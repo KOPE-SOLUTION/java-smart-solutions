@@ -2,6 +2,8 @@
 
 Playlist นี้นำ Smart Factory Core จาก OOP มาสร้าง Desktop Window App ด้วย Java Swing ทีละส่วน
 
+แต่ละ EP เพิ่ม Component หรือพฤติกรรมใหม่เพียงกลุ่มเดียว ให้วาง Snippet ในตำแหน่งที่ระบุแล้วเปิดหน้าต่างดูผลก่อนทำส่วนถัดไป โค้ด Dashboard ฉบับเต็มอยู่ใน `src/main/java/smartfactory/ui`
+
 | EP | เนื้อหา | ผลลัพธ์ |
 |---|---|---|
 | [3.1](ep01-swing-jframe-edt.md) | Swing, JFrame และ EDT | เปิดหน้าต่างแรกได้ |
@@ -16,4 +18,3 @@ Playlist นี้นำ Smart Factory Core จาก OOP มาสร้าง 
 | [3.10](ep10-thai-package-iot.md) | ภาษาไทย Packaging และ IoT Roadmap | พร้อมส่งมอบและต่อยอด |
 
 เริ่มที่ [EP 3.1](ep01-swing-jframe-edt.md) หรือกลับไป [README หลัก](../../README.md)
-

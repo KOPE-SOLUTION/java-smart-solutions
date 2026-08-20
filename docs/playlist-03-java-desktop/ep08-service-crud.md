@@ -3,43 +3,55 @@
 ## เป้าหมาย
 
 - ส่ง Service เข้า Frame ผ่าน Constructor
-- ให้ UI เรียก Use Case แทนการเก็บ Business Logic เอง
-- เพิ่ม อ่าน อัปเดต และลบเครื่องจักร
+- ให้ UI เรียก Use Case แทนการเก็บ Business Logic
+- Refresh หน้าจอหลังข้อมูลเปลี่ยน
+
+## 1. รับ Service ผ่าน Constructor
+
+เพิ่ม Field ใน Frame:
 
 ```java
 private final SmartFactoryService service;
+```
 
+เพิ่ม Parameter ใน Constructor:
+
+```java
 public SmartFactoryFrame(SmartFactoryService service) {
     this.service = service;
 }
 ```
 
-เพิ่มเครื่อง:
+## 2. เพิ่มเครื่องจักร
+
+ใน Event Handler ของปุ่ม Add:
 
 ```java
-service.addMachine(new Machine(id, name, location));
+Machine machine = new Machine(id, name, location);
+service.addMachine(machine);
 refreshDashboard();
 ```
 
-อัปเดต Sensor:
+รันและตรวจว่าตารางมีแถวใหม่ก่อนเพิ่ม Action อื่น
+
+## 3. อัปเดต Sensor
 
 ```java
 service.updateSensor(machineId, temperature, vibration);
 refreshDashboard();
 ```
 
-ลบเครื่อง:
+## 4. ลบเครื่องจักร
 
 ```java
 service.removeMachine(machineId);
 refreshDashboard();
 ```
 
-ทุก Action จบด้วยการอ่าน state ล่าสุดแล้ว refresh View ลดความเสี่ยงที่ Table จะแสดงข้อมูลไม่ตรงกับ Model
+ทุก Action จบด้วยการอ่าน State ล่าสุดและ Refresh View ทำให้ตารางตรงกับข้อมูลใน Service
 
 ## Challenge
 
 เพิ่มปุ่มค้นหาด้วย ID โดยใช้ `service.findById(...)` และแสดงข้อความเมื่อไม่พบ
 
 ถัดไป: [EP 3.9 — Timer และ UI Thread](ep09-timer-thread.md)
-

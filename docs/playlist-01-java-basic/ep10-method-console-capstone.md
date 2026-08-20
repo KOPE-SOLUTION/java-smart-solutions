@@ -2,39 +2,54 @@
 
 ## เป้าหมาย
 
-- แยกโปรแกรมเป็น method ที่มีหน้าที่เดียว
-- ใช้ parameter และ return value
-- รวม Basic ทั้ง Playlist เป็น Mini Project
+- แยกโปรแกรมเป็น Method ที่มีหน้าที่เดียว
+- ส่งข้อมูลเข้า Method ด้วย Parameter
+- รับผลลัพธ์กลับด้วย `return`
 
-## Method ตรวจสถานะ
+บทนี้เริ่มจาก Method สั้นสองตัว ก่อนเปิดโปรแกรม Capstone ฉบับเต็มใน Repository
+
+## 1. Method ที่มี Return Value
+
+วาง Method นี้ภายใน Class แต่วางไว้นอก `main`:
 
 ```java
 private static String checkStatus(double temperature, double vibration) {
     if (temperature >= 80.0 || vibration >= 7.0) {
         return "WARNING";
     }
+
     return "RUNNING";
 }
 ```
 
-## Method แสดงหนึ่งแถว
+ทดลองเรียกภายใน `main`:
 
 ```java
-private static void printMachine(
-        int number,
-        String name,
-        double temperature,
-        double vibration
-) {
+String status = checkStatus(82.3, 6.2);
+System.out.println("Status: " + status);
+```
+
+## 2. Method ที่ไม่ Return ค่า
+
+เพิ่ม Method นี้ไว้นอก `main`:
+
+```java
+private static void printMachine(String name, double temperature, double vibration) {
     String status = checkStatus(temperature, vibration);
-    System.out.printf("%d. %-12s %5.1f C %4.1f mm/s %s%n",
-            number, name, temperature, vibration, status);
+    System.out.println(name + " | " + temperature + " C | " + vibration + " mm/s | " + status);
 }
 ```
 
-## โค้ด Capstone ใน Repository
+แล้วเรียกจาก `main`:
 
-เปิดและคัดลอกไฟล์ [`BasicDemo.java`](../../src/main/java/smartfactory/basic/BasicDemo.java) ซึ่งรวม Variable, Array, Loop, Method, Condition, Switch และ Scanner ไว้ในโปรแกรมที่รันได้
+```java
+printMachine("Mixer", 65.5, 2.3);
+printMachine("Conveyor", 82.3, 6.2);
+```
+
+## 3. เปิด Capstone ฉบับเต็ม
+
+เปิดไฟล์ [`BasicDemo.java`](../../src/main/java/smartfactory/basic/BasicDemo.java) หลังจากเข้าใจสอง Method ด้านบนแล้ว ไฟล์นี้รวม Variable, Array, Loop, Method, Condition, Switch และ Scanner ไว้เป็นโปรแกรมเดียว
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\run-basic.ps1
@@ -50,6 +65,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-basic.ps1
 
 ## Final Challenge
 
+ทำทีละข้อและรันหลังแก้แต่ละข้อ:
+
 1. เพิ่ม Array แรงสั่นสะเทือน
 2. เปลี่ยน `checkTemperature` เป็น `checkStatus`
 3. แจ้งเตือนเมื่ออุณหภูมิตั้งแต่ 80 หรือแรงสั่นตั้งแต่ 7
@@ -59,4 +76,3 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-basic.ps1
 Playlist ถัดไปจะแก้ข้อจำกัดของ Array และ Static Method ด้วย Class และ Object
 
 ถัดไป: [Playlist 2 — Java OOP in Action](../playlist-02-java-oop/README.md)
-

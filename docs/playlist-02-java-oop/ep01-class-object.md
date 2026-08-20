@@ -3,49 +3,74 @@
 ## เป้าหมาย
 
 - แยกความหมายของ Class กับ Object
-- เปลี่ยนข้อมูลเครื่องจักรจาก Array เป็น Object
-- สร้าง Object หลายตัวจาก Class เดียว
+- สร้าง Object จาก Class
+- เห็นว่าแต่ละ Object เก็บข้อมูลของตัวเอง
 
-## แนวคิด
+Class คือแบบพิมพ์ ส่วน Object คือสิ่งที่สร้างขึ้นจากแบบพิมพ์นั้น Class `Machine` เดียวจึงใช้สร้าง Mixer, Conveyor และเครื่องจักรอื่นได้
 
-Class คือแบบพิมพ์ ส่วน Object คือสิ่งที่สร้างขึ้นจากแบบพิมพ์นั้น `Machine` หนึ่ง Class จึงสร้าง Mixer, Conveyor และ Pump ได้หลาย Object
+## 1. สร้าง Class
 
-## สร้างไฟล์ `ClassObjectDemo.java`
+สร้างไฟล์ `Machine.java`:
+
+```java
+public class Machine {
+    String id;
+    String name;
+    double temperature;
+}
+```
+
+Field คือข้อมูลที่ Object แต่ละตัวเก็บไว้
+
+## 2. สร้างไฟล์สำหรับทดลอง
+
+สร้างไฟล์ `ClassObjectDemo.java`:
 
 ```java
 public class ClassObjectDemo {
-    static class Machine {
-        String id;
-        String name;
-        double temperature;
-    }
-
     public static void main(String[] args) {
-        Machine mixer = new Machine();
-        mixer.id = "M-001";
-        mixer.name = "Mixer";
-        mixer.temperature = 65.5;
-
-        Machine conveyor = new Machine();
-        conveyor.id = "M-002";
-        conveyor.name = "Conveyor";
-        conveyor.temperature = 82.3;
-
-        System.out.println(mixer.id + " " + mixer.name);
-        System.out.println(conveyor.id + " " + conveyor.name);
+        // สร้าง Object ในส่วนถัดไป
     }
 }
 ```
 
-## Checkpoint
+## 3. สร้าง Object แรก
 
-- `mixer` และ `conveyor` มี Class เดียวกัน แต่เก็บ state คนละชุด
-- การแก้ `mixer.temperature` ไม่กระทบ `conveyor.temperature`
-- Field ยังเปิดเป็นค่า default เพราะยังไม่ได้ทำ Encapsulation
+วางภายใน `main`:
+
+```java
+Machine mixer = new Machine();
+mixer.id = "M-001";
+mixer.name = "Mixer";
+mixer.temperature = 65.5;
+
+System.out.println(mixer.id + " | " + mixer.name);
+```
+
+`new Machine()` สร้าง Object ส่วนตัวแปร `mixer` ใช้อ้างถึง Object นั้น
+
+## 4. สร้าง Object ที่สอง
+
+```java
+Machine conveyor = new Machine();
+conveyor.id = "M-002";
+conveyor.name = "Conveyor";
+conveyor.temperature = 82.3;
+
+System.out.println(conveyor.id + " | " + conveyor.name);
+```
+
+Compile และ Run:
+
+```powershell
+javac -encoding UTF-8 Machine.java ClassObjectDemo.java
+java ClassObjectDemo
+```
+
+การแก้ `mixer.temperature` ไม่กระทบ `conveyor.temperature` เพราะเป็นคนละ Object
 
 ## Challenge
 
-สร้าง Object `pump` เพิ่มและพิมพ์ข้อมูลทั้งสามเครื่องด้วย method ชั่วคราวหนึ่ง method
+สร้าง Object `pump` เพิ่ม แล้วพิมพ์รหัส ชื่อ และอุณหภูมิ
 
 ถัดไป: [EP 2.2 — Field, Method และ Constructor](ep02-field-method-constructor.md)
-

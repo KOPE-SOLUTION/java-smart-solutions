@@ -2,17 +2,23 @@
 
 ## เป้าหมาย
 
-- ทำให้ Source, Console และ Swing แสดงภาษาไทยสม่ำเสมอ
-- ตรวจโปรเจกต์ก่อนส่งมอบ
-- เห็นเส้นทางจากข้อมูลจำลองไป MQTT และ Database
+- ตรวจภาษาไทยใน Source, Console และ Swing
+- รันชุดตรวจสอบก่อนส่งมอบ
+- เห็นเส้นทางต่อยอดจากข้อมูลจำลองไป IoT
 
-## ภาษาไทยสามชั้น
+ทำตามแต่ละส่วนแยกกัน โดยตรวจภาษาไทยและ Test ให้ผ่านก่อนเริ่ม Packaging
 
-1. Source บันทึกเป็น UTF-8 ผ่าน `.editorconfig`
+## 1. ตรวจภาษาไทย
+
+โปรเจกต์ดูแลภาษาไทยสามชั้น:
+
+1. บันทึก Source เป็น UTF-8 ผ่าน `.editorconfig`
 2. Compile ด้วย `javac -encoding UTF-8`
-3. Swing ตั้ง Locale และเลือกฟอนต์ที่แสดงอักษรไทยได้
+3. ตั้ง Locale และเลือกฟอนต์ที่รองรับภาษาไทยใน Swing
 
-[`ThaiUiSupport.java`](../../src/main/java/smartfactory/ui/ThaiUiSupport.java) ตรวจฟอนต์ตามลำดับ `Leelawadee UI`, `Tahoma`, `Noto Sans Thai` และ logical font ของ Java พร้อมกำหนดข้อความ Popup เป็น `ตกลง`, `ยกเลิก`, `ใช่`, `ไม่`
+[`ThaiUiSupport.java`](../../src/main/java/smartfactory/ui/ThaiUiSupport.java) ตรวจฟอนต์ตามลำดับ `Leelawadee UI`, `Tahoma`, `Noto Sans Thai` และ Logical Font ของ Java
+
+รันชุดตรวจสอบ:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\check-encoding.ps1
@@ -20,15 +26,17 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 ```
 
-## Packaging
+## 2. เตรียม Packaging
 
-เมื่อพร้อมแจกจ่าย สามารถใช้ `jpackage` สร้าง App Image หรือ Installer โดยควรเพิ่ม Maven/Gradle และกำหนด Main Class เป็น:
+เมื่อโปรแกรมทำงานครบแล้ว สามารถใช้ `jpackage` สร้าง App Image หรือ Installer ขั้นต่อไปควรเพิ่ม Maven หรือ Gradle และกำหนด Main Class เป็น:
 
 ```text
 smartfactory.ui.DesktopApp
 ```
 
-## จาก Random ไป IoT
+Packaging เป็นงานหลังจาก Build, Test และภาษาไทยผ่านแล้ว
+
+## 3. เส้นทางต่อยอด IoT
 
 ```mermaid
 flowchart LR
@@ -39,11 +47,11 @@ flowchart LR
     Service --> DB[(Database)]
 ```
 
-เปลี่ยนเฉพาะแหล่งข้อมูลจาก `simulateSensorReadings` เป็น MQTT Client โดยเก็บ Model, Service และ UI ส่วนใหญ่ไว้ได้
+เปลี่ยนแหล่งข้อมูลจาก `simulateSensorReadings` เป็น MQTT Client โดยยังใช้ Model, Service และ UI ส่วนใหญ่ต่อได้
 
 ## Final Challenge
 
-เลือกหนึ่งงานต่อยอด:
+เลือกทำทีละหนึ่งหัวข้อ:
 
 1. Export CSV
 2. บันทึก SQLite
@@ -58,4 +66,3 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 ```
 
 กลับไป [README หลัก](../../README.md)
-

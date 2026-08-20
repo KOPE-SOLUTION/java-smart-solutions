@@ -2,6 +2,8 @@
 
 Playlist นี้เปลี่ยน Smart Factory Console จาก Array หลายชุดเป็น Domain Model ที่ขยายและทดสอบได้
 
+แต่ละ EP แบ่งโค้ดตามหน้าที่ เช่น Field, Constructor และ Method ให้เพิ่มลงใน Class ทีละส่วน โค้ดฉบับเต็มใน `src` ใช้ตรวจคำตอบหลังทำตามบทเรียนแล้ว
+
 | EP | เนื้อหา | ผลลัพธ์ |
 |---|---|---|
 | [2.1](ep01-class-object.md) | Class และ Object | สร้างเครื่องจักรหลาย Object |
@@ -16,4 +18,3 @@ Playlist นี้เปลี่ยน Smart Factory Console จาก Array �
 | [2.10](ep10-service-exception-test.md) | Service, Exception และ Test | ได้ Smart Factory Core ที่ทดสอบแล้ว |
 
 เริ่มที่ [EP 2.1](ep01-class-object.md) หรือกลับไป [README หลัก](../../README.md)
-

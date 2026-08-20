@@ -2,33 +2,43 @@
 
 ## เป้าหมาย
 
-- แยกความหมายของ JDK, `javac` และ `java`
+- ตรวจว่าเครื่องมีคำสั่ง `java` และ `javac`
 - สร้างไฟล์ `.java` แล้วคอมไพล์เป็น `.class`
-- รันโปรแกรมแรกในบริบท Smart Factory
+- แสดงข้อความจากโปรแกรม Java
 
-## ตรวจเครื่องมือ
+## 1. ตรวจเครื่องมือ
 
 ```powershell
 java -version
 javac -version
 ```
 
-ทั้งสองคำสั่งควรแสดงเวอร์ชัน 17 ขึ้นไป ถ้าพบเฉพาะ `java` แต่ไม่พบ `javac` ให้ตรวจว่าติดตั้ง JDK ไม่ใช่เฉพาะ Runtime
+ทั้งสองคำสั่งควรแสดงเวอร์ชัน 17 ขึ้นไป ถ้าพบ `java` แต่ไม่พบ `javac` ให้ตรวจว่าติดตั้ง JDK ไม่ใช่เฉพาะ Runtime
 
-## สร้างไฟล์ `HelloFactory.java`
+## 2. สร้างโครงไฟล์
+
+สร้างไฟล์ `HelloFactory.java` แล้ววางโค้ดนี้:
 
 ```java
 public class HelloFactory {
     public static void main(String[] args) {
-        System.out.println("Smart Factory Monitor");
-        System.out.println("Java is ready!");
+        // เพิ่มโค้ดในส่วนถัดไปตรงนี้
     }
 }
 ```
 
 ชื่อไฟล์ต้องตรงกับชื่อ `public class` รวมถึงตัวพิมพ์เล็กและใหญ่
 
-## Compile และ Run
+## 3. เพิ่มคำสั่งแสดงผล
+
+วางสองบรรทัดนี้ภายใน `main`:
+
+```java
+System.out.println("Smart Factory Monitor");
+System.out.println("Java is ready!");
+```
+
+## 4. Compile และ Run
 
 ```powershell
 javac -encoding UTF-8 HelloFactory.java
@@ -47,12 +57,11 @@ Java is ready!
 ## Checkpoint
 
 - เปลี่ยนข้อความบรรทัดที่สองเป็นชื่อโรงงานของคุณ
-- ลบ semicolon หนึ่งตำแหน่ง รัน `javac` และอ่านเลขบรรทัดจาก error
+- ลบ semicolon หนึ่งตำแหน่ง แล้วอ่านเลขบรรทัดจาก Compile Error
 - แก้กลับจนคอมไพล์ผ่าน
 
 ## Challenge
 
-พิมพ์ข้อความสามบรรทัด: ชื่อโรงงาน, ชื่อเครื่องจักร และสถานะเริ่มต้น
+เพิ่มอีกหนึ่งบรรทัดให้ผลลัพธ์มีชื่อโรงงาน ชื่อเครื่องจักร และสถานะเริ่มต้น เช่น `KOPES Factory`, `Mixer M-001` และ `Status: READY`
 
 ถัดไป: [EP 1.2 — Variable และ Data Type](ep02-variables-data-types.md)
-

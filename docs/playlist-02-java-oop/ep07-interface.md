@@ -2,9 +2,13 @@
 
 ## เป้าหมาย
 
-- แยกความสามารถออกจากลำดับ Inheritance
+- กำหนดความสามารถด้วย Interface
 - ใช้ `implements` และ `@Override`
-- ออกแบบ Contract ที่หลาย Class ใช้ร่วมกัน
+- ให้หลาย Class ใช้สัญญาเดียวกัน
+
+## 1. สร้าง Interface
+
+สร้างไฟล์ `Maintainable.java`:
 
 ```java
 public interface Maintainable {
@@ -13,28 +17,49 @@ public interface Maintainable {
 }
 ```
 
+Interface ระบุว่า Object ต้องทำอะไร แต่ยังไม่กำหนดรายละเอียดการทำงาน
+
+## 2. ให้ Machine ใช้ Interface
+
+แก้ส่วนประกาศ Class:
+
 ```java
 public class Machine extends FactoryDevice implements Maintainable {
-    @Override
-    public boolean requiresMaintenance() {
-        return operatingHours >= 500 || status == MachineStatus.WARNING;
-    }
+```
 
-    @Override
-    public void performMaintenance() {
-        operatingHours = 0;
-        status = MachineStatus.OFFLINE;
-    }
+เพิ่มสถานะเริ่มต้นใน `Machine` ถ้ายังไม่มี Field นี้:
+
+```java
+private MachineStatus status = MachineStatus.OFFLINE;
+```
+
+## 3. กำหนดรายละเอียดของแต่ละ Method
+
+วางภายใน `Machine`:
+
+```java
+@Override
+public boolean requiresMaintenance() {
+    return operatingHours >= 500 || status == MachineStatus.WARNING;
 }
 ```
 
-`Machine` และ `EnergyMeter` อาจสืบทอดคนละ Parent Class แต่ยัง implement `Maintainable` เหมือนกันได้
+เพิ่ม Method สำหรับบำรุงรักษา:
 
-ซอร์สจริง: [`Maintainable.java`](../../src/main/java/smartfactory/model/Maintainable.java)
+```java
+@Override
+public void performMaintenance() {
+    operatingHours = 0;
+    status = MachineStatus.OFFLINE;
+}
+```
+
+Machine และอุปกรณ์ชนิดอื่นอาจสืบทอด Parent ต่างกัน แต่ยัง `implements Maintainable` เหมือนกันได้
+
+ซอร์สฉบับเต็ม: [`Maintainable.java`](../../src/main/java/smartfactory/model/Maintainable.java)
 
 ## Challenge
 
-สร้าง Interface `SensorReadable` ที่มี method `updateReading(SensorReading reading)`
+สร้าง Interface `SensorReadable` ที่มี Method `updateReading(SensorReading reading)`
 
 ถัดไป: [EP 2.8 — Polymorphism](ep08-polymorphism.md)
-

@@ -2,21 +2,29 @@
 
 ## เป้าหมาย
 
-- มอง Object ผ่าน Parent Type หรือ Interface
-- เรียก method ของ Object จริงที่ Runtime
-- ลด `if` ตรวจชนิดที่ไม่จำเป็น
+- อ้างถึง Object ผ่าน Parent Type หรือ Interface
+- เรียก Method ของ Object จริงที่ Runtime
+- ใช้ Method เดียวกับอุปกรณ์หลายชนิด
+
+## 1. มอง Machine ผ่าน Type อื่น
 
 ```java
 Machine machine = new Machine("M-001", "Mixer", "Line A");
 
 FactoryDevice device = machine;
 Maintainable maintainable = machine;
+```
 
+ตัวแปรทั้งสามอ้างถึง Object เดียวกัน แต่เปิดให้เรียก Method ตาม Type ของตัวแปร
+
+ทดลองเรียก:
+
+```java
 System.out.println(device.getDeviceType());
 System.out.println(maintainable.requiresMaintenance());
 ```
 
-Method ที่รับชนิดกลาง:
+## 2. สร้าง Method ที่รับ Parent Type
 
 ```java
 private static void printDevice(FactoryDevice device) {
@@ -24,13 +32,12 @@ private static void printDevice(FactoryDevice device) {
 }
 ```
 
-เมื่อส่ง `Machine` หรือ `EnergyMeter` เข้า method เดียวกัน Java จะเลือก implementation ของ Object จริง
+Method นี้รับได้ทั้ง `Machine` และ Class อื่นที่สืบทอด `FactoryDevice` Java จะเลือก Implementation ของ Object จริงขณะ Runtime
 
 ดูตัวอย่างทำงาน: [`OopDemo.java`](../../src/main/java/smartfactory/oop/OopDemo.java)
 
 ## Challenge
 
-สร้าง `List<FactoryDevice>` ที่มี Machine และ EnergyMeter แล้ววนเรียก `getDeviceType()`
+สร้าง Object `EnergyMeter` แล้วส่งเข้า `printDevice(...)` Method เดียวกับ Machine
 
 ถัดไป: [EP 2.9 — Collection, Optional และ Stream](ep09-collection-optional-stream.md)
-
