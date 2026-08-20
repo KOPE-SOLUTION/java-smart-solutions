@@ -8,9 +8,25 @@
 
 บทนี้เริ่มจาก Method สั้นสองตัว ก่อนเปิดโปรแกรม Capstone ฉบับเต็มใน Repository
 
-## 1. Method ที่มี Return Value
+## 1. สร้างโครงไฟล์
 
-วาง Method นี้ภายใน Class แต่วางไว้นอก `main`:
+สร้างไฟล์ `MachineMethod.java`:
+
+```java
+public class MachineMethod {
+    public static void main(String[] args) {
+        // เรียก Method ตรงนี้
+    }
+
+    // เพิ่ม Method ตรงนี้
+}
+```
+
+Method ที่สร้างในบทนี้ต้องอยู่ภายใน Class `MachineMethod` แต่ไม่ซ้อนอยู่ภายใน `main`
+
+## 2. Method ที่มี Return Value
+
+วาง Method นี้แทน Comment `// เพิ่ม Method ตรงนี้`:
 
 ```java
 private static String checkStatus(double temperature, double vibration) {
@@ -22,16 +38,16 @@ private static String checkStatus(double temperature, double vibration) {
 }
 ```
 
-ทดลองเรียกภายใน `main`:
+วางโค้ดนี้แทน Comment `// เรียก Method ตรงนี้` ภายใน `main`:
 
 ```java
 String status = checkStatus(82.3, 6.2);
 System.out.println("Status: " + status);
 ```
 
-## 2. Method ที่ไม่ Return ค่า
+## 3. Method ที่ไม่ Return ค่า
 
-เพิ่ม Method นี้ไว้นอก `main`:
+เพิ่ม Method นี้ต่อจาก `checkStatus(...)` โดยยังอยู่ภายใน Class:
 
 ```java
 private static void printMachine(String name, double temperature, double vibration) {
@@ -40,14 +56,14 @@ private static void printMachine(String name, double temperature, double vibrati
 }
 ```
 
-แล้วเรียกจาก `main`:
+แล้วเพิ่มการเรียก Method ต่อจากโค้ดเดิมภายใน `main`:
 
 ```java
 printMachine("Mixer", 65.5, 2.3);
 printMachine("Conveyor", 82.3, 6.2);
 ```
 
-## 3. เปิด Capstone ฉบับเต็ม
+## 4. เปิด Capstone ฉบับเต็ม
 
 เปิดไฟล์ [`BasicDemo.java`](../../src/main/java/smartfactory/basic/BasicDemo.java) หลังจากเข้าใจสอง Method ด้านบนแล้ว ไฟล์นี้รวม Variable, Array, Loop, Method, Condition, Switch และ Scanner ไว้เป็นโปรแกรมเดียว
 
