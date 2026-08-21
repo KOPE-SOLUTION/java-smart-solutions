@@ -3,40 +3,90 @@
 ## เป้าหมาย
 
 - ให้ปุ่มตอบสนองเมื่อผู้ใช้กด
-- อ่านค่าจาก TextField
-- เปลี่ยนข้อความบนหน้าจอหลังบันทึก
+- อ่านค่าจาก `JTextField`
+- เปลี่ยนข้อความบนหน้าจอ
+- เข้าใจว่า Lambda ทำงานเมื่อ Event เกิดขึ้น
 
-Desktop App รอ Event จากผู้ใช้ ไม่ได้ทำงานจากบนลงล่างแล้วปิดเหมือนโปรแกรม Console
+ทำงานต่อใน `createWindow()` ของ `FirstWindow.java` โดยใช้ `saveButton` และ TextField จาก EP3.3
+
+Desktop App จะเปิดหน้าต่างแล้วรอ Event จากผู้ใช้ ต่างจาก Console App ที่ทำงานจากบนลงล่างแล้วจบ
 
 ## 1. เพิ่ม Label แสดงผล
 
-วางหลังสร้าง `saveButton`:
+วางหลังส่วนที่สร้าง `actions` และปุ่มใน EP3.2:
 
 ```java
 JLabel statusLabel = new JLabel("ยังไม่มีข้อมูล");
 actions.add(statusLabel);
 ```
 
-## 2. ผูก Event กับปุ่ม
+ถ้าคุณวางส่วน `actions` ไว้ก่อนส่วน Form ก็ไม่เป็นปัญหา เพราะตัวแปรทั้งหมดอยู่ภายใน `createWindow()` เดียวกัน
 
-วางใน Method เดียวกับที่สร้าง `idField`, `nameField` และ `saveButton` เพื่อให้ Lambda เข้าถึง Component เหล่านี้ได้:
+## 2. ผูก Event กับปุ่ม Save
+
+วางโค้ดนี้หลังจากสร้าง `idField`, `nameField`, `locationField`, `saveButton` และ `statusLabel` ครบแล้ว แต่ยังอยู่ก่อน `frame.setVisible(true);`:
 
 ```java
 saveButton.addActionListener(event -> {
     String id = idField.getText().trim();
     String name = nameField.getText().trim();
-    statusLabel.setText("บันทึก " + id + " - " + name);
+    String location = locationField.getText().trim();
+
+    statusLabel.setText(
+            "บันทึก " + id + " | " + name + " | " + location
+    );
 });
 ```
 
-คำสั่งภายใน Lambda จะทำงานเมื่อผู้ใช้กดปุ่ม Save
+โค้ดภายใน Lambda ยังไม่ทำงานตอนสร้างปุ่ม แต่จะทำงานเมื่อผู้ใช้กด `saveButton`
 
-## 3. ทดลอง Event อื่น
+## 3. Compile และทดลอง Event
 
-Event ที่พบได้บ่อย ได้แก่ กดปุ่ม เลือกแถวในตาราง กด Enter ใน TextField และปิดหน้าต่าง เริ่มจากปุ่มหนึ่งตัวให้ทำงานก่อนเพิ่ม Event ชนิดอื่น
+```powershell
+javac -encoding UTF-8 FirstWindow.java
+java -Dfile.encoding=UTF-8 FirstWindow
+```
+
+ทดลองตามลำดับ:
+
+1. กรอกรหัส ชื่อ และตำแหน่ง
+2. กดปุ่มบันทึก
+3. ตรวจว่า `statusLabel` เปลี่ยนตามข้อมูลที่กรอก
+4. แก้ข้อมูลแล้วกดอีกครั้งเพื่อดูผลใหม่
+
+## 4. ผูกปุ่ม Add ให้ Focus ช่องรหัส
+
+ใช้ `addButton` จาก EP3.2 ทดลอง Event อีกแบบ:
+
+```java
+addButton.addActionListener(event -> idField.requestFocusInWindow());
+```
+
+เมื่อกด Add เคอร์เซอร์จะย้ายไปที่ช่องรหัส เราจะเปลี่ยนปุ่มนี้ให้เปิด Dialog ใน EP3.5
+
+## จุดที่มักสับสน
+
+- Listener ต้องวางหลังประกาศ Component ที่ Lambda ต้องใช้
+- `getText()` อ่านข้อความจาก TextField
+- `setText(...)` เปลี่ยนข้อความของ Label หรือ TextField
+- Parameter `event` คือข้อมูล Event ที่ Swing ส่งเข้ามา แม้ตัวอย่างนี้ยังไม่ได้อ่านค่าจากมัน
+
+## ตรวจความพร้อมก่อนเข้า EP 3.5
+
+- ปุ่ม Save มี `addActionListener(...)`
+- กด Save แล้ว `statusLabel` เปลี่ยน
+- ปุ่ม Add ย้าย Focus ไปช่องรหัสได้
+- ไม่มี Listener ของปุ่มเดียวกันที่ทำงานซ้ำโดยไม่ตั้งใจ
 
 ## Challenge
 
-เพิ่มปุ่ม Clear แล้วผูก Event ให้ล้าง TextField ทีละช่องด้วย `setText("")`
+สร้างปุ่ม Clear และเพิ่มลงใน `actions`:
+
+```java
+JButton clearButton = new JButton("Clear");
+actions.add(clearButton);
+```
+
+จากนั้นผูก Event ให้ล้าง TextField ทีละช่องด้วย `setText("")` และเปลี่ยน `statusLabel` กลับเป็น `ยังไม่มีข้อมูล`
 
 ถัดไป: [EP 3.5 — JOptionPane และ Validation](ep05-dialog-validation.md)

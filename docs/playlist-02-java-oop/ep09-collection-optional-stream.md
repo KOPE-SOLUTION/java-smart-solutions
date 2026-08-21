@@ -2,21 +2,41 @@
 
 ## เป้าหมาย
 
-- เพิ่มข้อมูลด้วย `List`
+- เก็บ Machine หลาย Object ด้วย `List`
 - สื่อผลค้นหาที่อาจไม่พบด้วย `Optional`
-- นับข้อมูลที่ตรงเงื่อนไขด้วย Stream
+- กรองและนับข้อมูลด้วย Stream
+- แยกโค้ดจัดการรายการออกจากไฟล์ Demo
 
-ทำตามทีละส่วน โดยเริ่มจาก List ให้ทำงานก่อนแล้วจึงเพิ่มการค้นหาและการนับ
+EP นี้จะสร้างสองไฟล์ใหม่:
 
-## 1. เก็บ Machine ใน List
+1. `SmartFactoryService.java` — เก็บและค้นหา Machine
+2. `CollectionDemo.java` — สร้างข้อมูลและทดลองเรียก Service
 
-เพิ่ม Field ใน Service:
+ทำตามทีละส่วน โดย Compile หลังจบแต่ละหัวข้อได้ ไม่ต้องเขียนทุกอย่างพร้อมกัน
+
+## 1. สร้างไฟล์ SmartFactoryService.java
+
+สร้างไฟล์ใหม่ชื่อ `SmartFactoryService.java` แล้ววาง Import ไว้บนสุดของไฟล์:
 
 ```java
-private final List<Machine> machines = new ArrayList<>();
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 ```
 
-เพิ่ม Method:
+วาง Class ต่อจาก Import:
+
+```java
+public class SmartFactoryService {
+    private final List<Machine> machines = new ArrayList<>();
+}
+```
+
+`List` เพิ่ม Machine ภายหลังได้ ต่างจาก Array ที่มีขนาดคงที่
+
+## 2. เพิ่ม Machine ลงใน List
+
+วาง Method นี้ภายใน `SmartFactoryService`:
 
 ```java
 public void addMachine(Machine machine) {
@@ -24,9 +44,11 @@ public void addMachine(Machine machine) {
 }
 ```
 
-`List` เพิ่มข้อมูลภายหลังได้ ต่างจาก Array ที่กำหนดขนาดคงที่
+ตอนนี้ Service มีหน้าที่เก็บ Machine แต่ยังค้นหาไม่ได้
 
-## 2. ค้นหาด้วย Optional
+## 3. ค้นหาด้วย Optional
+
+วาง Method ต่อจาก `addMachine(...)`:
 
 ```java
 public Optional<Machine> findById(String id) {
@@ -36,20 +58,138 @@ public Optional<Machine> findById(String id) {
 }
 ```
 
-`Optional` บอกผู้เรียกอย่างชัดเจนว่าผลค้นหาอาจไม่มีค่า หลีกเลี่ยง `optional.get()` โดยไม่ตรวจ ควรใช้ `ifPresent`, `orElse` หรือ `orElseThrow`
+อ่านลำดับการทำงานจากบนลงล่าง:
 
-## 3. นับด้วย Stream
+1. นำ Machine ทุกตัวจาก `machines`
+2. กรองเฉพาะตัวที่รหัสตรงกับ `id`
+3. คืน Object ตัวแรกที่พบ
+4. ถ้าไม่พบ คืน `Optional.empty()` แทน `null`
+
+## 4. นับ Machine ตามสถานะด้วย Stream
+
+วาง Method นี้ภายใน `SmartFactoryService`:
 
 ```java
-long warningCount = machines.stream()
-        .filter(machine -> machine.getStatus() == MachineStatus.WARNING)
-        .count();
+public long countByStatus(MachineStatus status) {
+    return machines.stream()
+            .filter(machine -> machine.getStatus() == status)
+            .count();
+}
 ```
 
-อ่านลำดับเป็น “นำ Machine ทั้งหมดมา กรองเฉพาะ WARNING แล้วนับจำนวน”
+Method นี้รับสถานะที่ต้องการ แล้วคืนจำนวน Machine ที่ตรงกับสถานะนั้น
+
+## 5. สร้างไฟล์ CollectionDemo.java
+
+สร้างไฟล์ใหม่ชื่อ `CollectionDemo.java`:
+
+```java
+public class CollectionDemo {
+    public static void main(String[] args) {
+        SmartFactoryService service = new SmartFactoryService();
+    }
+}
+```
+
+## 6. สร้างและเพิ่ม Machine
+
+วางภายใน `main` ต่อจากการสร้าง Service:
+
+```java
+Machine mixer = new Machine("M-001", "Mixer", "Line A");
+mixer.updateReading(new SensorReading(65.5, 3.1));
+
+Machine conveyor = new Machine("M-002", "Conveyor", "Line B");
+conveyor.updateReading(new SensorReading(85.0, 4.2));
+
+service.addMachine(mixer);
+service.addMachine(conveyor);
+```
+
+Mixer มีค่าปลอดภัยจึงเป็น `RUNNING` ส่วน Conveyor มีอุณหภูมิสูงกว่าเกณฑ์จึงเป็น `WARNING`
+
+## 7. ทดลองค้นหา
+
+วางต่อภายใน `main`:
+
+```java
+service.findById("M-001")
+        .ifPresent(machine -> System.out.println("Found: " + machine.getName()));
+```
+
+`ifPresent(...)` จะทำงานเมื่อค้นพบ Machine เท่านั้น จึงไม่ต้องเรียก `get()` โดยไม่ตรวจค่า
+
+ทดลองค้นหารหัสที่ไม่มีในระบบ:
+
+```java
+String result = service.findById("M-999")
+        .map(Machine::getName)
+        .orElse("Machine not found");
+
+System.out.println(result);
+```
+
+## 8. ทดลองนับด้วย Stream
+
+วางต่อภายใน `main`:
+
+```java
+long warningCount = service.countByStatus(MachineStatus.WARNING);
+System.out.println("Warning count: " + warningCount);
+```
+
+## 9. Compile และ Run
+
+```powershell
+javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java CollectionDemo.java
+java -Dfile.encoding=UTF-8 CollectionDemo
+```
+
+ตัวอย่างผลลัพธ์:
+
+```text
+Found: Mixer
+Machine not found
+Warning count: 1
+```
+
+## จุดที่มักสับสน
+
+- `machines` อยู่ใน `SmartFactoryService` ดังนั้น Method ที่ใช้ `machines.stream()` ต้องวางภายใน Class นี้
+- Import ต้องอยู่บนสุดของไฟล์และอยู่นอก Class
+- `Optional<Machine>` ไม่ใช่ Machine โดยตรง ต้องใช้ `ifPresent`, `map`, `orElse` หรือ `orElseThrow`
+- `count()` คืนค่าเป็น `long` ไม่ใช่ `int`
+
+## ตรวจความพร้อมก่อนเข้า EP 2.10
+
+- มีไฟล์ `SmartFactoryService.java`
+- Service มี Field `List<Machine>`
+- มี Method `addMachine(...)`, `findById(...)` และ `countByStatus(...)`
+- มีไฟล์ `CollectionDemo.java`
+- ค้นหารหัสที่มีและไม่มีในระบบได้
+- นับสถานะ `WARNING` ได้หนึ่งเครื่อง
+- Compile และ Run ได้โดยไม่มี Error
+
+ซอร์สฉบับเต็ม: [`SmartFactoryService.java`](../../src/main/java/smartfactory/service/SmartFactoryService.java)
 
 ## Challenge
 
-เปลี่ยนเงื่อนไขใน `filter` ให้เลือกเครื่องที่ทำงานครบ 500 ชั่วโมง แล้วนับจำนวน
+เพิ่ม Method นี้ภายใน `SmartFactoryService` เพื่อนับ Machine ที่ควรบำรุงรักษา:
+
+```java
+public long countRequiringMaintenance() {
+    return machines.stream()
+            .filter(machine -> machine.requiresMaintenance())
+            .count();
+}
+```
+
+จากนั้นเรียกใน `CollectionDemo.java`:
+
+```java
+System.out.println(
+        "Maintenance count: " + service.countRequiringMaintenance()
+);
+```
 
 ถัดไป: [EP 2.10 — Service, Exception และ Test](ep10-service-exception-test.md)
