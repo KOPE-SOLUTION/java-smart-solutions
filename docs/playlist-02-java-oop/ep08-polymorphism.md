@@ -7,7 +7,7 @@
 - ให้ Java เลือก Method ของ Object จริงขณะ Runtime
 - ใช้ Method เดียวกับอุปกรณ์หลายชนิด
 
-EP นี้ไม่ต้องแก้ `Machine.java` เราจะสร้างไฟล์ทดลองใหม่เพื่อแยกจากตัวอย่างเดิม
+EP นี้ไม่ต้องแก้ `Machine.java` ให้สร้างไฟล์ทดลองใหม่เพื่อแยกจากตัวอย่างเดิม
 
 ## 1. สร้างไฟล์ PolymorphismDemo.java
 
@@ -90,7 +90,7 @@ printDevice(conveyor);
 
 Method `printDevice(...)` เดียวกันรับ Machine ได้ทุก Object เพราะ Machine ทุกตัวเป็น FactoryDevice
 
-ถ้าคุณเรียก `printDevice(machine);` ไว้แล้วจากส่วนก่อนหน้า ให้เหลือเพียงชุดล่าสุดเพื่อไม่ให้ผลลัพธ์ซ้ำ
+หากมี `printDevice(machine);` จากส่วนก่อนหน้า ให้เหลือเพียงชุดล่าสุดเพื่อไม่ให้ผลลัพธ์ซ้ำ
 
 ## 6. Compile และ Run
 

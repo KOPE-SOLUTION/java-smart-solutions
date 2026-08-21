@@ -89,7 +89,7 @@ tableModel.addRow(
 tableModel.setRowCount(0);
 ```
 
-ยังไม่ต้องใส่บรรทัดนี้ถาวรใน `createWindow()` เพราะแถวทดลองจะหาย เราจะนำไปใช้ใน Method Refresh ตั้งแต่ EP3.7
+ยังไม่ต้องใส่บรรทัดนี้ถาวรใน `createWindow()` เพราะแถวทดลองจะหาย บรรทัดนี้จะนำไปใช้ใน Method Refresh ตั้งแต่ EP3.7
 
 ## 7. Compile และ Run
 

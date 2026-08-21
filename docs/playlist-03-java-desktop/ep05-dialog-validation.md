@@ -31,7 +31,7 @@ addButton.addActionListener(event -> idField.requestFocusInWindow());
 addButton.addActionListener(event -> showAddDialog(frame, statusLabel));
 ```
 
-Method `showAddDialog(...)` ยังไม่มี เราจะเพิ่มในส่วนถัดไป
+Method `showAddDialog(...)` ยังไม่ถูกสร้าง ให้เพิ่มในส่วนถัดไป
 
 ## 3. สร้าง Method showAddDialog()
 

@@ -72,7 +72,7 @@ Timer simulationTimer = new Timer(2_000, event -> {
 
 ค่า `2_000` คือ 2,000 milliseconds หรือ 2 วินาที ทุกครั้งที่ Timer ทำงาน Service จะสร้างค่าใหม่ แล้ว UI อ่าน State ล่าสุดมา Refresh
 
-ยังไม่ต้องเรียก `simulationTimer.start()` ตรงนี้ เพราะเราจะควบคุมผ่านปุ่ม
+ยังไม่ต้องเรียก `simulationTimer.start()` ตรงนี้ เนื่องจากการเริ่มและหยุดจะควบคุมผ่านปุ่ม
 
 ## 5. สลับ Start และ Stop
 

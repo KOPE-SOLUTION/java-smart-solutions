@@ -7,7 +7,7 @@
 - ค้นหา Machine ที่จำเป็นต้องพบด้วย `orElseThrow`
 - เขียน Test ด้วย Java ล้วนโดยไม่ต้องติดตั้ง JUnit
 
-EP นี้ทำต่อจาก `SmartFactoryService.java` ของ EP 2.9 เราจะไม่สร้าง Service ซ้ำ แต่จะแก้ Method เดิมและเพิ่มความสามารถทีละส่วน
+EP นี้ทำต่อจาก `SmartFactoryService.java` ของ EP 2.9 ไม่ต้องสร้าง Service ซ้ำ ให้แก้ Method เดิมและเพิ่มความสามารถทีละส่วน
 
 ## 1. แบ่งหน้าที่ของ Model และ Service
 
@@ -37,7 +37,7 @@ public void addMachine(Machine machine) {
 }
 ```
 
-ต้องตรวจ `null` ก่อนเรียก `machine.getId()` ไม่เช่นนั้นจะเกิด `NullPointerException` ซึ่งอธิบายปัญหาได้น้อยกว่า Exception ที่เรากำหนดเอง
+ต้องตรวจ `null` ก่อนเรียก `machine.getId()` ไม่เช่นนั้นจะเกิด `NullPointerException` ซึ่งอธิบายปัญหาได้น้อยกว่า Exception ที่กำหนดเอง
 
 การค้นหาใน EP 2.9 ใช้ `equalsIgnoreCase(...)` ดังนั้น `M-001` และ `m-001` จะถือว่าเป็นรหัสเดียวกัน
 

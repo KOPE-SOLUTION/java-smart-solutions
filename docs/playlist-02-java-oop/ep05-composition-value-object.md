@@ -9,7 +9,7 @@
 
 EP นี้ทำต่อจากไฟล์ `Machine.java`, `MachineStatus.java` และ `ClassObjectDemo.java` ของ EP 2.4 โดยวางทุกไฟล์ไว้ในโฟลเดอร์เดียวกัน
 
-ลำดับที่เราจะทำคือ:
+ลำดับการทำงาน:
 
 1. สร้าง `SensorReading.java`
 2. ให้ `Machine` เก็บ SensorReading ล่าสุด
@@ -78,7 +78,7 @@ private SensorReading latestReading;
 
 ### 4.2 กำหนดค่าเริ่มต้นใน Constructor
 
-แทนที่ Constructor เดิมของ `Machine` ด้วยรูปแบบนี้ เพื่อให้ทุกคนเริ่มจากโครงเดียวกัน:
+แทนที่ Constructor เดิมของ `Machine` ด้วยโค้ดนี้:
 
 ```java
 public Machine(String id, String name) {
@@ -95,7 +95,7 @@ public Machine(String id, String name) {
 }
 ```
 
-ถ้า Constructor เดิมรับ `double temp` ให้ลบ Parameter นั้นออก เพราะต่อจากนี้เราจะอัปเดตค่า Sensor ผ่าน `updateReading(...)`
+หาก Constructor เดิมรับ `double temp` ให้ลบ Parameter นั้นออก เนื่องจากค่า Sensor จะอัปเดตผ่าน `updateReading(...)`
 
 จากนั้นลบ Field เดิมนี้ เพราะอุณหภูมิถูกย้ายไปเก็บใน `SensorReading` แล้ว:
 
@@ -119,7 +119,7 @@ public void updateReading(SensorReading reading) {
 }
 ```
 
-ตอนเรียก Method เราจะส่ง SensorReading เข้ามาทั้ง Object แทนการส่งอุณหภูมิเพียงค่าเดียว
+ตอนเรียก Method ให้ส่ง `SensorReading` เข้ามาทั้ง Object แทนการส่งอุณหภูมิเพียงค่าเดียว
 
 ### 4.4 เพิ่ม Getter สำหรับ Sensor ล่าสุด
 

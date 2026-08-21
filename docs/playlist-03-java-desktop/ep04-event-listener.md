@@ -20,7 +20,7 @@ JLabel statusLabel = new JLabel("ยังไม่มีข้อมูล");
 actions.add(statusLabel);
 ```
 
-ถ้าคุณวางส่วน `actions` ไว้ก่อนส่วน Form ก็ไม่เป็นปัญหา เพราะตัวแปรทั้งหมดอยู่ภายใน `createWindow()` เดียวกัน
+หากส่วน `actions` อยู่ก่อนส่วน Form โค้ดยังทำงานได้ เพราะตัวแปรทั้งหมดอยู่ภายใน `createWindow()` เดียวกัน
 
 ## 2. ผูก Event กับปุ่ม Save
 
@@ -62,7 +62,7 @@ java -Dfile.encoding=UTF-8 FirstWindow
 addButton.addActionListener(event -> idField.requestFocusInWindow());
 ```
 
-เมื่อกด Add เคอร์เซอร์จะย้ายไปที่ช่องรหัส เราจะเปลี่ยนปุ่มนี้ให้เปิด Dialog ใน EP3.5
+เมื่อกด Add เคอร์เซอร์จะย้ายไปที่ช่องรหัส ปุ่มนี้จะถูกเปลี่ยนให้เปิด Dialog ใน EP3.5
 
 ## จุดที่มักสับสน
 

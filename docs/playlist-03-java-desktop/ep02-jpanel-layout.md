@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 frame.add(new JLabel("Machine Monitor", SwingConstants.CENTER));
 ```
 
-เราจะเปลี่ยนจากการวาง Component เดียวเป็น Dashboard ที่มีหลาย Panel
+ขั้นตอนนี้เปลี่ยนจากการวาง Component เดียวเป็น Dashboard ที่มีหลาย Panel
 
 ## 3. สร้าง Root Panel
 
@@ -90,7 +90,7 @@ actions.add(updateButton);
 root.add(actions, BorderLayout.SOUTH);
 ```
 
-เราประกาศปุ่มเป็นตัวแปร เพราะ EP ถัดไปจะนำตัวแปรเหล่านี้ไปผูก Event
+ประกาศปุ่มเป็นตัวแปร เพื่อให้ EP ถัดไปนำตัวแปรเหล่านี้ไปผูก Event
 
 ## 8. Compile และ Run
 

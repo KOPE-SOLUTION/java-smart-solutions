@@ -49,10 +49,10 @@ private MachineStatus status = MachineStatus.OFFLINE;
 private int operatingHours = 0;
 ```
 
-ถ้า `Machine` ของคุณมี `operatingHours` อยู่แล้วจาก EP 2.3 ให้ใช้ Field เดิมและไม่ต้องประกาศซ้ำ เพียงตรวจว่าค่าเริ่มต้นเป็น `0`
+หากมี Field `operatingHours` อยู่แล้วจาก EP 2.3 ให้ใช้ Field เดิมโดยไม่ต้องประกาศซ้ำ และตรวจว่าค่าเริ่มต้นเป็น `0`
 
 - `status` เก็บสถานะปัจจุบันด้วย Enum จาก EP 2.4
-- `operatingHours` เก็บจำนวนรอบการทำงานที่เราจำลองเป็นชั่วโมง
+- `operatingHours` เก็บจำนวนรอบการทำงานที่จำลองเป็นชั่วโมง
 - ค่าคงที่สามตัวเป็นเกณฑ์ที่ใช้ตัดสินสถานะและการบำรุงรักษา
 
 ## 4. ปรับ updateReading(...)

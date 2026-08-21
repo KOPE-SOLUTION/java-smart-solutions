@@ -81,7 +81,7 @@ javac -encoding UTF-8 FirstWindow.java
 java -Dfile.encoding=UTF-8 FirstWindow
 ```
 
-ผลที่ต้องเห็นคือ Form สามช่องและปุ่มบันทึกอยู่ใต้ Summary ตอนนี้ปุ่มยังไม่ตอบสนอง เพราะเราจะผูก Event ใน EP3.4
+ผลที่ต้องเห็นคือ Form สามช่องและปุ่มบันทึกอยู่ใต้ Summary ตอนนี้ปุ่มยังไม่ตอบสนอง โดยการผูก Event จะทำใน EP3.4
 
 ## Component แต่ละชนิด
 
