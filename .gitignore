@@ -3,3 +3,8 @@ out/
 .idea/
 .vscode/
 /src/main/java/labs/
+
+# Local practice files created while recording tutorials
+/labs/
+/practice/
+/try/

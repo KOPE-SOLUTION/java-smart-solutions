@@ -107,7 +107,7 @@ Service Layer ไม่ได้หมายถึงทุก Method ที่�
 
 ## 5. สร้างไฟล์ SmartFactoryCoreTest.java
 
-สร้างไฟล์ใหม่ชื่อ `SmartFactoryCoreTest.java` ในโฟลเดอร์เดียวกับไฟล์ Lab:
+สร้างไฟล์ใหม่ชื่อ `SmartFactoryCoreTest.java` ในโฟลเดอร์เดียวกับไฟล์ Java ที่ทำมาตั้งแต่ EP2.1:
 
 ```java
 public class SmartFactoryCoreTest {
@@ -128,7 +128,7 @@ Test นี้เป็น Java ปกติ ใช้ `main` เป็นจุ
 
 ```java
 private static void testSafeReadingSetsRunning() {
-    Machine machine = new Machine("T-001", "Test Machine", "Lab");
+    Machine machine = new Machine("T-001", "Test Machine", "พื้นที่ทดสอบ");
     machine.updateReading(new SensorReading(60.0, 2.0));
 
     if (machine.getStatus() != MachineStatus.RUNNING) {
@@ -152,10 +152,10 @@ private static void testSafeReadingSetsRunning() {
 ```java
 private static void testDuplicateIdIsRejected() {
     SmartFactoryService service = new SmartFactoryService();
-    service.addMachine(new Machine("T-002", "First", "Lab"));
+    service.addMachine(new Machine("T-002", "First", "พื้นที่ทดสอบ"));
 
     try {
-        service.addMachine(new Machine("t-002", "Second", "Lab"));
+        service.addMachine(new Machine("t-002", "Second", "พื้นที่ทดสอบ"));
         throw new AssertionError("Duplicate id should fail");
     } catch (IllegalArgumentException expected) {
         if (!expected.getMessage().contains("ซ้ำ")) {
@@ -169,9 +169,9 @@ private static void testDuplicateIdIsRejected() {
 
 ใน Test นี้ `try` คือการลงมือเพิ่มรหัสซ้ำ ส่วน `catch (IllegalArgumentException expected)` คือการยืนยันว่า Service ปฏิเสธข้อมูลตามที่ออกแบบไว้ หากไม่มี Exception จะไปถึง `AssertionError` และถือว่า Test ไม่ผ่าน
 
-## 8. Compile และ Run Test ของ Lab
+## 8. Compile และ Run Test
 
-เปิด Terminal ในโฟลเดอร์เดียวกับไฟล์ Java แล้วรัน:
+เปิด Terminal ในโฟลเดอร์ที่เก็บไฟล์ Java ที่ทำตามบทเรียน แล้วรัน:
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java SmartFactoryCoreTest.java
@@ -186,9 +186,9 @@ PASS: 2 tests
 
 ถ้ามี Test ใดผิด โปรแกรมจะแสดง `AssertionError` แทนข้อความ PASS ให้แก้กฎหรือข้อมูล Test ก่อนทำส่วนถัดไป
 
-## 9. ตรวจโปรเจกต์ฉบับเต็ม
+## 9. ตรวจโปรเจกต์ใน Repository
 
-คำสั่งส่วนนี้ใช้กับซอร์สฉบับเต็มใน Repository ไม่ใช่ไฟล์ Lab ที่เพิ่งสร้าง ให้เปิด Terminal ที่โฟลเดอร์หลักของโปรเจกต์แล้วรัน:
+เมื่อต้องการตรวจซอร์สที่อยู่ใน `src/main/java` และ `src/test/java` ให้เปิด Terminal ที่โฟลเดอร์หลักของ Repository แล้วรัน:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
@@ -208,7 +208,7 @@ PASS: 5 tests
 - มีทั้ง `findById(...)` และ `findRequired(...)`
 - การอัปเดต Sensor ทำผ่าน Service และ Machine
 - มีไฟล์ `SmartFactoryCoreTest.java`
-- Test ของ Lab แสดง `PASS: 2 tests`
+- `SmartFactoryCoreTest` แสดง `PASS: 2 tests`
 - แยก Model, Service และ Demo ออกจากกันชัดเจน
 
 ซอร์สฉบับเต็มสำหรับตรวจคำตอบ:
