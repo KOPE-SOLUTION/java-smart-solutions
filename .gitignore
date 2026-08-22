@@ -2,4 +2,4 @@ out/
 *.class
 .idea/
 .vscode/
-
+/src/main/java/labs/

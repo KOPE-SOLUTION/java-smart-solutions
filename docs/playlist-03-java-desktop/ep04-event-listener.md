@@ -62,7 +62,7 @@ saveButton.addActionListener(event -> {
 
 ```powershell
 javac -encoding UTF-8 FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ทดลองตามลำดับ:

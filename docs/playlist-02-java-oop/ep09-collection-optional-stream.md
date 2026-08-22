@@ -72,6 +72,13 @@ public Optional<Machine> findById(String id) {
 }
 ```
 
+ชี้ส่วนประกอบในโค้ด:
+
+- `machines.stream()` เริ่ม Stream จากข้อมูลใน List โดยไม่ได้คัดลอกหรือแก้ List เดิม
+- `.filter(...)` เลือกเฉพาะ Machine ที่ผ่านเงื่อนไข
+- `machine -> ...` คือ Lambda ที่รับ Machine หนึ่ง Object แล้วคืน `true` หรือ `false`
+- `.findFirst()` จบการประมวลผลและคืน `Optional<Machine>` เพราะอาจพบหรือไม่พบ Object
+
 อ่านลำดับการทำงานจากบนลงล่าง:
 
 1. นำ Machine ทุกตัวจาก `machines`
@@ -91,7 +98,7 @@ public long countByStatus(MachineStatus status) {
 }
 ```
 
-Method นี้รับสถานะที่ต้องการ แล้วคืนจำนวน Machine ที่ตรงกับสถานะนั้น
+Method นี้รับสถานะที่ต้องการ แล้วคืนจำนวน Machine ที่ตรงกับสถานะนั้น โดย `filter(...)` ยังเป็นขั้นกรองเหมือนเดิม แต่ครั้งนี้ `count()` เป็นคำสั่งจบ Stream และคืนจำนวนเป็น `long`
 
 ## 5. สร้างไฟล์ CollectionDemo.java
 
@@ -131,7 +138,7 @@ service.findById("M-001")
         .ifPresent(machine -> System.out.println("Found: " + machine.getName()));
 ```
 
-`ifPresent(...)` จะทำงานเมื่อค้นพบ Machine เท่านั้น จึงไม่ต้องเรียก `get()` โดยไม่ตรวจค่า
+`ifPresent(...)` จะเรียก Lambda เฉพาะเมื่อ `Optional` มี Machine จึงไม่ต้องเรียก `get()` โดยไม่ตรวจค่า ตัวแปร `machine` ภายใน Lambda คือ Object ที่ค้นพบ ไม่ใช่ Machine ทุกตัวใน List
 
 ทดลองค้นหารหัสที่ไม่มีในระบบ:
 
@@ -142,6 +149,12 @@ String result = service.findById("M-999")
 
 System.out.println(result);
 ```
+
+- `map(Machine::getName)` เปลี่ยนค่าภายในจาก `Optional<Machine>` เป็น `Optional<String>` เมื่อค้นพบ
+- `Machine::getName` เป็น Method Reference ซึ่งทำหน้าที่เดียวกับ `machine -> machine.getName()`
+- `orElse(...)` คืนข้อความสำรองเมื่อ `Optional` ว่าง
+
+Stream ใช้ค้นหาใน Service ส่วน Optional ใช้ส่งผลลัพธ์ที่อาจไม่มีออกจาก Method ทั้งสองแนวคิดทำงานต่อกัน แต่ไม่ใช่สิ่งเดียวกัน
 
 ## 8. ทดลองนับด้วย Stream
 
@@ -156,7 +169,7 @@ System.out.println("Warning count: " + warningCount);
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java CollectionDemo.java
-java -Dfile.encoding=UTF-8 CollectionDemo
+java "-Dfile.encoding=UTF-8" CollectionDemo
 ```
 
 ตัวอย่างผลลัพธ์:

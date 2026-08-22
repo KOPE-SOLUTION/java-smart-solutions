@@ -110,7 +110,7 @@ root.add(actions, BorderLayout.SOUTH);
 
 ```powershell
 javac -encoding UTF-8 FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ผลที่ต้องเห็น:

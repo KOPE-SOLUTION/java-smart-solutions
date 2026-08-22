@@ -93,6 +93,18 @@ Service ทำงานตามลำดับ:
 2. สร้าง Value Object `SensorReading`
 3. ส่งข้อมูลให้ Machine เป็นผู้เปลี่ยน State ของตัวเอง
 
+## ส่วนไหนคือ Service Layer
+
+| ส่วนของโค้ด | ความรับผิดชอบ |
+|---|---|
+| `SmartFactoryService` | เป็น Service Layer และรวม Use Case ของระบบ |
+| `findById(...)` | ค้นหาแบบยอมรับกรณีไม่พบ จึงคืน Optional |
+| `findRequired(...)` | เปลี่ยนกรณีไม่พบให้เป็น Exception สำหรับ Use Case ที่ต้องมีข้อมูล |
+| `updateSensor(...)` | ประสานการค้นหา สร้าง SensorReading และสั่ง Machine |
+| `Machine.updateReading(...)` | ดูแลกฎและเปลี่ยน State ภายใน Machine |
+
+Service Layer ไม่ได้หมายถึงทุก Method ที่ลงท้ายด้วย `Service` แต่หมายถึงชั้นที่รับ Use Case จาก Demo หรือ UI แล้วประสาน Model หลายส่วน โดยไม่ย้ายกฎภายใน Machine ออกมาไว้ใน UI
+
 ## 5. สร้างไฟล์ SmartFactoryCoreTest.java
 
 สร้างไฟล์ใหม่ชื่อ `SmartFactoryCoreTest.java` ในโฟลเดอร์เดียวกับไฟล์ Lab:
@@ -127,6 +139,12 @@ private static void testSafeReadingSetsRunning() {
 
 ถ้ากฎทำงานถูกต้อง Method จะจบโดยไม่มีข้อความ แต่ถ้าสถานะผิดจะโยน `AssertionError` และโปรแกรมหยุด
 
+โครงสร้าง Test นี้แบ่งได้สามช่วง:
+
+1. Arrange — สร้าง Machine และข้อมูล Sensor
+2. Act — เรียก `machine.updateReading(...)`
+3. Assert — ตรวจ `machine.getStatus()` และโยน `AssertionError` เมื่อผลไม่ตรง
+
 ## 7. เพิ่ม Test รหัสซ้ำ
 
 วาง Method นี้ภายใน `SmartFactoryCoreTest` ต่อจาก Test แรก:
@@ -149,13 +167,15 @@ private static void testDuplicateIdIsRejected() {
 
 ถ้า Service ไม่ปฏิเสธรหัสซ้ำ บรรทัด `throw new AssertionError(...)` จะทำให้ Test ล้มเหลว
 
+ใน Test นี้ `try` คือการลงมือเพิ่มรหัสซ้ำ ส่วน `catch (IllegalArgumentException expected)` คือการยืนยันว่า Service ปฏิเสธข้อมูลตามที่ออกแบบไว้ หากไม่มี Exception จะไปถึง `AssertionError` และถือว่า Test ไม่ผ่าน
+
 ## 8. Compile และ Run Test ของ Lab
 
 เปิด Terminal ในโฟลเดอร์เดียวกับไฟล์ Java แล้วรัน:
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java SmartFactoryCoreTest.java
-java -Dfile.encoding=UTF-8 SmartFactoryCoreTest
+java "-Dfile.encoding=UTF-8" SmartFactoryCoreTest
 ```
 
 ผลลัพธ์ที่ถูกต้อง:

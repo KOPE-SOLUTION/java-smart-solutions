@@ -82,7 +82,7 @@ private static void createWindow() {
 
 ```powershell
 javac -encoding UTF-8 FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ผลที่ต้องเห็นคือหน้าต่างว่างชื่อ `Smart Factory` ขนาด 600×400 เมื่อปิดหน้าต่างแล้ว Terminal จึงกลับมารับคำสั่งต่อ

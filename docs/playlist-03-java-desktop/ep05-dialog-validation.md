@@ -117,7 +117,7 @@ UI Validation ช่วยให้ผู้ใช้แก้ข้อมูล
 
 ```powershell
 javac -encoding UTF-8 FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ทดลองสามกรณี:

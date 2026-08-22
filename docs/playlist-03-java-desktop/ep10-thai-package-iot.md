@@ -87,7 +87,7 @@ public static void main(String[] args) {
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java ThaiUiSupport.java FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ตรวจอย่างน้อยห้าจุด:
@@ -98,7 +98,7 @@ java -Dfile.encoding=UTF-8 FirstWindow
 4. ปุ่ม `ตกลง` และ `ยกเลิก`
 5. Console ไม่มีเครื่องหมาย `????`
 
-ถ้า Source แสดงถูกแต่ Popup เพี้ยน ปัญหามักอยู่ที่ Font หรือเรียก `configure()` หลังสร้าง Component หาก Console เพี้ยนให้ตรวจทั้ง `javac -encoding UTF-8` และ `java -Dfile.encoding=UTF-8`
+ถ้า Source แสดงถูกแต่ Popup เพี้ยน ปัญหามักอยู่ที่ Font หรือเรียก `configure()` หลังสร้าง Component หาก Console เพี้ยนให้ตรวจทั้ง `javac -encoding UTF-8` และ `java "-Dfile.encoding=UTF-8"`
 
 ## 4. ตรวจโปรเจกต์ฉบับเต็ม
 

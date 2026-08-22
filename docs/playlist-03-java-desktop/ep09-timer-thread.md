@@ -114,7 +114,7 @@ autoButton.addActionListener(event -> {
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ทดลองตามลำดับ:

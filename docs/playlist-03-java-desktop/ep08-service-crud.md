@@ -29,6 +29,17 @@ flowchart LR
 
 ทุก Event เปลี่ยนข้อมูลผ่าน Service แล้ว Refresh UI จาก State ล่าสุด
 
+CRUD ใน EP นี้ไม่ได้อยู่ใน Method เดียว แต่กระจายตาม Use Case:
+
+| CRUD | Method หลัก | จุดที่เรียกจาก UI |
+|---|---|---|
+| Create | `service.addMachine(...)` | Inline Form และ Add Dialog |
+| Read | `service.getMachines()` และ `countByStatus(...)` | `refreshDashboard(...)` |
+| Update | `service.updateSensor(...)` | Listener ของปุ่ม Update Sensor |
+| Delete | `service.removeMachine(...)` | Listener ของปุ่ม Delete |
+
+หลัง Create, Update หรือ Delete ต้องเรียก `refreshAction.run()` เพื่อ Read State ล่าสุดกลับมาแสดงใหม่
+
 ## 1. เพิ่ม Method ที่ UI ต้องใช้ใน Service
 
 เปิด `SmartFactoryService.java` จาก Playlist 2 แล้ววางสอง Method นี้ภายใน Class
@@ -132,6 +143,8 @@ Runnable refreshAction = () -> refreshDashboard(
 ```
 
 Listener ทุกตัวสามารถเรียก `refreshAction.run()` หลังข้อมูลเปลี่ยน โดยไม่ต้องส่ง Parameter ซ้ำหลายครั้ง
+
+`Runnable` ในส่วนนี้หมายถึงคำสั่งที่ไม่มี Parameter และไม่มีค่าคืน Lambda ด้านขวาเก็บขั้นตอน Refresh ไว้ ส่วน `refreshAction.run()` คือการเรียกขั้นตอนนั้นให้ทำงานทันที ไม่ได้สร้าง Thread ใหม่และไม่ได้ทำงานเบื้องหลัง
 
 ## 5. เชื่อม Inline Form กับ Service
 
@@ -268,7 +281,7 @@ deleteButton.addActionListener(event -> {
 
 ```powershell
 javac -encoding UTF-8 MachineStatus.java SensorReading.java FactoryDevice.java Maintainable.java Machine.java SmartFactoryService.java FirstWindow.java
-java -Dfile.encoding=UTF-8 FirstWindow
+java "-Dfile.encoding=UTF-8" FirstWindow
 ```
 
 ทดสอบตามลำดับ:
