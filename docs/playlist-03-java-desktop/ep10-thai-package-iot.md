@@ -10,7 +10,7 @@
 
 ทำตามลำดับ: ภาษาไทย → Test → App Image → IoT Roadmap อย่าเริ่ม Packaging ก่อนโปรแกรมและ Test ทำงานครบ
 
-## 1. สร้างไฟล์ ThaiUiSupport.java สำหรับ Lab
+## 1. สร้างไฟล์ ThaiUiSupport.java
 
 สร้างไฟล์ใหม่ชื่อ `ThaiUiSupport.java` ในโฟลเดอร์เดียวกับ `FirstWindow.java` แล้วเพิ่ม Import:
 
@@ -62,7 +62,7 @@ public final class ThaiUiSupport {
 }
 ```
 
-บน Windows ใช้ `Leelawadee UI` เป็นตัวเลือกแรก หากเครื่องอื่นไม่มีฟอนต์นี้ให้ใช้ซอร์สฉบับเต็มซึ่งตรวจฟอนต์สำรองหลายตัว:
+บน Windows ใช้ `Leelawadee UI` เป็นตัวเลือกแรก หากเครื่องอื่นไม่มีฟอนต์นี้ให้ดูซอร์สตัวอย่างใน Repository ซึ่งตรวจฟอนต์สำรองหลายตัว:
 
 [`ThaiUiSupport.java`](../../src/main/java/smartfactory/ui/ThaiUiSupport.java)
 
@@ -81,7 +81,7 @@ public static void main(String[] args) {
 
 ต้องเรียก `configure()` ก่อน `createWindow()` เพราะ Component ที่สร้างไปแล้วอาจเก็บ Font และข้อความเดิมจาก `UIManager`
 
-## 3. Compile และตรวจภาษาไทยใน Lab
+## 3. Compile และตรวจภาษาไทย
 
 เปิด Terminal ในโฟลเดอร์เดียวกับไฟล์ Java:
 
@@ -100,9 +100,9 @@ java "-Dfile.encoding=UTF-8" FirstWindow
 
 ถ้า Source แสดงถูกแต่ Popup เพี้ยน ปัญหามักอยู่ที่ Font หรือเรียก `configure()` หลังสร้าง Component หาก Console เพี้ยนให้ตรวจทั้ง `javac -encoding UTF-8` และ `java "-Dfile.encoding=UTF-8"`
 
-## 4. ตรวจโปรเจกต์ฉบับเต็ม
+## 4. ตรวจโปรเจกต์ใน Repository
 
-คำสั่งส่วนนี้รันจากโฟลเดอร์หลักของ Repository ไม่ใช่จากโฟลเดอร์ `labs`:
+เปิด Terminal ที่โฟลเดอร์หลักของ Repository แล้วรันคำสั่งสำหรับซอร์สใน `src/main/java` และ `src/test/java`:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\check-encoding.ps1
@@ -130,7 +130,7 @@ jpackage --version
 
 ถ้าระบบหาไม่พบ ให้ตรวจว่าโฟลเดอร์ `bin` ของ JDK อยู่ใน `PATH` เช่นเดียวกับ `java` และ `javac`
 
-## 6. สร้าง App Image ของโปรเจกต์ฉบับเต็ม
+## 6. สร้าง App Image ของโปรเจกต์ใน Repository
 
 รันจากโฟลเดอร์หลักของ Repository หลัง `test.ps1` ผ่านแล้ว
 
