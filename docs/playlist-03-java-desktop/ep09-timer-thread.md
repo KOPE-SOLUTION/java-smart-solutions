@@ -12,6 +12,24 @@ EP นี้แก้สองไฟล์:
 1. `SmartFactoryService.java` — เพิ่มการจำลองค่า Sensor
 2. `FirstWindow.java` — เพิ่ม Swing Timer และปุ่มควบคุม
 
+## ภาพรวม Timer และ EDT
+
+```mermaid
+sequenceDiagram
+    participant Timer as Swing Timer
+    participant EDT as Event Dispatch Thread
+    participant Service as SmartFactoryService
+    participant Machine
+    participant UI as Dashboard
+
+    Timer->>EDT: ActionEvent ทุก 2 วินาที
+    EDT->>Service: simulateSensorReadings(...)
+    Service->>Machine: updateReading(...)
+    EDT->>UI: refreshDashboard()
+```
+
+งานสั้นอัปเดต UI ทำบน EDT แต่งาน HTTP, Database หรือ MQTT ต้องแยกออก
+
 ## 1. เพิ่ม Random ใน SmartFactoryService.java
 
 เปิด `SmartFactoryService.java` แล้วเพิ่ม Import บนสุดของไฟล์:

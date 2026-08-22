@@ -14,6 +14,20 @@ EP นี้จะสร้างสองไฟล์ใหม่:
 
 ทำตามทีละส่วน โดย Compile หลังจบแต่ละหัวข้อได้ ไม่ต้องเขียนทุกอย่างพร้อมกัน
 
+## ภาพรวมการไหลของข้อมูล
+
+```mermaid
+flowchart LR
+    D[CollectionDemo] --> S[SmartFactoryService]
+    S --> L["List ของ Machine"]
+    L --> ST[stream]
+    ST --> F[filter]
+    F --> O["findFirst → Optional"]
+    F --> C[count]
+```
+
+Service เก็บรายการ ส่วน Stream อ่านและประมวลผลรายการเดิม
+
 ## 1. สร้างไฟล์ SmartFactoryService.java
 
 สร้างไฟล์ใหม่ชื่อ `SmartFactoryService.java` แล้ววาง Import ไว้บนสุดของไฟล์:

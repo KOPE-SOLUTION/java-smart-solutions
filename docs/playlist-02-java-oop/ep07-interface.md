@@ -9,6 +9,33 @@
 
 EP นี้จะสร้างไฟล์ใหม่หนึ่งไฟล์และแก้ `Machine.java` ตามลำดับ
 
+## ภาพรวมความสัมพันธ์
+
+```mermaid
+classDiagram
+    direction LR
+    class FactoryDevice {
+        <<abstract>>
+    }
+    class Maintainable {
+        <<interface>>
+        requiresMaintenance()
+        performMaintenance()
+    }
+    class Machine
+    class SensorReading
+    class MachineStatus {
+        <<enumeration>>
+    }
+
+    FactoryDevice <|-- Machine : extends
+    Maintainable <|.. Machine : implements
+    Machine --> SensorReading : latestReading
+    Machine --> MachineStatus : status
+```
+
+`extends` คือการสืบทอด ส่วน `implements` คือการทำตามสัญญา
+
 ## 1. สร้างไฟล์ Maintainable.java
 
 สร้างไฟล์ใหม่ชื่อ `Maintainable.java` ในโฟลเดอร์เดียวกับ `Machine.java`:

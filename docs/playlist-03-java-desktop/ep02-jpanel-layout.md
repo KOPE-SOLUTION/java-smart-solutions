@@ -9,6 +9,20 @@
 
 ทำงานต่อใน `FirstWindow.java` จาก EP3.1 โดยยังไม่สร้างไฟล์ใหม่
 
+## ภาพรวม Layout
+
+```mermaid
+flowchart TB
+    F[JFrame] --> R["root: BorderLayout"]
+    R --> H["NORTH: header"]
+    R --> C["CENTER: content"]
+    R --> A["SOUTH: actions"]
+    C --> S["NORTH: summary GridLayout"]
+    C --> W["CENTER: พื้นที่ทำงาน"]
+```
+
+Panel ใหญ่แบ่งพื้นที่ แล้ว Panel ย่อยจัด Component ภายในอีกชั้น
+
 ## 1. เพิ่ม Import
 
 วาง Import ต่อไปนี้รวมกับ Import เดิมเหนือ Class:

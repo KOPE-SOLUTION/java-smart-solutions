@@ -9,6 +9,21 @@
 
 EP นี้ทำต่อจาก `SmartFactoryService.java` ของ EP 2.9 ไม่ต้องสร้าง Service ซ้ำ ให้แก้ Method เดิมและเพิ่มความสามารถทีละส่วน
 
+## ภาพรวมการแบ่งหน้าที่
+
+```mermaid
+flowchart LR
+    UI["Demo / UI"] --> S[SmartFactoryService]
+    T[Test] --> S
+    S --> L["List ของ Machine"]
+    S --> M[Machine]
+    S --> E["Exception เมื่อผิดกฎ"]
+    M --> R[SensorReading]
+    M --> ST[MachineStatus]
+```
+
+UI เรียก Use Case ผ่าน Service ส่วน Machine ดูแล State และกฎของตัวเอง
+
 ## 1. แบ่งหน้าที่ของ Model และ Service
 
 - `Machine` ดูแลกฎของ Object เช่น ค่า Sensor สถานะ และการบำรุงรักษา

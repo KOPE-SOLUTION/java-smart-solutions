@@ -11,6 +11,23 @@ Playlist 3 จะใช้ไฟล์ Lab แบบไม่ใส่ `package`
 
 EP3.1 สร้างเพียงไฟล์เดียวคือ `FirstWindow.java` และไฟล์นี้จะถูกพัฒนาต่อจนถึง EP3.9
 
+## ภาพรวมการเปิดหน้าต่าง
+
+```mermaid
+sequenceDiagram
+    participant Main as main()
+    participant EDT as Event Dispatch Thread
+    participant Window as createWindow()
+    participant Frame as JFrame
+
+    Main->>EDT: invokeLater(...)
+    EDT->>Window: เรียกสร้าง UI
+    Window->>Frame: สร้าง Component
+    Window->>Frame: setVisible(true)
+```
+
+Swing Component ถูกสร้างและแก้ไขบน EDT
+
 ## 1. สร้างไฟล์ FirstWindow.java
 
 สร้างไฟล์ใหม่ชื่อ `FirstWindow.java` แล้ววาง Import ไว้บนสุด:

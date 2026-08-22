@@ -9,6 +9,17 @@
 
 ทำงานต่อใน Method `createWindow()` ของ `FirstWindow.java` โดยใช้ตัวแปร `content` จาก EP3.2
 
+## ภาพรวม Component ใน Form
+
+```mermaid
+flowchart TB
+    C["content CENTER"] --> F["form: GridLayout 4 x 2"]
+    F --> ID["JLabel รหัส + idField"]
+    F --> N["JLabel ชื่อ + nameField"]
+    F --> L["JLabel ตำแหน่ง + locationField"]
+    F --> B["ช่องว่าง + saveButton"]
+```
+
 ## 1. เพิ่ม Import
 
 วางรวมกับ Import เดิมเหนือ Class:

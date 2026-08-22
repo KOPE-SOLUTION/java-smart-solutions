@@ -9,6 +9,18 @@
 
 ทำงานต่อใน `FirstWindow.java` และใช้ `table`, `tableModel` กับ `summary` จาก EP ก่อนหน้า
 
+## ภาพรวมการแสดงผล
+
+```mermaid
+flowchart LR
+    M[TableModel] -->|ค่าของ Cell| R[Cell Renderer]
+    R -->|สีและตำแหน่ง| T[JTable]
+    M --> S[refreshSummary]
+    S --> L[Summary Labels]
+```
+
+Renderer เปลี่ยนหน้าตา Cell แต่ไม่เปลี่ยนข้อมูลใน TableModel
+
 ## 1. เพิ่ม Import
 
 วางรวมกับ Import เดิมเหนือ Class:

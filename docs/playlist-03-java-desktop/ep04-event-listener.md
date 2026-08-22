@@ -11,6 +11,24 @@
 
 Desktop App จะเปิดหน้าต่างแล้วรอ Event จากผู้ใช้ ต่างจาก Console App ที่ทำงานจากบนลงล่างแล้วจบ
 
+## ภาพรวม Event
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Button as saveButton
+    participant Listener as ActionListener
+    participant Fields as JTextField
+    participant Label as statusLabel
+
+    User->>Button: กดปุ่ม
+    Button->>Listener: ส่ง ActionEvent
+    Listener->>Fields: getText()
+    Listener->>Label: setText(...)
+```
+
+โค้ดใน Listener ทำงานเมื่อ Event เกิด ไม่ได้ทำงานตอนสร้างปุ่ม
+
 ## 1. เพิ่ม Label แสดงผล
 
 วางหลังส่วนที่สร้าง `actions` และปุ่มใน EP3.2:

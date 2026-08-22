@@ -9,6 +9,18 @@
 
 EP นี้ไม่ต้องแก้ `Machine.java` ให้สร้างไฟล์ทดลองใหม่เพื่อแยกจากตัวอย่างเดิม
 
+## ภาพรวม Object เดียว หลาย Type
+
+```mermaid
+flowchart LR
+    M["machine : Machine"] --> O["Machine Object"]
+    D["device : FactoryDevice"] --> O
+    I["maintainable : Maintainable"] --> O
+    O --> R["Runtime เรียก Method ของ Machine"]
+```
+
+ตัวแปรทั้งสามชี้ไปยัง Object เดียวกัน ไม่ได้สร้าง Machine เพิ่ม
+
 ## 1. สร้างไฟล์ PolymorphismDemo.java
 
 สร้างไฟล์ใหม่ชื่อ `PolymorphismDemo.java` ในโฟลเดอร์เดียวกับไฟล์อื่น แล้ววางโครงเริ่มต้น:

@@ -14,6 +14,21 @@ EP นี้แก้สองไฟล์:
 
 ทำทีละ Use Case และ Run ตรวจทุกส่วนก่อนเพิ่มส่วนถัดไป
 
+## ภาพรวม CRUD
+
+```mermaid
+flowchart LR
+    U[ผู้ใช้] --> E[Event ใน FirstWindow]
+    E --> S[SmartFactoryService]
+    S --> M["List ของ Machine"]
+    E --> R[refreshDashboard]
+    R --> T[JTable]
+    R --> C[Summary]
+    S -->|ผิดกฎ| D[JOptionPane]
+```
+
+ทุก Event เปลี่ยนข้อมูลผ่าน Service แล้ว Refresh UI จาก State ล่าสุด
+
 ## 1. เพิ่ม Method ที่ UI ต้องใช้ใน Service
 
 เปิด `SmartFactoryService.java` จาก Playlist 2 แล้ววางสอง Method นี้ภายใน Class

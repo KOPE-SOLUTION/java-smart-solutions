@@ -9,6 +9,18 @@
 
 ทำงานต่อใน `FirstWindow.java` และยังไม่เชื่อม `SmartFactoryService` ใน EP นี้
 
+## ภาพรวม Dialog และ Validation
+
+```mermaid
+flowchart TD
+    A[กด Add] --> D[เปิด Confirm Dialog]
+    D --> Q{ผู้ใช้กดอะไร}
+    Q -->|Cancel / ปิด| R[return]
+    Q -->|OK| V{กรอกครบหรือไม่}
+    V -->|ไม่ครบ| E[แสดง Error Dialog]
+    V -->|ครบ| S[อัปเดต statusLabel]
+```
+
 ## 1. เพิ่ม Import
 
 วางรวมกับ Import เดิมเหนือ Class:

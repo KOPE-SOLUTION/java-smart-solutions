@@ -9,6 +9,19 @@
 
 ทำงานต่อใน `FirstWindow.java` โดยยังใช้ Form จาก EP3.3 และ Dialog จาก EP3.5
 
+## ภาพรวม Table
+
+```mermaid
+flowchart TB
+    W["workspace: BorderLayout"] --> F["NORTH: form"]
+    W --> SP["CENTER: JScrollPane"]
+    SP --> T[JTable]
+    T --> M[DefaultTableModel]
+    M --> C["columns + rows"]
+```
+
+`JTable` แสดงข้อมูล ส่วน `TableModel` เก็บโครงสร้างคอลัมน์และแถว
+
 ## 1. เพิ่ม Import
 
 วางรวมกับ Import เดิมเหนือ Class:
