@@ -72,6 +72,10 @@ public final class DashboardController {
     @FXML private TextField idField;
     @FXML private TextField nameField;
     @FXML private TextField locationField;
+    @FXML private Label formModeLabel;
+    @FXML private Button addMachineButton;
+    @FXML private Button editMachineButton;
+    @FXML private Button cancelEditButton;
     @FXML private TextField temperatureField;
     @FXML private TextField vibrationField;
     @FXML private Button autoButton;
@@ -91,7 +95,7 @@ public final class DashboardController {
         sortedMachines.comparatorProperty().bind(machineTable.comparatorProperty());
         machineTable.setItems(sortedMachines);
         machineTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, previous, selected) -> fillSensorFields(selected)
+                (observable, previous, selected) -> handleMachineSelection(selected)
         );
 
         simulationTimeline = new Timeline(
@@ -204,10 +208,31 @@ public final class DashboardController {
             String name = requireText(nameField, "กรุณากรอกชื่อเครื่องจักร");
             String location = requireText(locationField, "กรุณากรอกตำแหน่ง");
             service.addMachine(new Machine(id, name, location));
-            clearMachineForm();
+            resetMachineForm();
             refreshDashboard();
             showStatus("เพิ่มเครื่องจักร " + id + " แล้ว");
         });
+    }
+
+    @FXML
+    private void handleUpdateMachine() {
+        runUiAction(() -> {
+            Machine selected = requireSelectedMachine();
+            String name = requireText(nameField, "กรุณากรอกชื่อเครื่องจักร");
+            String location = requireText(locationField, "กรุณากรอกตำแหน่ง");
+            service.updateMachineDetails(selected.getId(), name, location);
+            refreshDashboard();
+            machineTable.getSelectionModel().clearSelection();
+            resetMachineForm();
+            showStatus("แก้ไขข้อมูล " + selected.getId() + " แล้ว");
+        });
+    }
+
+    @FXML
+    private void handleCancelEdit() {
+        machineTable.getSelectionModel().clearSelection();
+        resetMachineForm();
+        showStatus("ยกเลิกการแก้ไขแล้ว");
     }
 
     @FXML
@@ -352,10 +377,32 @@ public final class DashboardController {
         vibrationField.setText(format(reading.getVibration()));
     }
 
-    private void clearMachineForm() {
+    private void handleMachineSelection(Machine machine) {
+        fillSensorFields(machine);
+        if (machine == null) {
+            resetMachineForm();
+            return;
+        }
+
+        idField.setText(machine.getId());
+        nameField.setText(machine.getName());
+        locationField.setText(machine.getLocation());
+        idField.setEditable(false);
+        formModeLabel.setText("กำลังแก้ไข " + machine.getId());
+        addMachineButton.setDisable(true);
+        editMachineButton.setDisable(false);
+        cancelEditButton.setDisable(false);
+    }
+
+    private void resetMachineForm() {
         idField.clear();
         nameField.clear();
         locationField.clear();
+        idField.setEditable(true);
+        formModeLabel.setText("จัดการข้อมูล");
+        addMachineButton.setDisable(false);
+        editMachineButton.setDisable(true);
+        cancelEditButton.setDisable(true);
     }
 
     private void runUiAction(Runnable action) {

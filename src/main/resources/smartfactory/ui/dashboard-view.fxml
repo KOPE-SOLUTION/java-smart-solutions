@@ -90,10 +90,10 @@
             </padding>
             <GridPane hgap="10" vgap="8" styleClass="machine-form">
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                    <ColumnConstraints percentWidth="18" hgrow="ALWAYS" fillWidth="true"/>
+                    <ColumnConstraints percentWidth="26" hgrow="ALWAYS" fillWidth="true"/>
+                    <ColumnConstraints percentWidth="26" hgrow="ALWAYS" fillWidth="true"/>
                     <ColumnConstraints percentWidth="30" hgrow="ALWAYS" fillWidth="true"/>
-                    <ColumnConstraints percentWidth="30" hgrow="ALWAYS" fillWidth="true"/>
-                    <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
                 </columnConstraints>
                 <Label text="รหัส" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <TextField fx:id="idField" promptText="M-004" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -101,9 +101,15 @@
                 <TextField fx:id="nameField" promptText="Packaging Robot" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Label text="ตำแหน่ง" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
                 <TextField fx:id="locationField" promptText="Line B" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <Label text="จัดการ" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                <Button text="เพิ่มเครื่องจักร" onAction="#handleAddMachine" styleClass="button-primary" maxWidth="Infinity"
-                        GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                <Label fx:id="formModeLabel" text="จัดการข้อมูล" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                <HBox spacing="6" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <Button fx:id="addMachineButton" text="เพิ่ม" onAction="#handleAddMachine"
+                            styleClass="button-primary" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="editMachineButton" text="บันทึกแก้ไข" onAction="#handleUpdateMachine"
+                            styleClass="button-success" disable="true" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="cancelEditButton" text="ยกเลิก" onAction="#handleCancelEdit"
+                            disable="true" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
             </GridPane>
 
             <HBox alignment="CENTER_LEFT" spacing="8" styleClass="action-row">

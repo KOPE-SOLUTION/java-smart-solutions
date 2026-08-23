@@ -163,6 +163,10 @@
     -fx-background-color: #0f69e8;
 }
 
+.button-success {
+    -fx-background-color: #148a5a;
+}
+
 .button-danger {
     -fx-background-color: #c92d40;
 }

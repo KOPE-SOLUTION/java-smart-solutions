@@ -198,6 +198,6 @@ Summary Card ยังคงนับเครื่องจักรทั้�
 
 เพิ่มตัวเลือก `ชั่วโมงตั้งแต่ 500` โดยตรวจจาก `getOperatingHours()` แยกจากกฎ `requiresMaintenance()` แล้วอธิบายว่าตัวกรองสองแบบให้ผลต่างกันเมื่อ Sensor ผิดปกติแต่ชั่วโมงยังไม่ถึง 500
 
-ย้อนกลับ: [EP 3.13 — ค้นหาแบบทันทีด้วย FilteredList](ep13-search-filter.md)
+ถัดไป: [EP 3.15 — แก้ไขข้อมูลเครื่องจักรและ Complete CRUD](ep15-edit-machine-crud.md)
 
-กลับไป: [README ของ Playlist 3](README.md)
+ย้อนกลับ: [EP 3.13 — ค้นหาแบบทันทีด้วย FilteredList](ep13-search-filter.md)

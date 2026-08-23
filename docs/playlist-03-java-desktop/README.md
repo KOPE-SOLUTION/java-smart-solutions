@@ -14,11 +14,13 @@
 | [3.6](ep06-validation-alert.md) | Validation และ Alert | ป้องกันข้อมูลไม่ครบหรือผิดรูปแบบ |
 | [3.7](ep07-tableview-observablelist.md) | TableView และ ObservableList | แสดงข้อมูลเครื่องจักรในตาราง |
 | [3.8](ep08-cellfactory-summary.md) | CellFactory และ Summary Card | แยกสีสถานะและสรุปจำนวน |
-| [3.9](ep09-service-crud.md) | Service และ CRUD | เชื่อม UI กับ OOP Core |
+| [3.9](ep09-service-crud.md) | Service และ CRUD เบื้องต้น | เพิ่ม อ่าน และลบผ่าน OOP Core |
 | [3.10](ep10-task-timeline.md) | Task, Thread และ Timeline | จำลอง Sensor โดยหน้าต่างไม่ค้าง |
 | [3.11](ep11-fxml-controller.md) | FXML และ Controller | แยก View ออกจาก Logic |
 | [3.12](ep12-thai-package-iot.md) | ภาษาไทย, Runtime Image และ IoT | ตรวจภาษาไทยและเตรียมส่งมอบ |
 | [3.13](ep13-search-filter.md) | Search และ FilteredList | ค้นหาข้อมูลแบบทันที |
 | [3.14](ep14-multi-filter-sort.md) | Multi-filter และ SortedList | กรองหลายเงื่อนไขและเรียงข้อมูล |
+| [3.15](ep15-edit-machine-crud.md) | Edit Machine และ Complete CRUD | แก้ไขชื่อและตำแหน่งเครื่องจักร |
+| [3.16 Optional](ep16-scene-builder-optional.md) | Scene Builder Workflow | จัด Form แบบ Drag & Drop |
 
 เริ่มที่ [EP 3.1](ep01-javafx-maven-stage-scene.md) หรือกลับไป [README หลัก](../../README.md)

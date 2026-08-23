@@ -100,4 +100,4 @@ refreshSummary();
 
 เพิ่มสถานะ `หยุดซ่อมบำรุง` และกำหนดสีฟ้าให้ Cell
 
-ถัดไป: [EP 3.9 — เชื่อม Service และ CRUD](ep09-service-crud.md)
+ถัดไป: [EP 3.9 — เชื่อม Service และ CRUD เบื้องต้น](ep09-service-crud.md)

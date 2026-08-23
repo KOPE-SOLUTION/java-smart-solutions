@@ -88,12 +88,14 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 | 3.6 | Validation และ Alert | [ตรวจข้อมูลก่อนบันทึก](docs/playlist-03-java-desktop/ep06-validation-alert.md) |
 | 3.7 | TableView และ ObservableList | [แสดงรายการเครื่องจักร](docs/playlist-03-java-desktop/ep07-tableview-observablelist.md) |
 | 3.8 | CellFactory และ Summary Card | [แยกสีและสรุปสถานะ](docs/playlist-03-java-desktop/ep08-cellfactory-summary.md) |
-| 3.9 | เชื่อม Service และ CRUD | [ใช้ OOP Core กับ UI](docs/playlist-03-java-desktop/ep09-service-crud.md) |
+| 3.9 | เชื่อม Service และ CRUD เบื้องต้น | [เพิ่ม อ่าน และลบผ่าน OOP Core](docs/playlist-03-java-desktop/ep09-service-crud.md) |
 | 3.10 | Task, Thread และ Timeline | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep10-task-timeline.md) |
 | 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
 | 3.13 | Search และ FilteredList | [ค้นหาข้อมูลแบบทันที](docs/playlist-03-java-desktop/ep13-search-filter.md) |
 | 3.14 | Multi-filter และ SortedList | [กรองหลายเงื่อนไขและเรียงข้อมูล](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) |
+| 3.15 | Edit Machine และ Complete CRUD | [แก้ไขชื่อและตำแหน่งเครื่องจักร](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) |
+| 3.16 Optional | Scene Builder Workflow | [จัด Form แบบ Drag & Drop](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) |
 
 **ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้
 
@@ -111,7 +113,7 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 - เปลี่ยนสถานะเป็น `WARNING` เมื่อค่าผิดปกติ และเป็น `EMERGENCY_STOP` เมื่ออุณหภูมิตั้งแต่ 100 °C
 - แยกจำนวน Sensor ผิดปกติออกจากจำนวนเครื่องที่ต้องบำรุงรักษา
 - แจ้งเตือนบำรุงรักษาเมื่อทำงานครบ 500 ชั่วโมงหรือมีสถานะผิดปกติ
-- เพิ่ม ลบ และบำรุงรักษาเครื่องจักรผ่านหน้าต่าง Desktop
+- เพิ่ม แก้ไข ลบ และบำรุงรักษาเครื่องจักรผ่านหน้าต่าง Desktop
 - ค้นหาจากรหัส ชื่อ หรือตำแหน่ง และกรองตามสถานะหรือการบำรุงรักษา
 - จำลองค่าเซนเซอร์ครั้งเดียวหรืออัปเดตอัตโนมัติทุก 2 วินาที
 - ทดสอบ Business Logic ด้วยสคริปต์เดียว โดย Maven Wrapper จัดการ Dependency ให้
@@ -163,7 +165,7 @@ Java_OOP_DesktopApp/
 │  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 และ Optional Track 4V
 │  ├─ playlist-01-java-basic/       # EP 1.1–1.10
 │  ├─ playlist-02-java-oop/         # EP 2.1–2.10
-│  └─ playlist-03-java-desktop/     # EP 3.1–3.14
+│  └─ playlist-03-java-desktop/     # EP 3.1–3.16
 ├─ mvnw.cmd                         # Maven Wrapper สำหรับ Windows
 ├─ pom.xml                          # JavaFX และ Build Configuration
 ├─ scripts/
@@ -229,12 +231,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 หน้าต่าง Dashboard จะเปิดขึ้นมา จากนั้นทดลองตามลำดับนี้:
 
 1. สังเกต Summary **Sensor ผิดปกติ = 1** จาก `M-002` และ **ต้องบำรุงทั้งหมด = 2** จาก `M-002` กับ `M-003`
-2. เลือก `M-002` แล้วกด **บำรุงเสร็จแล้ว** ตัวเลขต้องลดเหลือ `1`
-3. ใส่อุณหภูมิ `65` และแรงสั่น `3` แล้วกด **อัปเดต Sensor** ตัวเลขยังเป็น `1` เพราะ `M-003` ยังเกิน 500 ชั่วโมง
-4. เลือก `M-003` แล้วกด **บำรุงเสร็จแล้ว** ตัวเลขต้องลดเป็น `0`
-5. อัปเดต Sensor ของ `M-003` ด้วยค่าปกติ ตัวเลขต้องคงเป็น `0`
-6. กด **เริ่ม Auto Sensor** เพื่อดูข้อมูลเปลี่ยนทุก 2 วินาที
-7. ค้นหา `line a` และทดลองกรองสถานะหรือกำหนดบำรุงรักษา
+2. เลือก `M-002` เปลี่ยนชื่อจาก `สายพาน` เป็น `สายพานลำเลียง` แล้วกด **บันทึกแก้ไข**
+3. ค้นหา `ลำเลียง` ต้องพบ `M-002` จากนั้นล้างตัวกรอง
+4. เลือก `M-002` แล้วกด **บำรุงเสร็จแล้ว** ตัวเลขต้องลดเหลือ `1`
+5. ใส่อุณหภูมิ `65` และแรงสั่น `3` แล้วกด **อัปเดต Sensor** ตัวเลขยังเป็น `1` เพราะ `M-003` ยังเกิน 500 ชั่วโมง
+6. เลือก `M-003` แล้วกด **บำรุงเสร็จแล้ว** ตัวเลขต้องลดเป็น `0`
+7. อัปเดต Sensor ของ `M-003` ด้วยค่าปกติ ตัวเลขต้องคงเป็น `0`
+8. ทดลองกรองสถานะหรือกำหนดบำรุงรักษา
+9. กด **เริ่ม Auto Sensor** เพื่อดูข้อมูลเปลี่ยนทุก 2 วินาที
 
 ### 4. Run Test
 
@@ -245,7 +249,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
 ผลลัพธ์ที่ถูกต้อง:
 
 ```text
-PASS: 6 tests
+PASS: 7 tests
 ```
 
 ## รัน Maven โดยตรง
@@ -281,9 +285,9 @@ PASS: 6 tests
 
 ### Playlist 3 — Java Desktop Workshop
 
-ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML, FilteredList, SortedList และ Background Task
+ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML, FilteredList, SortedList และ Background Task พร้อม Optional Lab สำหรับ Scene Builder
 
-- สารบัญ 14 EP: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
+- สารบัญ 15 EP และ 1 Optional Lab: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
 - จุดเริ่มรัน: [DesktopApp.java](src/main/java/smartfactory/ui/DesktopApp.java)
 - View: [dashboard-view.fxml](src/main/resources/smartfactory/ui/dashboard-view.fxml)
 - Theme: [smart-factory.css](src/main/resources/smartfactory/ui/smart-factory.css)
@@ -315,7 +319,7 @@ flowchart LR
     CSS[JavaFX CSS] --> FXML
 ```
 
-แนวคิดสำคัญคือ **หน้าจอไม่ควรเป็นเจ้าของกฎธุรกิจ** กฎว่าอุณหภูมิเท่าไรจึงเตือนอยู่ใน `Machine` ส่วนการค้นหา เพิ่ม ลบ และสรุปผลอยู่ใน `SmartFactoryService` ดังนั้น Console และ Desktop App จึงใช้ logic ชุดเดียวกันได้
+แนวคิดสำคัญคือ **หน้าจอไม่ควรเป็นเจ้าของกฎธุรกิจ** กฎว่าอุณหภูมิเท่าไรจึงเตือนอยู่ใน `Machine` ส่วนการค้นหา เพิ่ม แก้ไข ลบ และสรุปผลอยู่ใน `SmartFactoryService` ดังนั้น Console และ Desktop App จึงใช้ logic ชุดเดียวกันได้
 
 ## กติกาของ Case Study
 
@@ -359,9 +363,9 @@ flowchart LR
 - [ ] อธิบายความต่างระหว่าง Class กับ Object ได้
 - [ ] บอกได้ว่า field ใดถูก Encapsulation และเพราะอะไร
 - [ ] อธิบาย `extends` กับ `implements` ได้
-- [ ] เพิ่มเครื่องจักรจากหน้าจอได้
+- [ ] เพิ่มและแก้ไขข้อมูลเครื่องจักรจากหน้าจอได้
 - [ ] ทำให้เกิดสถานะ WARNING ด้วยตนเองได้
-- [ ] รัน Test ผ่านทั้ง 6 กรณี
+- [ ] รัน Test ผ่านทั้ง 7 กรณี
 - [ ] เพิ่มกฎธุรกิจใหม่พร้อม Test อย่างน้อย 1 ข้อ
 
 </details>

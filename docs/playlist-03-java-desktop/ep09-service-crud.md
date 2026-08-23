@@ -1,8 +1,10 @@
-# EP 3.9 — เชื่อม OOP Core ผ่าน Service และทำ CRUD
+# EP 3.9 — เชื่อม OOP Core ผ่าน Service และ CRUD เบื้องต้น
 
 ## สิ่งที่จะทำ
 
 เลิกเก็บข้อมูลจำลองไว้ใน UI แล้วให้ `SmartFactoryService` เป็นผู้จัดการ `Machine`
+
+EP นี้เริ่มจาก Create, Read และ Delete ก่อน ส่วน Update สำหรับแก้ชื่อกับตำแหน่งจะเติมให้ CRUD ครบใน [EP 3.15](ep15-edit-machine-crud.md)
 
 ```mermaid
 flowchart LR

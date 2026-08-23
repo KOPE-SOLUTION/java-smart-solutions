@@ -36,6 +36,13 @@ public abstract class FactoryDevice {
         this.location = requireText(location, "location");
     }
 
+    public void updateDetails(String name, String location) {
+        String validatedName = requireText(name, "name");
+        String validatedLocation = requireText(location, "location");
+        this.name = validatedName;
+        this.location = validatedLocation;
+    }
+
     protected static String requireText(String value, String fieldName) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " must not be blank");
@@ -43,4 +50,3 @@ public abstract class FactoryDevice {
         return value.trim();
     }
 }
-

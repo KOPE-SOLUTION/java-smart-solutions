@@ -13,8 +13,9 @@ public class SmartFactoryTest {
         testEmergencyTemperatureStopsMachine();
         testMaintenanceResetsMachine();
         testStatusAndMaintenanceAreCountedSeparately();
+        testMachineDetailsCanBeUpdated();
         testDuplicateIdIsRejected();
-        System.out.println("PASS: 6 tests");
+        System.out.println("PASS: 7 tests");
     }
 
     private static void testSafeReadingSetsRunning() {
@@ -72,6 +73,27 @@ public class SmartFactoryTest {
             throw new AssertionError("duplicate id should fail");
         } catch (IllegalArgumentException expected) {
             assertTrue(expected.getMessage().contains("ซ้ำ"), "duplicate error message");
+        }
+    }
+
+    private static void testMachineDetailsCanBeUpdated() {
+        SmartFactoryService service = SmartFactoryService.createWithSampleData();
+        Machine conveyor = service.findRequired("M-002");
+        SensorReading readingBeforeEdit = conveyor.getLatestReading();
+
+        service.updateMachineDetails("M-002", " สายพานลำเลียง ", " Packing Line ");
+
+        assertEquals("M-002", conveyor.getId(), "machine id remains unchanged");
+        assertEquals("สายพานลำเลียง", conveyor.getName(), "updated machine name");
+        assertEquals("Packing Line", conveyor.getLocation(), "updated machine location");
+        assertEquals(readingBeforeEdit, conveyor.getLatestReading(), "sensor reading remains unchanged");
+
+        try {
+            service.updateMachineDetails("M-002", "", "Line A");
+            throw new AssertionError("blank machine name should fail");
+        } catch (IllegalArgumentException expected) {
+            assertEquals("สายพานลำเลียง", conveyor.getName(), "invalid edit keeps previous name");
+            assertEquals("Packing Line", conveyor.getLocation(), "invalid edit keeps previous location");
         }
     }
 

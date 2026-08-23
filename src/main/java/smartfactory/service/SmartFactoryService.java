@@ -43,6 +43,10 @@ public class SmartFactoryService {
                 .orElseThrow(() -> new IllegalArgumentException("ไม่พบเครื่องจักร: " + id));
     }
 
+    public void updateMachineDetails(String id, String name, String location) {
+        findRequired(id).updateDetails(name, location);
+    }
+
     public void updateSensor(String id, double temperature, double vibration) {
         findRequired(id).updateReading(new SensorReading(temperature, vibration));
     }

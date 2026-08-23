@@ -86,7 +86,7 @@ Runtime Image รวม Java Runtime และ Module ที่แอปใช�
 - ข้อมูลเริ่มต้นแสดง `Sensor ผิดปกติ = 1` และ `ต้องบำรุงทั้งหมด = 2`
 - Summary ลดจาก `2 -> 1 -> 0` เมื่อบำรุง `M-002` และ `M-003` ตามลำดับ
 - Auto Sensor ทำงานโดยหน้าต่างไม่ค้าง
-- `powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1` แสดง `PASS: 6 tests`
+- `powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1` แสดง `PASS: 7 tests`
 - Runtime Image เปิดได้บน Windows
 
 ซอร์สฉบับเต็ม: [`src/main/java/smartfactory/ui`](../../src/main/java/smartfactory/ui)
