@@ -51,6 +51,30 @@
 11. FXML และ Controller
 12. ภาษาไทย, Runtime Image และ IoT Roadmap
 
+## Future Playlist และ Optional Track
+
+เส้นทางหลักหลัง Playlist 3:
+
+1. Playlist 4 — Spring Boot REST API
+2. Playlist 5 — Angular และ TypeScript
+3. Playlist 6 — Smart Factory Web Dashboard
+4. Playlist 7 — MQTT, Database และ IoT Device
+
+### Optional Track 4V — Java Web UI with Vaadin Flow: Smart Factory Dashboard
+
+แทรกหลัง Playlist 4 โดยไม่ใช้แทน Angular เหมาะสำหรับผู้ชมที่ต้องการสร้าง Web UI ด้วย Java และ OOP ต่อเนื่องจาก JavaFX
+
+1. Vaadin Flow และ Spring Boot
+2. Component, Layout และ Theme
+3. Route และ Navigation
+4. Grid และ DataProvider
+5. Form, Binder และ Validation
+6. เชื่อม Application Service และ CRUD
+7. Server Push และข้อมูล Sensor แบบ Real-time
+8. Security, Test และ Production Build
+
+ชื่อสั้นบน Thumbnail: **JAVA + VAADIN**
+
 ## เหตุผลที่ใช้ Repository เดียว
 
 - Case Study และ Domain Model ชุดเดียวกันพัฒนาต่อเนื่องทั้งสาม Playlist

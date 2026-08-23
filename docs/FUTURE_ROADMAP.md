@@ -1,6 +1,6 @@
 # Future Roadmap — Java Smart Solutions
 
-> สถานะ: เอกสารนี้เป็นแผนสำหรับรองรับการพัฒนาในอนาคต ยังไม่มี Playlist, EP, Source Code หรือคำสั่งติดตั้งสำหรับระยะที่ 4–7
+> สถานะ: เอกสารนี้เป็นแผนสำหรับรองรับการพัฒนาในอนาคต ยังไม่มี Playlist, บทเรียน, Source Code หรือคำสั่งติดตั้งสำหรับระยะที่ 4–7 และ Optional Track 4V
 
 Roadmap นี้ต่อยอด Case Study เดิมจาก Java Console, OOP Core และ Desktop Dashboard ไปสู่ระบบ Smart Factory แบบ Full Stack และ IoT โดยยังใช้ Business Rule ชุดเดิมเป็นศูนย์กลาง
 
@@ -12,6 +12,7 @@ Roadmap นี้ต่อยอด Case Study เดิมจาก Java Consol
 | 2 | Java OOP | มีบทเรียนแล้ว |
 | 3 | Java Desktop Application | มีบทเรียนแล้ว |
 | 4 | Spring Boot REST API | วางแผนไว้ |
+| 4V | Vaadin Flow Web UI | Optional Track — วางแผนไว้ |
 | 5 | Angular และ TypeScript | วางแผนไว้ |
 | 6 | Smart Factory Web Dashboard | วางแผนไว้ |
 | 7 | MQTT, Database และ IoT Device | วางแผนไว้ |
@@ -33,6 +34,27 @@ Roadmap นี้ต่อยอด Case Study เดิมจาก Java Consol
 - เตรียม API สำหรับ Angular และช่องทางรับข้อมูล IoT
 
 ผลลัพธ์ที่คาดหวัง: Java Backend ที่เก็บกฎของ Smart Factory ไว้ใน Domain และให้บริการผ่าน REST API
+
+## Optional Track 4V — Vaadin Flow: Smart Factory Web UI
+
+Track นี้อยู่หลัง Spring Boot REST API สำหรับผู้เรียนที่ต้องการสร้าง Web UI ด้วย Java และแนวคิด OOP ต่อเนื่องจาก JavaFX โดยไม่ใช้แทน Angular ซึ่งยังเป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend และ Backend
+
+ในระบบที่ Vaadin และ Spring Boot ทำงานอยู่ใน Application เดียวกัน Vaadin View จะเรียก Application Service ผ่าน Dependency Injection โดยตรง ไม่เรียก REST API ของระบบตัวเองซ้ำ ส่วน REST API ยังคงมีไว้สำหรับ Angular, Mobile App, IoT และระบบภายนอก
+
+ลำดับหัวข้อที่วางแผนไว้:
+
+1. รู้จัก Vaadin Flow และเริ่มโครงการร่วมกับ Spring Boot
+2. Component, Layout และ Theme สำหรับ Smart Factory
+3. Route และ Navigation ระหว่างหน้า
+4. Grid และ DataProvider สำหรับรายการเครื่องจักร
+5. Form, Binder และ Validation
+6. เชื่อม Application Service และทำ CRUD
+7. Background Task, Server Push และข้อมูล Sensor แบบ Real-time
+8. Security, Test และ Production Build
+
+ผลลัพธ์ที่คาดหวัง: Smart Factory Web UI แบบ Java-first สำหรับ Dashboard ภายในโรงงาน, Admin Tool และระบบ Enterprise โดยใช้ Domain และ Application Service ชุดเดียวกับ Spring Boot
+
+หลังจบ Track นี้ ผู้เรียนสามารถไปต่อ Angular ตามเส้นทางหลัก หรือไปยัง MQTT, Database และ IoT ได้ โดยไม่บังคับว่าต้องเรียนทั้ง Vaadin และ Angular ก่อนจึงจะต่อยอดได้
 
 ## ระยะที่ 5 — Angular และ TypeScript
 
@@ -105,14 +127,15 @@ flowchart LR
     Device[IoT Device] --> Broker[MQTT Broker]
     Broker --> MqttAdapter[MQTT Adapter]
     MqttAdapter --> AppService[Application Service]
+    Vaadin[Optional: Vaadin Flow UI] --> AppService
+    Angular[Angular Dashboard] --> RestApi[Spring Boot REST API]
+    RestApi --> AppService
     AppService --> Domain[Java Domain Core]
     AppService --> Repository[Repository Interface]
     Repository --> Database[(Database)]
-    Domain --> RestApi[Spring Boot REST API]
-    RestApi --> Angular[Angular Dashboard]
 ```
 
-จุดสำคัญคือ Angular, REST, MQTT และ Database เป็นช่องทางเข้าออกของระบบ ส่วนกฎตรวจ Sensor, สถานะเครื่องจักร และการบำรุงรักษายังคงอยู่ใน Java Domain Core
+จุดสำคัญคือ Angular ติดต่อระบบผ่าน REST API ตามสถาปัตยกรรมแบบแยก Frontend/Backend ส่วน Vaadin เป็น Optional Web UI ที่เรียก Application Service ภายใน Spring Boot โดยตรง ทั้งสองเส้นทางไม่ย้ายกฎตรวจ Sensor, สถานะเครื่องจักร หรือการบำรุงรักษาออกจาก Java Domain Core
 
 ## โครงสร้างโฟลเดอร์ที่สงวนไว้ใน Roadmap
 
@@ -121,6 +144,7 @@ flowchart LR
 ```text
 docs/
 ├─ playlist-04-spring-boot-rest/
+├─ optional-04v-vaadin-flow/
 ├─ playlist-05-angular-typescript/
 ├─ playlist-06-smart-factory-web/
 └─ playlist-07-mqtt-database-iot/

@@ -8,7 +8,7 @@
 
 ## เส้นทางการเรียนรู้
 
-Repo นี้วางเส้นทางจาก Java Console ไปสู่ระบบ Smart Factory แบบ Full Stack และ IoT โดยสามระยะแรกมีบทเรียนแล้ว ส่วนระยะที่ 4–7 เป็น Roadmap สำหรับพัฒนาในอนาคต ยังไม่มี EP หรือ Source Code ให้ทำตาม
+Repo นี้วางเส้นทางจาก Java Console ไปสู่ระบบ Smart Factory แบบ Full Stack และ IoT โดยสามระยะแรกมีบทเรียนแล้ว ส่วนระยะที่ 4–7 และ Optional Track 4V เป็น Roadmap สำหรับพัฒนาในอนาคต ยังไม่มี EP หรือ Source Code ให้ทำตาม
 
 | ระยะ | Track | ผลลัพธ์ปลายทาง | สถานะ |
 |---|---|---|---|
@@ -16,9 +16,12 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 | 2 | Java OOP | Smart Factory Core | มีบทเรียนแล้ว |
 | 3 | Java Desktop Application | JavaFX Dashboard | มีบทเรียนแล้ว |
 | 4 | Spring Boot REST API | นำ OOP Core ให้บริการผ่าน HTTP และ JSON | Roadmap — ยังไม่มีบทเรียน |
+| 4V | Vaadin Flow Web UI | ทางเลือก Java-first หลัง Spring Boot สำหรับ Dashboard ภายใน | Optional Roadmap — ยังไม่มีบทเรียน |
 | 5 | Angular และ TypeScript | สร้าง Frontend ที่มี Component, Service และ DI | Roadmap — ยังไม่มีบทเรียน |
 | 6 | Smart Factory Web Dashboard | เชื่อม Angular กับ Java API เป็นระบบเดียว | Roadmap — ยังไม่มีบทเรียน |
 | 7 | MQTT, Database และ IoT Device | รับข้อมูลจริง บันทึกประวัติ และอัปเดต Dashboard | Roadmap — ยังไม่มีบทเรียน |
+
+Angular ยังคงเป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend/Backend ส่วน Vaadin เป็น Optional Track สำหรับผู้ที่ต้องการพัฒนา Web UI ด้วย Java และ OOP ต่อเนื่องจาก JavaFX
 
 หัวข้อในอนาคตจะสอนด้วยแนวทาง **Modern OOP** โดยใช้ Composition เป็นหลัก ใช้ Inheritance เฉพาะความสัมพันธ์แบบ is-a แยก Business Rule ออกจาก Framework และใช้ Interface, Value Object, Dependency Injection รวมถึง Test เพื่อให้ระบบเปลี่ยน UI, Database หรือช่องทางรับข้อมูลได้โดยไม่ต้องรื้อ Domain Core
 
@@ -153,7 +156,7 @@ javac -version
 Java_OOP_DesktopApp/
 ├─ README.md
 ├─ docs/
-│  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 ยังไม่มีบทเรียน
+│  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 และ Optional Track 4V
 │  ├─ playlist-01-java-basic/       # EP 1.1–1.10
 │  ├─ playlist-02-java-oop/         # EP 2.1–2.10
 │  └─ playlist-03-java-desktop/     # EP 3.1–3.12
