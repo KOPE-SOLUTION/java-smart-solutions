@@ -9,7 +9,7 @@
 flowchart LR
     D[MachineRow.status] --> C[CellFactory]
     C --> R[กำลังทำงาน: เขียว]
-    C --> W[แจ้งเตือน: ส้ม]
+    C --> W[Sensor ผิดปกติ: ส้ม]
     C --> E[หยุดฉุกเฉิน: แดง]
     D --> S[Summary]
 ```
@@ -50,7 +50,7 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 
         setText(status);
         String style = switch (status) {
-            case "แจ้งเตือน" -> "status-warning";
+            case "Sensor ผิดปกติ" -> "status-warning";
             case "หยุดฉุกเฉิน" -> "status-emergency";
             default -> "status-running";
         };
@@ -75,7 +75,7 @@ Summary เป็นยอดรวมของเครื่องจักร
 private void refreshSummary() {
     machineCount.set(machines.size());
     runningLabel.setText("กำลังทำงาน: " + countStatus("กำลังทำงาน"));
-    warningLabel.setText("แจ้งเตือน: " + countStatus("แจ้งเตือน"));
+    warningLabel.setText("Sensor ผิดปกติ: " + countStatus("Sensor ผิดปกติ"));
     emergencyLabel.setText("หยุดฉุกเฉิน: " + countStatus("หยุดฉุกเฉิน"));
 }
 
@@ -94,7 +94,7 @@ refreshSummary();
 
 ## 4. ทดลองสถานะอื่นชั่วคราว
 
-เปลี่ยนสถานะที่สร้างจาก `กำลังทำงาน` เป็น `แจ้งเตือน` แล้วรันใหม่เพื่อดูสีและตัวเลข จากนั้นเปลี่ยนกลับ
+เปลี่ยนสถานะที่สร้างจาก `กำลังทำงาน` เป็น `Sensor ผิดปกติ` แล้วรันใหม่เพื่อดูสีและตัวเลข จากนั้นเปลี่ยนกลับ
 
 ## Challenge
 

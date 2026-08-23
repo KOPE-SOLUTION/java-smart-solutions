@@ -39,7 +39,7 @@
                 </VBox>
                 <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-warning">
                     <Label fx:id="warningValue" text="0" styleClass="summary-value"/>
-                    <Label text="ต้องตรวจสอบ" styleClass="summary-label"/>
+                    <Label text="Sensor ผิดปกติ" styleClass="summary-label"/>
                 </VBox>
                 <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-emergency">
                     <Label fx:id="emergencyValue" text="0" styleClass="summary-value"/>

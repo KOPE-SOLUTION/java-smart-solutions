@@ -100,6 +100,8 @@ public long countByStatus(MachineStatus status) {
 
 Method นี้รับสถานะที่ต้องการ แล้วคืนจำนวน Machine ที่ตรงกับสถานะนั้น โดย `filter(...)` ยังเป็นขั้นกรองเหมือนเดิม แต่ครั้งนี้ `count()` เป็นคำสั่งจบ Stream และคืนจำนวนเป็น `long`
 
+`countByStatus(MachineStatus.WARNING)` นับเฉพาะเครื่องที่ค่า Sensor ทำให้เกิดสถานะ `WARNING` ไม่ได้นับเครื่องที่ Sensor ปกติแต่ครบกำหนดบำรุงรักษา
+
 ## 5. สร้างไฟล์ CollectionDemo.java
 
 สร้างไฟล์ใหม่ชื่อ `CollectionDemo.java`:
@@ -212,6 +214,8 @@ public long countRequiringMaintenance() {
 ```
 
 ค่าที่ได้เป็นยอดรวมของทุก Machine ใน Collection ไม่ใช่ผลของ Machine ตัวล่าสุดหรือ Machine ที่เลือกบนหน้าจอ
+
+ดังนั้น `countByStatus(WARNING)` และ `countRequiringMaintenance()` อาจได้ตัวเลขไม่เท่ากัน เพราะ Method หลังตรวจทั้งสถานะผิดปกติและชั่วโมงทำงาน
 
 จากนั้นเรียกใน `CollectionDemo.java`:
 

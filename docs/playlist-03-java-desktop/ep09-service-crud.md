@@ -77,13 +77,22 @@ private void refreshDashboard() {
     machines.setAll(service.getMachines());
     machineCount.set(machines.size());
     runningLabel.setText("กำลังทำงาน: " + service.countByStatus(MachineStatus.RUNNING));
-    warningLabel.setText("แจ้งเตือน: " + service.countByStatus(MachineStatus.WARNING));
+    warningLabel.setText("Sensor ผิดปกติ: " + service.countByStatus(MachineStatus.WARNING));
     emergencyLabel.setText("หยุดฉุกเฉิน: " + service.countByStatus(MachineStatus.EMERGENCY_STOP));
     maintenanceLabel.setText("ต้องบำรุงทั้งหมด: " + service.countRequiringMaintenance());
 }
 ```
 
 เพิ่ม Field `maintenanceLabel` แบบเดียวกับ Summary Label อื่น แล้วนำไปวางในส่วนบนของหน้าจอ ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
+
+```mermaid
+flowchart LR
+    W[WARNING จาก Sensor] --> WC[Sensor ผิดปกติ]
+    W --> MC[ต้องบำรุงทั้งหมด]
+    H[ชั่วโมงตั้งแต่ 500] --> MC
+```
+
+สองการ์ดนี้จึงอาจมีตัวเลขต่างกัน เช่น `M-003` มี Sensor ปกติจึงยังเป็น `RUNNING` แต่ถูกนับใน `ต้องบำรุงทั้งหมด` เพราะทำงานเกิน 500 ชั่วโมง
 
 ## 4. เพิ่มปุ่มลบ
 

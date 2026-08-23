@@ -3,7 +3,7 @@ package smartfactory.model;
 public enum MachineStatus {
     OFFLINE("ปิดเครื่อง"),
     RUNNING("กำลังทำงาน"),
-    WARNING("ต้องตรวจสอบ"),
+    WARNING("Sensor ผิดปกติ"),
     EMERGENCY_STOP("หยุดฉุกเฉิน"),
     MAINTENANCE("กำลังบำรุงรักษา");
 

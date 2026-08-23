@@ -43,9 +43,11 @@ Java จะไม่ยอม Compile ถ้าเลือกชื่อสถ
 ```java
 OFFLINE("ปิดเครื่อง"),
 RUNNING("กำลังทำงาน"),
-WARNING("ต้องตรวจสอบ"),
+WARNING("Sensor ผิดปกติ"),
 MAINTENANCE("กำลังบำรุงรักษา");
 ```
+
+`WARNING` ใช้บอกผลจากค่า Sensor เท่านั้น ส่วนการครบกำหนดบำรุงรักษาจะตรวจแยกด้วย `requiresMaintenance()` ใน EP 2.7
 
 จากนั้นเพิ่ม Field, Constructor และ Getter ภายใน Enum:
 

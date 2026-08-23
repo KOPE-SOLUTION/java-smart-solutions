@@ -53,7 +53,7 @@ title.getStyleClass().add("header-title");
 ```java
 Label total = new Label("ทั้งหมด: 0");
 Label running = new Label("กำลังทำงาน: 0");
-Label warning = new Label("แจ้งเตือน: 0");
+Label warning = new Label("Sensor ผิดปกติ: 0");
 Label emergency = new Label("หยุดฉุกเฉิน: 0");
 
 total.getStyleClass().add("summary-card");
@@ -92,6 +92,6 @@ scene.getStylesheets().add(
 
 ## Challenge
 
-สร้าง Class `.summary-warning` ให้ Card แจ้งเตือนใช้สีส้ม แล้วเพิ่ม Class นี้ให้ `warning`
+สร้าง Class `.summary-warning` ให้ Card Sensor ผิดปกติใช้สีส้ม แล้วเพิ่ม Class นี้ให้ `warning`
 
 ถัดไป: [EP 3.4 — Controls และ Form](ep04-controls-form.md)

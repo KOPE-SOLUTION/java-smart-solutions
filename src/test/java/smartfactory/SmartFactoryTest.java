@@ -12,7 +12,7 @@ public class SmartFactoryTest {
         testHighTemperatureSetsWarning();
         testEmergencyTemperatureStopsMachine();
         testMaintenanceResetsMachine();
-        testMaintenanceSummaryAfterNormalReading();
+        testStatusAndMaintenanceAreCountedSeparately();
         testDuplicateIdIsRejected();
         System.out.println("PASS: 6 tests");
     }
@@ -44,9 +44,14 @@ public class SmartFactoryTest {
         assertEquals(MachineStatus.OFFLINE, machine.getStatus(), "maintenance status");
     }
 
-    private static void testMaintenanceSummaryAfterNormalReading() {
+    private static void testStatusAndMaintenanceAreCountedSeparately() {
         SmartFactoryService service = SmartFactoryService.createWithSampleData();
+        Machine pump = service.findRequired("M-003");
+
+        assertEquals(1L, service.countByStatus(MachineStatus.WARNING), "abnormal sensor count");
         assertEquals(2L, service.countRequiringMaintenance(), "initial maintenance count");
+        assertEquals(MachineStatus.RUNNING, pump.getStatus(), "overdue machine can still be running");
+        assertTrue(pump.requiresMaintenance(), "operating hours require maintenance");
 
         service.performMaintenance("M-002");
         assertEquals(1L, service.countRequiringMaintenance(), "one machine still requires maintenance");

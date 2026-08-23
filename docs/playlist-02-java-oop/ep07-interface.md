@@ -123,6 +123,17 @@ public boolean requiresMaintenance() {
 }
 ```
 
+สถานะการทำงานกับกำหนดบำรุงรักษาเป็นคนละข้อมูลกัน:
+
+```mermaid
+flowchart LR
+    S[ค่า Sensor] --> ST[MachineStatus]
+    S --> R[requiresMaintenance]
+    H[ชั่วโมงทำงาน] --> R
+```
+
+Machine จึงสามารถมีสถานะ `RUNNING` พร้อมกับ `requiresMaintenance() == true` ได้ เช่น ค่า Sensor ปกติแต่ทำงานครบ 500 ชั่วโมงแล้ว
+
 ```java
 @Override
 public void performMaintenance() {

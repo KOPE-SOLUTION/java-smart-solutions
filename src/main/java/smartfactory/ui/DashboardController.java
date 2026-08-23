@@ -100,7 +100,7 @@ public final class DashboardController {
         ));
         hoursColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getOperatingHours()));
         maintenanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(
-                data.getValue().requiresMaintenance() ? "ควรบำรุง" : "ปกติ"
+                data.getValue().requiresMaintenance() ? "ต้องบำรุง" : "ปกติ"
         ));
 
         statusColumn.setCellFactory(column -> new TableCell<>() {
