@@ -2,9 +2,9 @@
 
 ## จาก Java Basic สู่ OOP และ Desktop App ผ่านโปรเจกต์จริง
 
-เรียน Java ผ่าน Case Study **Smart Factory Machine Monitor** โดยพัฒนาโค้ดชุดเดียวอย่างต่อเนื่องจากโปรแกรม Console ไปสู่ Business Logic แบบ OOP และ Dashboard ด้วย Java Swing
+เรียน Java ผ่าน Case Study **Smart Factory Machine Monitor** โดยพัฒนาโค้ดชุดเดียวอย่างต่อเนื่องจากโปรแกรม Console ไปสู่ Business Logic แบบ OOP และ Dashboard ด้วย JavaFX
 
-ทุกบทใช้รูปแบบ **สร้างโครงไฟล์ → เพิ่มโค้ดทีละช่วง → รันดูผล → ทำ Challenge** จึงไม่ต้องคัดลอกโค้ดก้อนใหญ่ในครั้งเดียว ส่วนโค้ดฉบับเต็มเก็บไว้ในโฟลเดอร์ `src` สำหรับใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ได้ตั้งแต่ JDK 17 ขึ้นไปโดยไม่ต้องติดตั้ง Library ภายนอก
+ทุกบทใช้รูปแบบ **สร้างโครงไฟล์ → เพิ่มโค้ดทีละช่วง → รันดูผล → ทำ Challenge** จึงไม่ต้องคัดลอกโค้ดก้อนใหญ่ในครั้งเดียว ส่วนโค้ดฉบับเต็มเก็บไว้ในโฟลเดอร์ `src` สำหรับใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ JDK 21, Maven Wrapper และ JavaFX 21
 
 ## เส้นทางการเรียนรู้
 
@@ -14,7 +14,7 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 |---|---|---|---|
 | 1 | Java Basic | Smart Factory Console | มีบทเรียนแล้ว |
 | 2 | Java OOP | Smart Factory Core | มีบทเรียนแล้ว |
-| 3 | Java Desktop Application | Swing Dashboard | มีบทเรียนแล้ว |
+| 3 | Java Desktop Application | JavaFX Dashboard | มีบทเรียนแล้ว |
 | 4 | Spring Boot REST API | นำ OOP Core ให้บริการผ่าน HTTP และ JSON | Roadmap — ยังไม่มีบทเรียน |
 | 5 | Angular และ TypeScript | สร้าง Frontend ที่มี Component, Service และ DI | Roadmap — ยังไม่มีบทเรียน |
 | 6 | Smart Factory Web Dashboard | เชื่อม Angular กับ Java API เป็นระบบเดียว | Roadmap — ยังไม่มีบทเรียน |
@@ -77,16 +77,18 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 
 | EP | เนื้อหา | เปิดบทเรียน |
 |---|---|---|
-| 3.1 | Swing, JFrame และ EDT | [เปิดหน้าต่างแรก](docs/playlist-03-java-desktop/ep01-swing-jframe-edt.md) |
-| 3.2 | JPanel และ Layout Manager | [แบ่งพื้นที่หน้าจอ](docs/playlist-03-java-desktop/ep02-jpanel-layout.md) |
-| 3.3 | Label, TextField และ Button | [สร้าง Form](docs/playlist-03-java-desktop/ep03-form-components.md) |
-| 3.4 | Event และ Listener | [ตอบสนองต่อผู้ใช้](docs/playlist-03-java-desktop/ep04-event-listener.md) |
-| 3.5 | JOptionPane และ Validation | [รับข้อมูลผ่าน Popup](docs/playlist-03-java-desktop/ep05-dialog-validation.md) |
-| 3.6 | JTable และ TableModel | [แสดงรายการเครื่องจักร](docs/playlist-03-java-desktop/ep06-jtable.md) |
-| 3.7 | Renderer และ Summary Card | [สร้าง Dashboard](docs/playlist-03-java-desktop/ep07-renderer-summary.md) |
-| 3.8 | เชื่อม Service และ CRUD | [เพิ่ม ลบ และอัปเดต](docs/playlist-03-java-desktop/ep08-service-crud.md) |
-| 3.9 | Timer และ UI Thread | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep09-timer-thread.md) |
-| 3.10 | ภาษาไทย Packaging และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep10-thai-package-iot.md) |
+| 3.1 | JavaFX, Maven, Stage และ Scene | [เปิดหน้าต่าง JavaFX แรก](docs/playlist-03-java-desktop/ep01-javafx-maven-stage-scene.md) |
+| 3.2 | Layout Pane | [แบ่งพื้นที่หน้าจอ](docs/playlist-03-java-desktop/ep02-layout-pane.md) |
+| 3.3 | JavaFX CSS | [สร้าง Theme](docs/playlist-03-java-desktop/ep03-css-theme.md) |
+| 3.4 | Controls และ Form | [รับข้อมูลเครื่องจักร](docs/playlist-03-java-desktop/ep04-controls-form.md) |
+| 3.5 | Event, Property และ Binding | [อัปเดต UI อัตโนมัติ](docs/playlist-03-java-desktop/ep05-event-binding.md) |
+| 3.6 | Validation และ Alert | [ตรวจข้อมูลก่อนบันทึก](docs/playlist-03-java-desktop/ep06-validation-alert.md) |
+| 3.7 | TableView และ ObservableList | [แสดงรายการเครื่องจักร](docs/playlist-03-java-desktop/ep07-tableview-observablelist.md) |
+| 3.8 | CellFactory และ Summary Card | [แยกสีและสรุปสถานะ](docs/playlist-03-java-desktop/ep08-cellfactory-summary.md) |
+| 3.9 | เชื่อม Service และ CRUD | [ใช้ OOP Core กับ UI](docs/playlist-03-java-desktop/ep09-service-crud.md) |
+| 3.10 | Task, Thread และ Timeline | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep10-task-timeline.md) |
+| 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
+| 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
 
 **ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้
 
@@ -101,11 +103,11 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 
 - แสดงรหัส ชื่อ ตำแหน่ง และสถานะของเครื่องจักร
 - รับค่าอุณหภูมิและแรงสั่นสะเทือนจากเซนเซอร์จำลอง
-- เปลี่ยนสถานะเป็น `WARNING` เมื่ออุณหภูมิตั้งแต่ 80 °C หรือแรงสั่นตั้งแต่ 7 mm/s
+- เปลี่ยนสถานะเป็น `WARNING` เมื่อค่าผิดปกติ และเป็น `EMERGENCY_STOP` เมื่ออุณหภูมิตั้งแต่ 100 °C
 - แจ้งเตือนบำรุงรักษาเมื่อทำงานครบ 500 ชั่วโมงหรือมีสถานะผิดปกติ
 - เพิ่ม ลบ และบำรุงรักษาเครื่องจักรผ่านหน้าต่าง Desktop
 - จำลองค่าเซนเซอร์ครั้งเดียวหรืออัปเดตอัตโนมัติทุก 2 วินาที
-- ทดสอบ Business Logic ด้วย Java ล้วน โดยไม่ต้องติดตั้ง Maven หรือ Library เพิ่ม
+- ทดสอบ Business Logic ด้วยสคริปต์เดียว โดย Maven Wrapper จัดการ Dependency ให้
 
 ## หัวข้อ Java ที่ใช้
 
@@ -120,7 +122,7 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 | OOP | Interface | `Machine implements Maintainable` |
 | OOP | Polymorphism | รับ `Machine` เป็น `FactoryDevice` หรือ `Maintainable` |
 | Java API | Enum, List, Optional, Stream | สถานะ คลังข้อมูล การค้นหา และสรุปผล |
-| Desktop | Swing, Layout, Event | `JFrame`, `JTable`, `JButton`, dialog และ listener |
+| Desktop | JavaFX, FXML, CSS | Stage, Scene, TableView, Binding, Task และ Timeline |
 | Quality | Exception และ Test | ตรวจข้อมูลผิด กรณีรหัสซ้ำ และกฎแจ้งเตือน |
 
 </details>
@@ -130,9 +132,11 @@ Repo นี้วางเส้นทางจาก Java Console ไปสู�
 
 ## เครื่องมือที่ต้องมี
 
-- JDK 17 ขึ้นไป (แนะนำรุ่น LTS)
+- JDK 21 LTS
 - Terminal หรือ PowerShell
 - Editor ใดก็ได้ เช่น VS Code, IntelliJ IDEA หรือ Apache NetBeans
+
+ไม่ต้องติดตั้ง Maven แยก เพราะ `mvnw.cmd` จะดาวน์โหลด Apache Maven รุ่นที่โครงการกำหนดและตรวจ Checksum ก่อนใช้งานครั้งแรก
 
 ตรวจสอบว่า Java พร้อมใช้งาน:
 
@@ -152,7 +156,9 @@ Java_OOP_DesktopApp/
 │  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 ยังไม่มีบทเรียน
 │  ├─ playlist-01-java-basic/       # EP 1.1–1.10
 │  ├─ playlist-02-java-oop/         # EP 2.1–2.10
-│  └─ playlist-03-java-desktop/     # EP 3.1–3.10
+│  └─ playlist-03-java-desktop/     # EP 3.1–3.12
+├─ mvnw.cmd                         # Maven Wrapper สำหรับ Windows
+├─ pom.xml                          # JavaFX และ Build Configuration
 ├─ scripts/
 │  ├─ build.ps1
 │  ├─ check-encoding.ps1
@@ -161,12 +167,15 @@ Java_OOP_DesktopApp/
 │  ├─ run-desktop.ps1
 │  └─ test.ps1
 └─ src/
-   ├─ main/java/smartfactory/
-   │  ├─ basic/BasicDemo.java
-   │  ├─ model/
-   │  ├─ oop/OopDemo.java
-   │  ├─ service/SmartFactoryService.java
-   │  └─ ui/
+   ├─ main/java/
+   │  ├─ module-info.java
+   │  └─ smartfactory/
+   │     ├─ basic/BasicDemo.java
+   │     ├─ model/
+   │     ├─ oop/OopDemo.java
+   │     ├─ service/SmartFactoryService.java
+   │     └─ ui/
+   ├─ main/resources/smartfactory/ui/  # FXML และ CSS
    └─ test/java/smartfactory/SmartFactoryTest.java
 ```
 
@@ -212,11 +221,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 
 หน้าต่าง Dashboard จะเปิดขึ้นมา จากนั้นทดลองตามลำดับนี้:
 
-1. เลือก `M-001` แล้วกด **กรอกค่าเซนเซอร์**
+1. เลือก `M-001` ในตาราง
 2. ใส่อุณหภูมิ `85` และแรงสั่น `3`
-3. สังเกตสถานะเปลี่ยนเป็น **ต้องตรวจสอบ**
-4. กด **บำรุงรักษาเสร็จแล้ว** แล้วสถานะจะเป็น **ปิดเครื่อง**
-5. กด **เริ่มจำลองอัตโนมัติ** เพื่อดูข้อมูลเปลี่ยนทุก 2 วินาที
+3. กด **อัปเดต Sensor** แล้วสังเกตสถานะเปลี่ยนเป็น **ต้องตรวจสอบ**
+4. กด **บำรุงเสร็จแล้ว** แล้วสถานะจะเป็น **ปิดเครื่อง**
+5. กด **เริ่ม Auto Sensor** เพื่อดูข้อมูลเปลี่ยนทุก 2 วินาที
 
 ### 4. Run Test
 
@@ -230,26 +239,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
 PASS: 5 tests
 ```
 
-## คอมไพล์ด้วยตนเอง
+## รัน Maven โดยตรง
 
-คำสั่งนี้แสดงขั้นตอนที่ Java เปลี่ยนไฟล์ `.java` เป็น `.class` โดยตรง
-
-```powershell
-New-Item -ItemType Directory -Force out | Out-Null
-$sourceFiles = @(
-    Get-ChildItem .\src\main\java -Recurse -Filter *.java
-    Get-ChildItem .\src\test\java -Recurse -Filter *.java
-)
-javac -encoding UTF-8 -d out $sourceFiles.FullName
-```
-
-เลือกโปรแกรมที่จะรัน:
+โปรเจกต์ JavaFX มี Module และ Dependency จึงใช้ Maven แทนการต่อ `--module-path` ด้วยตนเอง:
 
 ```powershell
-java -Dfile.encoding=UTF-8 -cp out smartfactory.basic.BasicDemo
-java -Dfile.encoding=UTF-8 -cp out smartfactory.oop.OopDemo
-java -Dfile.encoding=UTF-8 -cp out smartfactory.ui.DesktopApp
-java -Dfile.encoding=UTF-8 -ea -cp out smartfactory.SmartFactoryTest
+.\mvnw.cmd clean compile
+.\mvnw.cmd javafx:run
+.\mvnw.cmd -Dexec.mainClass=smartfactory.SmartFactoryTest -Dexec.classpathScope=test exec:java
 ```
 
 </details>
@@ -275,10 +272,12 @@ java -Dfile.encoding=UTF-8 -ea -cp out smartfactory.SmartFactoryTest
 
 ### Playlist 3 — Java Desktop Workshop
 
-ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย `JFrame`, `JPanel`, `JTable`, `JButton`, Layout Manager, dialog และ event listener
+ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML และ Background Task
 
-- สารบัญ 10 EP: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
+- สารบัญ 12 EP: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
 - จุดเริ่มรัน: [DesktopApp.java](src/main/java/smartfactory/ui/DesktopApp.java)
+- View: [dashboard-view.fxml](src/main/resources/smartfactory/ui/dashboard-view.fxml)
+- Theme: [smart-factory.css](src/main/resources/smartfactory/ui/smart-factory.css)
 
 ### บทสรุปของทั้งสาม Playlist
 
@@ -286,7 +285,7 @@ java -Dfile.encoding=UTF-8 -ea -cp out smartfactory.SmartFactoryTest
 
 - Test: [SmartFactoryTest.java](src/test/java/smartfactory/SmartFactoryTest.java)
 - บท Test: [EP 2.10](docs/playlist-02-java-oop/ep10-service-exception-test.md)
-- บทส่งมอบและ IoT: [EP 3.10](docs/playlist-03-java-desktop/ep10-thai-package-iot.md)
+- บทส่งมอบและ IoT: [EP 3.12](docs/playlist-03-java-desktop/ep12-thai-package-iot.md)
 
 </details>
 
@@ -302,7 +301,9 @@ flowchart LR
     Contract[Maintainable] -->|implements| Machine
     Machine --> Service[SmartFactoryService]
     Service --> Console[OopDemo]
-    Service --> UI[SmartFactoryFrame]
+    Service --> Controller[DashboardController]
+    FXML[FXML View] --> Controller
+    CSS[JavaFX CSS] --> FXML
 ```
 
 แนวคิดสำคัญคือ **หน้าจอไม่ควรเป็นเจ้าของกฎธุรกิจ** กฎว่าอุณหภูมิเท่าไรจึงเตือนอยู่ใน `Machine` ส่วนการค้นหา เพิ่ม ลบ และสรุปผลอยู่ใน `SmartFactoryService` ดังนั้น Console และ Desktop App จึงใช้ logic ชุดเดียวกันได้
@@ -312,8 +313,9 @@ flowchart LR
 | เงื่อนไข | ผลลัพธ์ |
 |---|---|
 | อุณหภูมิต่ำกว่า 80 °C และแรงสั่นต่ำกว่า 7 mm/s | `RUNNING` |
-| อุณหภูมิตั้งแต่ 80 °C | `WARNING` |
-| แรงสั่นตั้งแต่ 7 mm/s | `WARNING` |
+| อุณหภูมิตั้งแต่ 80 °C แต่ต่ำกว่า 100 °C | `WARNING` |
+| อุณหภูมิตั้งแต่ 100 °C | `EMERGENCY_STOP` |
+| แรงสั่นตั้งแต่ 7 mm/s โดยอุณหภูมิต่ำกว่า 100 °C | `WARNING` |
 | ชั่วโมงทำงานตั้งแต่ 500 | ควรบำรุงรักษา |
 | บำรุงรักษาเสร็จ | ชั่วโมงกลับเป็น 0 และสถานะ `OFFLINE` |
 | เพิ่มรหัสเดิมซ้ำ แม้ตัวพิมพ์เล็ก/ใหญ่ต่างกัน | แสดงข้อผิดพลาด |
@@ -393,7 +395,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\check-encoding.ps1
 
 ### เปิด Desktop App ไม่ได้บน Server หรือ Container
 
-Swing ต้องใช้ระบบที่มีหน้าจอ Desktop ถ้าทำงานบนเครื่องแบบ headless ให้รันเฉพาะ Basic, OOP และ Test
+JavaFX ต้องใช้ระบบที่มีหน้าจอ Desktop ถ้าทำงานบนเครื่องแบบ headless ให้รันเฉพาะ Basic, OOP, Build และ Test
 
 </details>
 

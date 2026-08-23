@@ -7,6 +7,7 @@ package smartfactory.model;
  */
 public class Machine extends FactoryDevice implements Maintainable {
     public static final double MAX_TEMPERATURE = 80.0;
+    public static final double EMERGENCY_TEMPERATURE = 100.0;
     public static final double MAX_VIBRATION = 7.0;
     public static final int MAINTENANCE_HOURS = 500;
 
@@ -50,14 +51,21 @@ public class Machine extends FactoryDevice implements Maintainable {
         this.latestReading = reading;
         this.operatingHours++;
 
-        boolean unsafe = reading.getTemperature() >= MAX_TEMPERATURE
-                || reading.getVibration() >= MAX_VIBRATION;
-        this.status = unsafe ? MachineStatus.WARNING : MachineStatus.RUNNING;
+        if (reading.getTemperature() >= EMERGENCY_TEMPERATURE) {
+            this.status = MachineStatus.EMERGENCY_STOP;
+        } else if (reading.getTemperature() >= MAX_TEMPERATURE
+                || reading.getVibration() >= MAX_VIBRATION) {
+            this.status = MachineStatus.WARNING;
+        } else {
+            this.status = MachineStatus.RUNNING;
+        }
     }
 
     @Override
     public boolean requiresMaintenance() {
-        return operatingHours >= MAINTENANCE_HOURS || status == MachineStatus.WARNING;
+        return operatingHours >= MAINTENANCE_HOURS
+                || status == MachineStatus.WARNING
+                || status == MachineStatus.EMERGENCY_STOP;
     }
 
     @Override
@@ -78,4 +86,3 @@ public class Machine extends FactoryDevice implements Maintainable {
         return operatingHours;
     }
 }
-

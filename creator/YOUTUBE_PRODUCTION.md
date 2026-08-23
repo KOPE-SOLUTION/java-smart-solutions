@@ -38,16 +38,18 @@
 
 ### Playlist 3 — Java Desktop Workshop: Smart Factory Dashboard
 
-1. Swing, JFrame และ Event Dispatch Thread
-2. JPanel และ Layout Manager
-3. JLabel, JTextField และ JButton
-4. Event-driven Programming และ Listener
-5. JOptionPane และ Validation
-6. JTable และ TableModel
-7. Cell Renderer และ Summary Card
-8. เชื่อม SmartFactoryService และ CRUD
-9. Swing Timer และ UI Thread
-10. ภาษาไทย, Packaging และ IoT Roadmap
+1. JavaFX, Maven, Stage และ Scene
+2. Layout Pane
+3. JavaFX CSS และ Smart Factory Theme
+4. Controls และ Form
+5. Event, Property และ Binding
+6. Validation และ Alert
+7. TableView และ ObservableList
+8. CellFactory และ Summary Card
+9. เชื่อม SmartFactoryService และ CRUD
+10. Task, Background Thread และ Timeline
+11. FXML และ Controller
+12. ภาษาไทย, Runtime Image และ IoT Roadmap
 
 ## เหตุผลที่ใช้ Repository เดียว
 
@@ -62,8 +64,8 @@ Tag ที่แนะนำ:
 p1-e01-first-program
 p1-e10-basic-capstone
 p2-e10-oop-tested
-p3-e09-live-dashboard
-p3-e10-iot-roadmap
+p3-e10-live-dashboard
+p3-e12-javafx-iot-roadmap
 ```
 
 ## รูปแบบชื่อวิดีโอ
@@ -71,7 +73,7 @@ p3-e10-iot-roadmap
 ```text
 [Java Smart Solutions 1.1] โปรแกรม Java แรกกับโจทย์ Smart Factory
 [Java Smart Solutions 2.6] เข้าใจ Inheritance และ Abstract Class จากโปรเจกต์จริง
-[Java Smart Solutions 3.5] สร้าง Dialog และ Validation ใน Java Swing
+[Java Smart Solutions 3.6] ตรวจข้อมูลด้วย Validation และ Alert ใน JavaFX
 ```
 
 ## Description แบบสั้น
@@ -85,7 +87,7 @@ Source Code และบทเรียน:
 เปิดตอนนี้โดยตรง:
 <GitHub Lesson URL>
 
-ใช้ JDK 17 ขึ้นไป ไม่ต้องติดตั้ง Library เพิ่ม
+ใช้ JDK 21 และ Maven Wrapper สำหรับจัดการ JavaFX
 
-#Java #JavaBasic #JavaOOP #JavaSwing #DesktopApp #SmartFactory
+#Java #JavaBasic #JavaOOP #JavaFX #DesktopApp #SmartFactory
 ```

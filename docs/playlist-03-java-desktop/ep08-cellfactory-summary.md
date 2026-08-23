@@ -1,0 +1,99 @@
+# EP 3.8 — CellFactory และ Summary Card
+
+## สิ่งที่จะทำ
+
+- เปลี่ยนสีสถานะเฉพาะ Cell
+- สรุปจำนวนแต่ละสถานะจากข้อมูลในรายการ
+
+```mermaid
+flowchart LR
+    D[MachineRow.status] --> C[CellFactory]
+    C --> R[กำลังทำงาน: เขียว]
+    C --> W[แจ้งเตือน: ส้ม]
+    C --> E[หยุดฉุกเฉิน: แดง]
+    D --> S[Summary]
+```
+
+## 1. เก็บ Label สรุปเป็น Field
+
+เพิ่ม Field:
+
+```java
+private final Label runningLabel = new Label();
+private final Label warningLabel = new Label();
+private final Label emergencyLabel = new Label();
+```
+
+ใน `buildTopArea()` ใช้ Field ทั้งสามแทน Label เดิม และใส่ `summary-card` ให้แต่ละตัว
+
+## 2. สร้าง Cell ตามสถานะ
+
+เพิ่ม Import:
+
+```java
+import javafx.scene.control.TableCell;
+```
+
+ใน `buildMachineTable()` หลังตั้งค่า `statusColumn`:
+
+```java
+statusColumn.setCellFactory(column -> new TableCell<>() {
+    @Override
+    protected void updateItem(String status, boolean empty) {
+        super.updateItem(status, empty);
+        getStyleClass().removeAll("status-running", "status-warning", "status-emergency");
+
+        if (empty || status == null) {
+            setText(null);
+            return;
+        }
+
+        setText(status);
+        String style = switch (status) {
+            case "แจ้งเตือน" -> "status-warning";
+            case "หยุดฉุกเฉิน" -> "status-emergency";
+            default -> "status-running";
+        };
+        getStyleClass().add(style);
+    }
+});
+```
+
+เพิ่ม CSS:
+
+```css
+.status-running { -fx-text-fill: #22c55e; -fx-font-weight: bold; }
+.status-warning { -fx-text-fill: #f59e0b; -fx-font-weight: bold; }
+.status-emergency { -fx-text-fill: #ef4444; -fx-font-weight: bold; }
+```
+
+## 3. Refresh Summary
+
+```java
+private void refreshSummary() {
+    machineCount.set(machines.size());
+    runningLabel.setText("กำลังทำงาน: " + countStatus("กำลังทำงาน"));
+    warningLabel.setText("แจ้งเตือน: " + countStatus("แจ้งเตือน"));
+    emergencyLabel.setText("หยุดฉุกเฉิน: " + countStatus("หยุดฉุกเฉิน"));
+}
+
+private long countStatus(String status) {
+    return machines.stream().filter(machine -> machine.status().equals(status)).count();
+}
+```
+
+หลัง `machines.add(...)` เรียก:
+
+```java
+refreshSummary();
+```
+
+## 4. ทดลองสถานะอื่นชั่วคราว
+
+เปลี่ยนสถานะที่สร้างจาก `กำลังทำงาน` เป็น `แจ้งเตือน` แล้วรันใหม่เพื่อดูสีและตัวเลข จากนั้นเปลี่ยนกลับ
+
+## Challenge
+
+เพิ่มสถานะ `หยุดซ่อมบำรุง` และกำหนดสีฟ้าให้ Cell
+
+ถัดไป: [EP 3.9 — เชื่อม Service และ CRUD](ep09-service-crud.md)

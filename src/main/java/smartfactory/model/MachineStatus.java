@@ -4,6 +4,7 @@ public enum MachineStatus {
     OFFLINE("ปิดเครื่อง"),
     RUNNING("กำลังทำงาน"),
     WARNING("ต้องตรวจสอบ"),
+    EMERGENCY_STOP("หยุดฉุกเฉิน"),
     MAINTENANCE("กำลังบำรุงรักษา");
 
     private final String displayName;
@@ -16,4 +17,3 @@ public enum MachineStatus {
         return displayName;
     }
 }
-

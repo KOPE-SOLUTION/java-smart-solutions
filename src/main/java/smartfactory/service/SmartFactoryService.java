@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-/** Service แยก business logic ออกจาก Console และ Swing UI */
+/** Service แยก business logic ออกจาก Console และ JavaFX UI */
 public class SmartFactoryService {
     private final List<Machine> machines = new ArrayList<>();
 
@@ -93,4 +93,3 @@ public class SmartFactoryService {
         return service;
     }
 }
-

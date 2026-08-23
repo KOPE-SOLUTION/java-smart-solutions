@@ -1,13 +1,15 @@
 $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $utf8Strict = [System.Text.UTF8Encoding]::new($false, $true)
-$allowedExtensions = @(".java", ".md", ".ps1")
+$allowedExtensions = @(".java", ".md", ".ps1", ".fxml", ".css", ".xml", ".properties", ".cmd")
 $invalidFiles = [System.Collections.Generic.List[string]]::new()
 
 $files = @(
     Get-ChildItem -LiteralPath $projectRoot -Recurse -File |
         Where-Object {
             $_.FullName -notlike "*\out\*" -and
+            $_.FullName -notlike "*\target\*" -and
+            $_.FullName -notlike "*\practice\*" -and
             ($allowedExtensions -contains $_.Extension -or $_.Name -eq ".editorconfig")
         }
 )

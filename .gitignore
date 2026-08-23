@@ -1,4 +1,7 @@
 out/
+target/
+release/
+package-input/
 *.class
 .idea/
 .vscode/
