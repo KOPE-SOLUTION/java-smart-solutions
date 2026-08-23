@@ -74,6 +74,18 @@ New-Item -ItemType Directory -Force practice/smart-factory-dashboard/src/main/ja
 </project>
 ```
 
+### ที่มาของ Dependency และ Plugin
+
+| รายการ | ใช้ทำอะไร | แหล่งอ้างอิง |
+|---|---|---|
+| `org.openjfx:javafx-controls` | เพิ่ม JavaFX Controls เช่น `Label`, `Button` และ `TableView` พร้อม Dependency พื้นฐานที่ต้องใช้ | [JavaFX Controls — Maven Central](https://central.sonatype.com/artifact/org.openjfx/javafx-controls/21) |
+| `maven-compiler-plugin` | Compile Source ด้วย `javac` และกำหนดมาตรฐาน Java ผ่าน `release` | [Apache Maven Compiler Plugin 3.13.0](https://maven.apache.org/plugins-archives/maven-compiler-plugin-3.13.0/examples/set-compiler-release.html) |
+| `javafx-maven-plugin` | จัด Classpath หรือ Module Path และเพิ่มคำสั่ง `javafx:run` | [OpenJFX JavaFX Maven Plugin](https://github.com/openjfx/javafx-maven-plugin) |
+
+อ่านภาพรวมการเริ่มต้นและการใช้ Maven ได้ที่ [OpenJFX Getting Started](https://openjfx.io/openjfx-docs/)
+
+`dependency` คือ Library ที่โปรแกรมเรียกใช้ ส่วน `plugin` คือเครื่องมือที่ Maven ใช้ระหว่าง Build หรือ Run ใน EP นี้ยังไม่เพิ่ม `javafx-fxml` เพราะจะเริ่มใช้ FXML ใน EP3.11
+
 ## 3. สร้างหน้าต่างแรก
 
 สร้างไฟล์ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java`:
