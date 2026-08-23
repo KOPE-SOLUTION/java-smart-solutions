@@ -22,7 +22,7 @@ JavaFX เหมาะกับ Dashboard ภายในโรงงาน, โ
 powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 ```
 
-คำสั่งนี้เปิด Source ฉบับสมบูรณ์ใน `src/main/java/smartfactory/ui` เพื่อให้เห็นผลลัพธ์ปลายทาง ส่วนไฟล์ที่สร้างตามคลิปยังคงเก็บแยกไว้ใน `practice/smart-factory-dashboard`
+คำสั่งนี้เปิด Dashboard ฉบับสมบูรณ์เพื่อให้เห็นผลลัพธ์ปลายทางก่อนเริ่มสร้างไปทีละส่วน
 
 Dashboard ฉบับสมบูรณ์สามารถแสดง Summary และตารางเครื่องจักร เพิ่มหรือลบรายการ อัปเดตค่า Sensor บันทึกการบำรุงรักษา และจำลองข้อมูลอัตโนมัติทุก 2 วินาที โดยใช้ JavaFX, FXML, CSS และ OOP Core ชุดเดียวกัน
 
