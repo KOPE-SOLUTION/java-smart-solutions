@@ -8,10 +8,13 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -29,12 +32,18 @@ import java.util.Optional;
 
 /** Controller ประสาน View กับ SmartFactoryService โดยไม่ย้ายกฎของ Model มาไว้ใน UI */
 public final class DashboardController {
+    private static final String ALL_STATUSES = "ทุกสถานะ";
+    private static final String ALL_MAINTENANCE = "ทุกเงื่อนไขบำรุงรักษา";
+    private static final String MAINTENANCE_REQUIRED = "ต้องบำรุง";
+    private static final String MAINTENANCE_NORMAL = "ปกติ";
     private static final List<String> STATUS_STYLES = List.of(
             "status-running", "status-warning", "status-emergency", "status-offline", "status-maintenance"
     );
 
     private final SmartFactoryService service;
     private final ObservableList<Machine> machineItems = FXCollections.observableArrayList();
+    private final FilteredList<Machine> filteredMachines = new FilteredList<>(machineItems, machine -> true);
+    private final SortedList<Machine> sortedMachines = new SortedList<>(filteredMachines);
     private final IntegerProperty totalMachines = new SimpleIntegerProperty();
     private final IntegerProperty runningMachines = new SimpleIntegerProperty();
     private final IntegerProperty warningMachines = new SimpleIntegerProperty();
@@ -56,6 +65,10 @@ public final class DashboardController {
     @FXML private TableColumn<Machine, String> vibrationColumn;
     @FXML private TableColumn<Machine, Integer> hoursColumn;
     @FXML private TableColumn<Machine, String> maintenanceColumn;
+    @FXML private TextField searchField;
+    @FXML private ComboBox<String> statusFilter;
+    @FXML private ComboBox<String> maintenanceFilter;
+    @FXML private Label filterResultLabel;
     @FXML private TextField idField;
     @FXML private TextField nameField;
     @FXML private TextField locationField;
@@ -73,8 +86,10 @@ public final class DashboardController {
     @FXML
     private void initialize() {
         configureTable();
+        configureFilters();
         bindSummaryCards();
-        machineTable.setItems(machineItems);
+        sortedMachines.comparatorProperty().bind(machineTable.comparatorProperty());
+        machineTable.setItems(sortedMachines);
         machineTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, previous, selected) -> fillSensorFields(selected)
         );
@@ -116,6 +131,62 @@ public final class DashboardController {
                 getStyleClass().add(statusStyle(status));
             }
         });
+    }
+
+    private void configureFilters() {
+        statusFilter.getItems().add(ALL_STATUSES);
+        for (MachineStatus status : MachineStatus.values()) {
+            statusFilter.getItems().add(status.getDisplayName());
+        }
+        statusFilter.setValue(ALL_STATUSES);
+
+        maintenanceFilter.getItems().setAll(
+                ALL_MAINTENANCE,
+                MAINTENANCE_REQUIRED,
+                MAINTENANCE_NORMAL
+        );
+        maintenanceFilter.setValue(ALL_MAINTENANCE);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> applyFilters());
+        statusFilter.valueProperty().addListener((observable, oldValue, newValue) -> applyFilters());
+        maintenanceFilter.valueProperty().addListener((observable, oldValue, newValue) -> applyFilters());
+    }
+
+    private void applyFilters() {
+        String keyword = normalize(searchField.getText());
+        String selectedStatus = statusFilter.getValue();
+        String selectedMaintenance = maintenanceFilter.getValue();
+
+        filteredMachines.setPredicate(machine -> {
+            boolean matchesKeyword = keyword.isBlank()
+                    || normalize(machine.getId()).contains(keyword)
+                    || normalize(machine.getName()).contains(keyword)
+                    || normalize(machine.getLocation()).contains(keyword);
+            boolean matchesStatus = selectedStatus == null
+                    || ALL_STATUSES.equals(selectedStatus)
+                    || machine.getStatus().getDisplayName().equals(selectedStatus);
+            boolean matchesMaintenance = switch (selectedMaintenance == null
+                    ? ALL_MAINTENANCE
+                    : selectedMaintenance) {
+                case MAINTENANCE_REQUIRED -> machine.requiresMaintenance();
+                case MAINTENANCE_NORMAL -> !machine.requiresMaintenance();
+                default -> true;
+            };
+            return matchesKeyword && matchesStatus && matchesMaintenance;
+        });
+
+        filterResultLabel.setText(
+                "แสดง " + filteredMachines.size() + " จาก " + machineItems.size() + " เครื่อง"
+        );
+    }
+
+    @FXML
+    private void handleClearFilters() {
+        searchField.clear();
+        statusFilter.setValue(ALL_STATUSES);
+        maintenanceFilter.setValue(ALL_MAINTENANCE);
+        applyFilters();
+        showStatus("ล้างการค้นหาและตัวกรองแล้ว");
     }
 
     private void bindSummaryCards() {
@@ -233,6 +304,7 @@ public final class DashboardController {
         String selectedId = selected == null ? null : selected.getId();
 
         machineItems.setAll(service.getMachines());
+        applyFilters();
         machineTable.refresh();
         totalMachines.set(machineItems.size());
         runningMachines.set((int) service.countByStatus(MachineStatus.RUNNING));
@@ -312,6 +384,10 @@ public final class DashboardController {
 
     private static String format(double value) {
         return String.format(Locale.ROOT, "%.1f", value);
+    }
+
+    private static String normalize(String value) {
+        return value == null ? "" : value.trim().toLowerCase(Locale.ROOT);
     }
 
     private static String statusStyle(MachineStatus status) {

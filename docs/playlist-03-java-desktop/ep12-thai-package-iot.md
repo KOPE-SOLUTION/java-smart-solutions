@@ -79,7 +79,7 @@ Runtime Image รวม Java Runtime และ Module ที่แอปใช�
 
 ให้สร้าง Adapter ใหม่สำหรับ MQTT หรือ Database แล้วเรียก `SmartFactoryService` แทนการเขียน Network Code ไว้ใน Controller โดยตรง วิธีนี้รักษา OOP และทำให้เปลี่ยน Broker หรือ Database ได้ง่ายกว่า
 
-## ตรวจงานก่อนจบ Playlist
+## ตรวจงาน EP 3.12
 
 - ภาษาไทยใน Label, Table และ Alert แสดงถูกต้อง
 - เพิ่ม ลบ อัปเดต Sensor และบำรุงรักษาได้
@@ -91,4 +91,6 @@ Runtime Image รวม Java Runtime และ Module ที่แอปใช�
 
 ซอร์สฉบับเต็ม: [`src/main/java/smartfactory/ui`](../../src/main/java/smartfactory/ui)
 
-กลับไป [README ของ Playlist 3](README.md) หรือ [README หลัก](../../README.md)
+ถัดไป: [EP 3.13 — ค้นหาแบบทันทีด้วย FilteredList](ep13-search-filter.md)
+
+กลับไป: [README ของ Playlist 3](README.md) หรือ [README หลัก](../../README.md)

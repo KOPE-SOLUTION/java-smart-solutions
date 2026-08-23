@@ -92,6 +92,8 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 | 3.10 | Task, Thread และ Timeline | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep10-task-timeline.md) |
 | 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
+| 3.13 | Search และ FilteredList | [ค้นหาข้อมูลแบบทันที](docs/playlist-03-java-desktop/ep13-search-filter.md) |
+| 3.14 | Multi-filter และ SortedList | [กรองหลายเงื่อนไขและเรียงข้อมูล](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) |
 
 **ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้
 
@@ -110,6 +112,7 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 - แยกจำนวน Sensor ผิดปกติออกจากจำนวนเครื่องที่ต้องบำรุงรักษา
 - แจ้งเตือนบำรุงรักษาเมื่อทำงานครบ 500 ชั่วโมงหรือมีสถานะผิดปกติ
 - เพิ่ม ลบ และบำรุงรักษาเครื่องจักรผ่านหน้าต่าง Desktop
+- ค้นหาจากรหัส ชื่อ หรือตำแหน่ง และกรองตามสถานะหรือการบำรุงรักษา
 - จำลองค่าเซนเซอร์ครั้งเดียวหรืออัปเดตอัตโนมัติทุก 2 วินาที
 - ทดสอบ Business Logic ด้วยสคริปต์เดียว โดย Maven Wrapper จัดการ Dependency ให้
 
@@ -160,7 +163,7 @@ Java_OOP_DesktopApp/
 │  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 และ Optional Track 4V
 │  ├─ playlist-01-java-basic/       # EP 1.1–1.10
 │  ├─ playlist-02-java-oop/         # EP 2.1–2.10
-│  └─ playlist-03-java-desktop/     # EP 3.1–3.12
+│  └─ playlist-03-java-desktop/     # EP 3.1–3.14
 ├─ mvnw.cmd                         # Maven Wrapper สำหรับ Windows
 ├─ pom.xml                          # JavaFX และ Build Configuration
 ├─ scripts/
@@ -231,6 +234,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-desktop.ps1
 4. เลือก `M-003` แล้วกด **บำรุงเสร็จแล้ว** ตัวเลขต้องลดเป็น `0`
 5. อัปเดต Sensor ของ `M-003` ด้วยค่าปกติ ตัวเลขต้องคงเป็น `0`
 6. กด **เริ่ม Auto Sensor** เพื่อดูข้อมูลเปลี่ยนทุก 2 วินาที
+7. ค้นหา `line a` และทดลองกรองสถานะหรือกำหนดบำรุงรักษา
 
 ### 4. Run Test
 
@@ -277,9 +281,9 @@ PASS: 6 tests
 
 ### Playlist 3 — Java Desktop Workshop
 
-ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML และ Background Task
+ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML, FilteredList, SortedList และ Background Task
 
-- สารบัญ 12 EP: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
+- สารบัญ 14 EP: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
 - จุดเริ่มรัน: [DesktopApp.java](src/main/java/smartfactory/ui/DesktopApp.java)
 - View: [dashboard-view.fxml](src/main/resources/smartfactory/ui/dashboard-view.fxml)
 - Theme: [smart-factory.css](src/main/resources/smartfactory/ui/smart-factory.css)

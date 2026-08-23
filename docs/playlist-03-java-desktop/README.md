@@ -18,5 +18,7 @@
 | [3.10](ep10-task-timeline.md) | Task, Thread และ Timeline | จำลอง Sensor โดยหน้าต่างไม่ค้าง |
 | [3.11](ep11-fxml-controller.md) | FXML และ Controller | แยก View ออกจาก Logic |
 | [3.12](ep12-thai-package-iot.md) | ภาษาไทย, Runtime Image และ IoT | ตรวจภาษาไทยและเตรียมส่งมอบ |
+| [3.13](ep13-search-filter.md) | Search และ FilteredList | ค้นหาข้อมูลแบบทันที |
+| [3.14](ep14-multi-filter-sort.md) | Multi-filter และ SortedList | กรองหลายเงื่อนไขและเรียงข้อมูล |
 
 เริ่มที่ [EP 3.1](ep01-javafx-maven-stage-scene.md) หรือกลับไป [README หลัก](../../README.md)

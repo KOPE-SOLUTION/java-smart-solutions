@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -59,6 +60,14 @@
                 <Insets top="0" right="20" bottom="12" left="20"/>
             </padding>
             <Label text="ข้อมูลเครื่องจักร" styleClass="section-title"/>
+            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="filter-row">
+                <TextField fx:id="searchField" promptText="ค้นหารหัส ชื่อ หรือตำแหน่ง..."
+                           maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                <ComboBox fx:id="statusFilter" promptText="ทุกสถานะ" prefWidth="180"/>
+                <ComboBox fx:id="maintenanceFilter" promptText="ทุกเงื่อนไขบำรุงรักษา" prefWidth="210"/>
+                <Button text="ล้างตัวกรอง" onAction="#handleClearFilters"/>
+                <Label fx:id="filterResultLabel" text="แสดง 0 จาก 0 เครื่อง" styleClass="filter-result"/>
+            </HBox>
             <TableView fx:id="machineTable" VBox.vgrow="ALWAYS" styleClass="machine-table">
                 <columns>
                     <TableColumn fx:id="idColumn" text="รหัส" prefWidth="90"/>
