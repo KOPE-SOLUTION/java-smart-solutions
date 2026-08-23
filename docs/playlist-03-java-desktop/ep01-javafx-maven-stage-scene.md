@@ -1,5 +1,19 @@
 # EP 3.1 — JavaFX, Maven, Stage และ Scene
 
+## Intro — ทำไมเลือก JavaFX
+
+Java มีทางเลือกสำหรับ Desktop UI หลายแบบ โปรเจกต์นี้เลือก JavaFX เพราะมี Component สมัยใหม่ รองรับ CSS, FXML, Property Binding และแยก View ออกจาก Logic ได้ชัด เหมาะกับการต่อยอด OOP Core เดิมเป็น Smart Factory Dashboard
+
+| เทคโนโลยี | ตำแหน่งที่เหมาะสม |
+|---|---|
+| AWT | API พื้นฐานสำหรับ Window, Graphics และ Native UI ของ Java |
+| Swing | Framework ที่ผ่านการใช้งานมายาวนานและยังพบในระบบเดิมหรืองาน Maintenance |
+| JavaFX | Desktop Application ที่ต้องการ Theme, Binding, FXML และโครงสร้าง UI ที่ต่อยอดง่าย |
+
+JavaFX เหมาะกับ Dashboard ภายในโรงงาน, โปรแกรม Offline, Machine Configuration, Maintenance และ Monitoring Tool รวมถึงงานที่เชื่อม Serial Port, USB หรืออุปกรณ์ภายใน เพราะใช้ Java Domain และ Service ชุดเดิมได้โดยไม่ต้องเพิ่ม JavaScript
+
+ข้อแลกเปลี่ยนคือ ตลาดงานและ Component Ecosystem เล็กกว่า Web และไม่ยืดหยุ่นเท่า Web Application สำหรับ Public UI หรือการใช้งานจากหลายอุปกรณ์ ดังนั้น Roadmap นี้จึงใช้ JavaFX สำหรับ Desktop แล้วค่อยต่อยอดไป Spring Boot, Vaadin และ Angular
+
 ## สิ่งที่จะทำ
 
 - สร้างโปรเจกต์ฝึกใน `practice/smart-factory-dashboard`
