@@ -47,7 +47,7 @@
                 </VBox>
                 <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-maintenance">
                     <Label fx:id="maintenanceValue" text="0" styleClass="summary-value"/>
-                    <Label text="ควรบำรุง" styleClass="summary-label"/>
+                    <Label text="ต้องบำรุงทั้งหมด" styleClass="summary-label"/>
                 </VBox>
             </HBox>
         </VBox>

@@ -199,7 +199,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
 ```text
 Encoding check passed: ... UTF-8 files
 Build completed: ...\out
-PASS: 5 tests
+PASS: 6 tests
 ```
 
 ## ตรวจความพร้อมก่อนจบ Playlist 2

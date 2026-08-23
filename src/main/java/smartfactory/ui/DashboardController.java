@@ -147,7 +147,7 @@ public final class DashboardController {
             double vibration = parseNumber(vibrationField, "แรงสั่นสะเทือน");
             service.updateSensor(selected.getId(), temperature, vibration);
             refreshDashboard();
-            showStatus("อัปเดต Sensor ของ " + selected.getName() + " แล้ว");
+            showStatusWithMaintenanceCount("อัปเดต Sensor ของ " + selected.getName() + " แล้ว");
         });
     }
 
@@ -157,7 +157,7 @@ public final class DashboardController {
             Machine selected = requireSelectedMachine();
             service.performMaintenance(selected.getId());
             refreshDashboard();
-            showStatus("บันทึกการบำรุงรักษา " + selected.getName() + " แล้ว");
+            showStatusWithMaintenanceCount("บันทึกการบำรุงรักษา " + selected.getName() + " แล้ว");
         });
     }
 
@@ -302,6 +302,12 @@ public final class DashboardController {
 
     private void showStatus(String message) {
         statusMessage.setText(message);
+    }
+
+    private void showStatusWithMaintenanceCount(String message) {
+        statusMessage.setText(
+                message + " | ต้องบำรุงทั้งหมด " + maintenanceMachines.get() + " เครื่อง"
+        );
     }
 
     private static String format(double value) {

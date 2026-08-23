@@ -87,13 +87,29 @@ loader.setControllerFactory(type -> {
 
 จุดนี้ทำให้ Dependency ชัดและเปลี่ยน Service สำหรับการทดสอบได้ง่ายขึ้น
 
-## 5. รัน
+## 5. ตรวจ Event ที่เปลี่ยนข้อมูล
+
+ทั้งการอัปเดต Sensor และการบำรุงรักษาต้องเรียก `refreshDashboard()` หลัง Service เสมอ:
+
+```java
+service.updateSensor(selected.getId(), temperature, vibration);
+refreshDashboard();
+
+service.performMaintenance(selected.getId());
+refreshDashboard();
+```
+
+Summary การบำรุงรักษาเป็นยอดรวมทุกเครื่อง ข้อมูลเริ่มต้นมี `M-002` ที่สถานะเตือนและ `M-003` ที่เกิน 500 ชั่วโมง จึงเริ่มที่ `2` เมื่อบำรุง `M-002` จะเหลือ `1` เพราะ `M-003` ยังรอบำรุงอยู่
+
+## 6. รัน
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
 ```
 
 ผลที่ต้องเห็น: Dashboard ฉบับเต็มทำงานเหมือนเดิม แต่ View, Controller, Service และ Model แยกหน้าที่กันแล้ว
+
+ทดลองบำรุง `M-002` แล้วอัปเดต Sensor เป็นอุณหภูมิ `65` และแรงสั่น `3` ตัวเลขต้องยังเป็น `1` จากนั้นบำรุง `M-003` และอัปเดต Sensor เป็นค่าปกติ ตัวเลขจึงเปลี่ยนเป็น `0`
 
 ## Challenge
 

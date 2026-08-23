@@ -114,6 +114,8 @@ stage.setOnHidden(event -> sensorTimeline.stop());
 
 ผลที่ต้องเห็น: อุณหภูมิ สถานะ และ Summary เปลี่ยนทุก 2 วินาที แต่หน้าต่างยังลากและกดได้ตามปกติ
 
+`refreshDashboard()` ต้องอยู่หลัง Loop เพราะ Summary ต้องคำนวณใหม่หลังอัปเดต Sensor ครบทุกเครื่อง หากเรียกก่อนอัปเดต ตัวเลขที่เห็นจะช้ากว่าข้อมูลจริงหนึ่งรอบ
+
 ## Challenge
 
 เพิ่มปุ่มเริ่ม/หยุด Auto Sensor โดยตรวจ `sensorTimeline.getStatus()`

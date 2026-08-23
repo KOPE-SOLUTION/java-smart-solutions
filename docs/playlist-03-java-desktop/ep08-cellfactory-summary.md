@@ -69,6 +69,8 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 
 ## 3. Refresh Summary
 
+Summary เป็นยอดรวมของเครื่องจักรทุกแถว ไม่ใช่ข้อมูลของแถวที่กำลังเลือก
+
 ```java
 private void refreshSummary() {
     machineCount.set(machines.size());
@@ -87,6 +89,8 @@ private long countStatus(String status) {
 ```java
 refreshSummary();
 ```
+
+เมื่อข้อมูลของแถวเปลี่ยน ต้องเรียก `refreshSummary()` อีกครั้งด้วย หลักเดียวกันนี้จะถูกย้ายไปอยู่ใน `refreshDashboard()` เมื่อเชื่อม Service ใน EP ถัดไป
 
 ## 4. ทดลองสถานะอื่นชั่วคราว
 

@@ -211,6 +211,8 @@ public long countRequiringMaintenance() {
 }
 ```
 
+ค่าที่ได้เป็นยอดรวมของทุก Machine ใน Collection ไม่ใช่ผลของ Machine ตัวล่าสุดหรือ Machine ที่เลือกบนหน้าจอ
+
 จากนั้นเรียกใน `CollectionDemo.java`:
 
 ```java

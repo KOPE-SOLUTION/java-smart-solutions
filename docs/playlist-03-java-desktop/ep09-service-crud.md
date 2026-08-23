@@ -79,8 +79,11 @@ private void refreshDashboard() {
     runningLabel.setText("กำลังทำงาน: " + service.countByStatus(MachineStatus.RUNNING));
     warningLabel.setText("แจ้งเตือน: " + service.countByStatus(MachineStatus.WARNING));
     emergencyLabel.setText("หยุดฉุกเฉิน: " + service.countByStatus(MachineStatus.EMERGENCY_STOP));
+    maintenanceLabel.setText("ต้องบำรุงทั้งหมด: " + service.countRequiringMaintenance());
 }
 ```
+
+เพิ่ม Field `maintenanceLabel` แบบเดียวกับ Summary Label อื่น แล้วนำไปวางในส่วนบนของหน้าจอ ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
 
 ## 4. เพิ่มปุ่มลบ
 
@@ -101,9 +104,28 @@ deleteButton.setOnAction(event -> {
 
 ตอนนี้ UI รู้เพียงว่าเรียก Service อะไร แต่กฎเพิ่ม ลบ ค้นหา และตรวจสถานะยังอยู่ใน OOP Core
 
+## 5. เพิ่มปุ่มบำรุงรักษา
+
+หลังเรียก Service ต้อง Refresh ทั้งตารางและ Summary:
+
+```java
+Button maintenanceButton = new Button("บำรุงเสร็จแล้ว");
+maintenanceButton.setOnAction(event -> {
+    Machine selected = machineTable.getSelectionModel().getSelectedItem();
+    if (selected == null) {
+        showError("กรุณาเลือกเครื่องจักรในตารางก่อน");
+        return;
+    }
+    service.performMaintenance(selected.getId());
+    refreshDashboard();
+});
+```
+
+ลำดับสำคัญคือ `Service เปลี่ยนข้อมูล -> refreshDashboard() อ่านค่าล่าสุด -> UI แสดงผล` หากขาดบรรทัด Refresh ตัวเลขด้านบนจะยังเป็นค่าเดิม
+
 ## Challenge
 
-เพิ่มปุ่มบำรุงรักษา โดยเลือกเครื่องจักรแล้วเรียก `service.performMaintenance(selected.getId())`
+แสดงข้อความหลังบำรุงรักษาว่าเหลือเครื่องที่ต้องบำรุงทั้งหมดกี่เครื่อง
 
 ซอร์สฉบับเต็ม: [`DashboardController.java`](../../src/main/java/smartfactory/ui/DashboardController.java)
 
