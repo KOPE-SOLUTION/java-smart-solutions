@@ -6,7 +6,7 @@ Playlist นี้เปลี่ยน Smart Factory Console จาก Array �
 
 | EP | เนื้อหา | ผลลัพธ์ |
 |---|---|---|
-| [Demo](demo-smart-factory-oop-core.md) | Smart Factory OOP Core ฉบับสมบูรณ์ | รันดูผลลัพธ์ก่อนเริ่ม Playlist |
+| [Demo](demo-smart-factory-oop-core.md) | Smart Factory OOP Core ฉบับสมบูรณ์ | ชมเหตุการณ์หนึ่งกะในโรงงานก่อนเริ่ม Playlist |
 | [2.1](ep01-class-object.md) | Class และ Object | สร้างเครื่องจักรหลาย Object |
 | [2.2](ep02-field-method-constructor.md) | Field, Method และ Constructor | กำหนดข้อมูลเริ่มต้นได้ |
 | [2.3](ep03-encapsulation-validation.md) | Encapsulation และ Validation | ป้องกัน state ที่ไม่ถูกต้อง |

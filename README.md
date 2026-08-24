@@ -217,14 +217,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-basic.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\run-oop.ps1
 ```
 
-โปรแกรมจะแสดง Final Demo จำนวนห้าส่วน:
+โปรแกรมจะแสดง Final Demo ผ่านเหตุการณ์ต่อเนื่องใน Smart Factory:
 
 ```text
-[1] OBJECT + ENCAPSULATION + COMPOSITION
-[2] INHERITANCE + INTERFACE + POLYMORPHISM
-[3] COLLECTION + OPTIONAL + STREAM + SERVICE
-[4] BUSINESS RULE อยู่ใน OBJECT
-[5] VALIDATION + EXCEPTION
+สถานะโรงงานก่อนเริ่มกะ
+ตรวจสอบเครื่องจักรที่ควรวางแผนบำรุงรักษา
+จำลองเหตุการณ์: M-001 มีอุณหภูมิสูง 105.0 °C
+บันทึกการบำรุงรักษา M-001
+ทดลองเพิ่มเครื่องจักรรหัส m-001 ซ้ำ
 OOP Core พร้อมนำไปใช้ต่อกับ Console, JavaFX, REST API และ IoT
 ```
 

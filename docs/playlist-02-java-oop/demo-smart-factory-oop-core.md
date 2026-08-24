@@ -1,6 +1,6 @@
 # Demo — Smart Factory OOP Core ฉบับสมบูรณ์
 
-ทดลองผลลัพธ์ปลายทางของ Playlist ก่อนเริ่ม EP2.1 โปรแกรมจะรัน Case Study เดียวตั้งแต่ Object และ Composition ไปจนถึง Polymorphism, Service, Business Rule และ Exception
+ทดลองผลลัพธ์ปลายทางของ Playlist ก่อนเริ่ม EP2.1 ผ่านเหตุการณ์หนึ่งกะการทำงานใน Smart Factory ตั้งแต่ตรวจสถานะเครื่องจักร รับมือค่า Sensor ผิดปกติ บันทึกการบำรุงรักษา ไปจนถึงป้องกันข้อมูลรหัสซ้ำ
 
 ## รัน Demo
 
@@ -10,56 +10,50 @@
 powershell -ExecutionPolicy Bypass -File .\scripts\run-oop.ps1
 ```
 
-Demo ทำงานใน Console เพราะเป้าหมายของ Playlist นี้คือสร้าง Domain และ Business Logic ที่ไม่ผูกกับหน้าจอ เมื่อถึง Playlist 3 จะนำ OOP Core ชุดเดิมไปใช้กับ JavaFX Dashboard
+Demo ทำงานใน Console เพราะเป้าหมายของ Playlist นี้คือสร้าง Domain และเงื่อนไขการทำงานที่ไม่ผูกกับหน้าจอ เมื่อถึง Playlist 3 จะนำ OOP Core ชุดเดิมไปใช้กับ JavaFX Dashboard
 
-## สิ่งที่ Demo แสดง
+## ลำดับเหตุการณ์
 
 ```mermaid
 flowchart LR
-    SR[SensorReading] -->|Composition| M[Machine]
-    FD[FactoryDevice] -->|extends| M
-    MT[Maintainable] -->|implements| M
-    M --> S[SmartFactoryService]
-    S --> D[OopDemo]
-    S --> UI[JavaFX ใน Playlist 3]
+    A[ตรวจสถานะโรงงาน] --> B[หาเครื่องที่ควรบำรุง]
+    B --> C[จำลองอุณหภูมิสูง]
+    C --> D[บันทึกการบำรุงรักษา]
+    D --> E[ทดลองเพิ่มรหัสซ้ำ]
 ```
 
-### 1. Object, Encapsulation และ Composition
+### สถานะโรงงานก่อนเริ่มกะ
 
-- สร้างเครื่องจักรสาม Object
-- เก็บ Field เป็น `private` และเปลี่ยนสถานะผ่าน Method
-- ให้ `Machine` มี `SensorReading` เป็นส่วนประกอบ
-- แสดงสถานะ ชั่วโมงทำงาน และเงื่อนไขบำรุงรักษาของแต่ละเครื่อง
+- `M-001` ทำงานปกติ
+- `M-002` มีค่า Sensor ผิดปกติ
+- `M-003` มีค่า Sensor ปกติ แต่ทำงานเกิน 500 ชั่วโมง
+- สรุปได้ว่า Sensor ผิดปกติ 1 เครื่อง และควรบำรุงรักษา 2 เครื่อง
 
-### 2. Inheritance, Interface และ Polymorphism
+### รับมือเหตุการณ์และป้องกันข้อมูล
 
-Object `Machine` เดียวกันถูกส่งเข้า Method ที่รับ Type ต่างกันได้:
+- ค้นหาเครื่องจักรที่ควรบำรุงพร้อมแสดงเหตุผล
+- ส่งอุณหภูมิ `105.0 °C` ให้ `M-001` แล้วสถานะเปลี่ยนเป็น `หยุดฉุกเฉิน`
+- บันทึกการบำรุงรักษาแล้วชั่วโมงทำงานกลับเป็น `0` และสถานะเปลี่ยนเป็น `ปิดเครื่อง`
+- ทดลองเพิ่ม `m-001` ซึ่งซ้ำกับ `M-001` แล้วระบบปฏิเสธข้อมูล
+
+## OOP ที่ทำงานอยู่เบื้องหลัง
+
+| เหตุการณ์ | แนวคิดที่ใช้ |
+|---|---|
+| เครื่องจักรแต่ละรายการเก็บข้อมูลและ Sensor ของตนเอง | Object, Encapsulation และ Composition |
+| ตรวจเครื่องจักรผ่าน Type กลาง | Inheritance, Interface และ Polymorphism |
+| ค้นหาและสรุปจำนวนเครื่องจักร | Collection, Optional, Stream และ Service |
+| ค่า Sensor เปลี่ยนสถานะโดยอัตโนมัติ | Method และเงื่อนไขของระบบภายใน Object |
+| ปฏิเสธรหัสเครื่องจักรซ้ำ | Validation และ Exception |
+
+ตัวอย่าง Polymorphism อยู่ในขั้นตรวจแผนบำรุงรักษา `Machine` Object เดียวถูกส่งให้ Method ที่รับ `Maintainable` และ `FactoryDevice` ได้:
 
 ```java
-printAsDevice(machine);
-printAsMaintainable(machine);
+requiresMaintenance(machine);
+printMaintenanceCandidate(machine, maintenanceReason(machine));
 ```
 
-- `FactoryDevice` แสดงข้อมูลร่วมของอุปกรณ์
-- `Maintainable` เรียกความสามารถด้านบำรุงรักษา
-- `Machine` เป็น Object จริงที่ทำงานผ่าน Type กลางทั้งสองแบบ
-
-### 3. Collection, Optional, Stream และ Service
-
-- `SmartFactoryService` จัดการรายการเครื่องจักร
-- ค้นหารหัสแบบไม่สนตัวพิมพ์เล็กหรือใหญ่ด้วย `Optional`
-- สรุปจำนวนตามสถานะและจำนวนที่ต้องบำรุงรักษา
-- Console ไม่ต้องรู้ว่า Collection ถูกค้นหาหรือนับอย่างไร
-
-### 4. Business Rule อยู่ใน Object
-
-Demo ส่งอุณหภูมิ `105.0 °C` ให้ `M-001` แล้วสถานะเปลี่ยนเป็น `หยุดฉุกเฉิน` โดย `OopDemo` ไม่ต้องเขียน `if/else` ซ้ำ
-
-หลังเรียกบำรุงรักษา ชั่วโมงทำงานจะกลับเป็น `0` และสถานะเปลี่ยนเป็น `ปิดเครื่อง`
-
-### 5. Validation และ Exception
-
-Demo ทดลองเพิ่มรหัส `m-001` ซึ่งซ้ำกับ `M-001` ระบบจึงปฏิเสธข้อมูลและแสดงข้อความจาก `IllegalArgumentException`
+`SmartFactoryService` เป็นจุดกลางสำหรับค้นหา อัปเดต Sensor บำรุงรักษา และเพิ่มเครื่องจักร ส่วน `Machine` เป็นผู้ดูแลสถานะและเงื่อนไขของตนเอง Console จึงมีหน้าที่เพียงส่งคำสั่งและแสดงผล
 
 ## Source ที่ทำงานร่วมกัน
 
@@ -75,11 +69,11 @@ Demo ทดลองเพิ่มรหัส `m-001` ซึ่งซ้ำก
 ## ผลลัพธ์ปลายทาง
 
 ```text
-[1] OBJECT + ENCAPSULATION + COMPOSITION
-[2] INHERITANCE + INTERFACE + POLYMORPHISM
-[3] COLLECTION + OPTIONAL + STREAM + SERVICE
-[4] BUSINESS RULE อยู่ใน OBJECT
-[5] VALIDATION + EXCEPTION
+สถานะโรงงานก่อนเริ่มกะ
+ตรวจสอบเครื่องจักรที่ควรวางแผนบำรุงรักษา
+จำลองเหตุการณ์: M-001 มีอุณหภูมิสูง 105.0 °C
+บันทึกการบำรุงรักษา M-001
+ทดลองเพิ่มเครื่องจักรรหัส m-001 ซ้ำ
 OOP Core พร้อมนำไปใช้ต่อกับ Console, JavaFX, REST API และ IoT
 ```
 

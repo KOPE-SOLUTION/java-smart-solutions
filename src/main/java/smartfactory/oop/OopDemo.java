@@ -14,11 +14,11 @@ public class OopDemo {
         SmartFactoryService service = SmartFactoryService.createWithSampleData();
 
         printHeader();
-        showObjectsAndComposition(service);
-        showPolymorphism(service);
-        showServiceCapabilities(service);
-        showBusinessRule(service);
-        showExceptionHandling(service);
+        showInitialFactoryStatus(service);
+        showMaintenancePlan(service);
+        simulateHighTemperature(service);
+        completeMaintenance(service);
+        rejectDuplicateMachineId(service);
         printClosing();
     }
 
@@ -26,67 +26,64 @@ public class OopDemo {
         System.out.println("=".repeat(72));
         System.out.println("        SMART FACTORY OOP CORE — FINAL DEMO");
         System.out.println("=".repeat(72));
-        System.out.println("แยกข้อมูล กฎธุรกิจ และการจัดการออกจาก Console หรือหน้าจอ\n");
+        System.out.println("สถานการณ์: ตรวจสอบโรงงานก่อนเริ่มกะและรับมือค่าผิดปกติ\n");
     }
 
-    private static void showObjectsAndComposition(SmartFactoryService service) {
-        printSection("1", "OBJECT + ENCAPSULATION + COMPOSITION");
+    private static void showInitialFactoryStatus(SmartFactoryService service) {
+        printScene("สถานะโรงงานก่อนเริ่มกะ");
         for (Machine machine : service.getMachines()) {
             printMachine(machine);
         }
-    }
-
-    private static void showPolymorphism(SmartFactoryService service) {
-        printSection("2", "INHERITANCE + INTERFACE + POLYMORPHISM");
-        Machine machine = service.findRequired("M-002");
-        printAsDevice(machine);
-        printAsMaintainable(machine);
-        System.out.println("Object เดียวกันถูกใช้งานผ่าน FactoryDevice และ Maintainable ได้");
-    }
-
-    private static void showServiceCapabilities(SmartFactoryService service) {
-        printSection("3", "COLLECTION + OPTIONAL + STREAM + SERVICE");
-        service.findById("m-003").ifPresent(machine ->
-                System.out.printf("ค้นหา m-003: พบ %s ที่ %s%n", machine.getName(), machine.getLocation())
-        );
-        System.out.printf("กำลังทำงาน: %d เครื่อง%n", service.countByStatus(MachineStatus.RUNNING));
         System.out.printf(
-                "ทั้งหมด: %d เครื่อง | ต้องบำรุงรักษา: %d เครื่อง%n",
+                "สรุป: ทั้งหมด %d | กำลังทำงาน %d | Sensor ผิดปกติ %d | ควรบำรุง %d%n",
                 service.getMachines().size(),
+                service.countByStatus(MachineStatus.RUNNING),
+                service.countByStatus(MachineStatus.WARNING)
+                        + service.countByStatus(MachineStatus.EMERGENCY_STOP),
                 service.countRequiringMaintenance()
         );
     }
 
-    private static void showBusinessRule(SmartFactoryService service) {
-        printSection("4", "BUSINESS RULE อยู่ใน OBJECT");
-        Machine mixer = service.findRequired("M-001");
-        System.out.printf("ก่อนรับค่าผิดปกติ: %s%n", formatState(mixer));
-
-        service.updateSensor("M-001", 105.0, 8.2);
-        System.out.printf("หลังรับค่า 105.0 °C: %s%n", formatState(mixer));
-
-        service.performMaintenance("M-001");
-        System.out.printf("หลังบำรุงรักษา: %s%n", formatState(mixer));
+    private static void showMaintenancePlan(SmartFactoryService service) {
+        printScene("ตรวจสอบเครื่องจักรที่ควรวางแผนบำรุงรักษา");
+        for (Machine machine : service.getMachines()) {
+            if (requiresMaintenance(machine)) {
+                printMaintenanceCandidate(machine, maintenanceReason(machine));
+            }
+        }
     }
 
-    private static void showExceptionHandling(SmartFactoryService service) {
-        printSection("5", "VALIDATION + EXCEPTION");
+    private static void simulateHighTemperature(SmartFactoryService service) {
+        printScene("จำลองเหตุการณ์: M-001 มีอุณหภูมิสูง 105.0 °C");
+        Machine mixer = service.findRequired("M-001");
+        System.out.printf("ก่อนรับค่า: %s%n", formatState(mixer));
+
+        service.updateSensor("M-001", 105.0, 8.2);
+        System.out.printf("หลังรับค่า: %s%n", formatState(mixer));
+    }
+
+    private static void completeMaintenance(SmartFactoryService service) {
+        printScene("บันทึกการบำรุงรักษา M-001");
+        Machine mixer = service.findRequired("M-001");
+        service.performMaintenance("M-001");
+        System.out.printf("ผลลัพธ์: %s%n", formatState(mixer));
+    }
+
+    private static void rejectDuplicateMachineId(SmartFactoryService service) {
+        printScene("ทดลองเพิ่มเครื่องจักรรหัส m-001 ซ้ำ");
         try {
             service.addMachine(new Machine("m-001", "เครื่องรหัสซ้ำ", "Line B"));
         } catch (IllegalArgumentException exception) {
-            System.out.println("ป้องกันข้อมูลไม่ถูกต้อง: " + exception.getMessage());
+            System.out.println("ระบบปฏิเสธข้อมูล: " + exception.getMessage());
         }
     }
 
     private static void printMachine(Machine machine) {
         System.out.printf(
-                "%s | %s | %s%n",
+                "%s | %s | %s | Sensor %.1f °C, %.1f mm/s | %s | %d ชั่วโมง | %s%n",
                 machine.getId(),
                 machine.getName(),
-                machine.getLocation()
-        );
-        System.out.printf(
-                "  Sensor %.1f °C, %.1f mm/s | %s | %d ชั่วโมง | %s%n",
+                machine.getLocation(),
                 machine.getLatestReading().getTemperature(),
                 machine.getLatestReading().getVibration(),
                 machine.getStatus().getDisplayName(),
@@ -95,19 +92,33 @@ public class OopDemo {
         );
     }
 
-    private static void printAsDevice(FactoryDevice device) {
+    private static boolean requiresMaintenance(Maintainable maintainable) {
+        return maintainable.requiresMaintenance();
+    }
+
+    private static void printMaintenanceCandidate(FactoryDevice device, String reason) {
         System.out.printf(
-                "FactoryDevice: %s | %s | ชนิด %s%n",
+                "%s | %s | เหตุผล: %s%n",
                 device.getId(),
                 device.getName(),
-                device.getDeviceType()
+                reason
         );
     }
 
-    private static void printAsMaintainable(Maintainable maintainable) {
-        System.out.println(
-                "Maintainable: "
-                        + (maintainable.requiresMaintenance() ? "ควรวางแผนบำรุงรักษา" : "ยังไม่ถึงกำหนด")
+    private static String maintenanceReason(Machine machine) {
+        boolean sensorAbnormal = machine.getStatus() == MachineStatus.WARNING
+                || machine.getStatus() == MachineStatus.EMERGENCY_STOP;
+        boolean hoursDue = machine.getOperatingHours() >= Machine.MAINTENANCE_HOURS;
+
+        if (sensorAbnormal && hoursDue) {
+            return "Sensor ผิดปกติและชั่วโมงทำงานครบกำหนด";
+        }
+        if (sensorAbnormal) {
+            return "Sensor ผิดปกติ";
+        }
+        return "ทำงาน %d ชั่วโมง ครบกำหนด %d ชั่วโมง".formatted(
+                machine.getOperatingHours(),
+                Machine.MAINTENANCE_HOURS
         );
     }
 
@@ -119,14 +130,15 @@ public class OopDemo {
         );
     }
 
-    private static void printSection(String number, String title) {
+    private static void printScene(String title) {
         System.out.println(DIVIDER);
-        System.out.printf("[%s] %s%n", number, title);
+        System.out.println(title);
         System.out.println(DIVIDER);
     }
 
     private static void printClosing() {
         System.out.println(DIVIDER);
+        System.out.println("สรุป: OOP Core ดูแลข้อมูล สถานะ การค้นหา และเงื่อนไขของระบบ");
         System.out.println("OOP Core พร้อมนำไปใช้ต่อกับ Console, JavaFX, REST API และ IoT");
         System.out.println("=".repeat(72));
     }
