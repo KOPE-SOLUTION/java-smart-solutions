@@ -58,6 +58,7 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 
 | EP | เนื้อหา | เปิดบทเรียน |
 |---|---|---|
+| Demo | Smart Factory OOP Core ฉบับสมบูรณ์ | [รันดูผลลัพธ์ก่อนเริ่ม Playlist](docs/playlist-02-java-oop/demo-smart-factory-oop-core.md) |
 | 2.1 | Class และ Object | [จาก Array สู่ Object](docs/playlist-02-java-oop/ep01-class-object.md) |
 | 2.2 | Field, Method และ Constructor | [สร้าง Object ที่พร้อมใช้](docs/playlist-02-java-oop/ep02-field-method-constructor.md) |
 | 2.3 | Encapsulation และ Validation | [รักษากติกาของ Object](docs/playlist-02-java-oop/ep03-encapsulation-validation.md) |
@@ -216,10 +217,15 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-basic.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\run-oop.ps1
 ```
 
-ผลลัพธ์ส่วนท้ายควรเป็น:
+โปรแกรมจะแสดง Final Demo จำนวนห้าส่วน:
 
 ```text
-ทั้งหมด 3 เครื่อง | ต้องตรวจ/บำรุงรักษา 2 เครื่อง
+[1] OBJECT + ENCAPSULATION + COMPOSITION
+[2] INHERITANCE + INTERFACE + POLYMORPHISM
+[3] COLLECTION + OPTIONAL + STREAM + SERVICE
+[4] BUSINESS RULE อยู่ใน OBJECT
+[5] VALIDATION + EXCEPTION
+OOP Core พร้อมนำไปใช้ต่อกับ Console, JavaFX, REST API และ IoT
 ```
 
 ### 3. Desktop Window App
@@ -280,6 +286,7 @@ PASS: 7 tests
 
 แก้ปัญหา array หลายชุดที่ต้องจำ index ให้ตรงกันด้วย `Machine` และ `SensorReading` แล้วต่อยอด Encapsulation, Inheritance, Interface, Polymorphism, Collection และ Exception
 
+- Final Demo: [Smart Factory OOP Core ฉบับสมบูรณ์](docs/playlist-02-java-oop/demo-smart-factory-oop-core.md)
 - สารบัญ 10 EP: [playlist-02-java-oop](docs/playlist-02-java-oop/README.md)
 - จุดเริ่มรัน: [OopDemo.java](src/main/java/smartfactory/oop/OopDemo.java)
 
