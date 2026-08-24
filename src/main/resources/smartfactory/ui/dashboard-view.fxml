@@ -34,9 +34,9 @@
                     <Label fx:id="totalValue" text="0" styleClass="summary-value"/>
                     <Label text="ทั้งหมด" styleClass="summary-label"/>
                 </VBox>
-                <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-running">
-                    <Label fx:id="runningValue" text="0" styleClass="summary-value"/>
-                    <Label text="กำลังทำงาน" styleClass="summary-label"/>
+                <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-normal">
+                    <Label fx:id="normalValue" text="0" styleClass="summary-value"/>
+                    <Label text="สถานะปกติ" styleClass="summary-label"/>
                 </VBox>
                 <VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-warning">
                     <Label fx:id="warningValue" text="0" styleClass="summary-value"/>

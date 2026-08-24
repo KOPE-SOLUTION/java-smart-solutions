@@ -45,13 +45,13 @@ public final class DashboardController {
     private final FilteredList<Machine> filteredMachines = new FilteredList<>(machineItems, machine -> true);
     private final SortedList<Machine> sortedMachines = new SortedList<>(filteredMachines);
     private final IntegerProperty totalMachines = new SimpleIntegerProperty();
-    private final IntegerProperty runningMachines = new SimpleIntegerProperty();
+    private final IntegerProperty normalMachines = new SimpleIntegerProperty();
     private final IntegerProperty warningMachines = new SimpleIntegerProperty();
     private final IntegerProperty emergencyMachines = new SimpleIntegerProperty();
     private final IntegerProperty maintenanceMachines = new SimpleIntegerProperty();
 
     @FXML private Label totalValue;
-    @FXML private Label runningValue;
+    @FXML private Label normalValue;
     @FXML private Label warningValue;
     @FXML private Label emergencyValue;
     @FXML private Label maintenanceValue;
@@ -195,7 +195,7 @@ public final class DashboardController {
 
     private void bindSummaryCards() {
         totalValue.textProperty().bind(totalMachines.asString());
-        runningValue.textProperty().bind(runningMachines.asString());
+        normalValue.textProperty().bind(normalMachines.asString());
         warningValue.textProperty().bind(warningMachines.asString());
         emergencyValue.textProperty().bind(emergencyMachines.asString());
         maintenanceValue.textProperty().bind(maintenanceMachines.asString());
@@ -332,7 +332,7 @@ public final class DashboardController {
         applyFilters();
         machineTable.refresh();
         totalMachines.set(machineItems.size());
-        runningMachines.set((int) service.countByStatus(MachineStatus.RUNNING));
+        normalMachines.set((int) service.countByStatus(MachineStatus.RUNNING));
         warningMachines.set((int) service.countByStatus(MachineStatus.WARNING));
         emergencyMachines.set((int) service.countByStatus(MachineStatus.EMERGENCY_STOP));
         maintenanceMachines.set((int) service.countRequiringMaintenance());

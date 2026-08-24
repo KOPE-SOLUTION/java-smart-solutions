@@ -78,7 +78,7 @@ refreshDashboard();
 private void refreshDashboard() {
     machines.setAll(service.getMachines());
     machineCount.set(machines.size());
-    runningLabel.setText("กำลังทำงาน: " + service.countByStatus(MachineStatus.RUNNING));
+    normalLabel.setText("สถานะปกติ: " + service.countByStatus(MachineStatus.RUNNING));
     warningLabel.setText("Sensor ผิดปกติ: " + service.countByStatus(MachineStatus.WARNING));
     emergencyLabel.setText("หยุดฉุกเฉิน: " + service.countByStatus(MachineStatus.EMERGENCY_STOP));
     maintenanceLabel.setText("ต้องบำรุงทั้งหมด: " + service.countRequiringMaintenance());

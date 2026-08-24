@@ -19,7 +19,7 @@ flowchart LR
 เพิ่ม Field:
 
 ```java
-private final Label runningLabel = new Label();
+private final Label normalLabel = new Label();
 private final Label warningLabel = new Label();
 private final Label emergencyLabel = new Label();
 ```
@@ -74,7 +74,7 @@ Summary เป็นยอดรวมของเครื่องจักร
 ```java
 private void refreshSummary() {
     machineCount.set(machines.size());
-    runningLabel.setText("กำลังทำงาน: " + countStatus("กำลังทำงาน"));
+    normalLabel.setText("สถานะปกติ: " + countStatus("กำลังทำงาน"));
     warningLabel.setText("Sensor ผิดปกติ: " + countStatus("Sensor ผิดปกติ"));
     emergencyLabel.setText("หยุดฉุกเฉิน: " + countStatus("หยุดฉุกเฉิน"));
 }

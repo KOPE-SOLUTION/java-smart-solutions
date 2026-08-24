@@ -52,16 +52,16 @@ title.getStyleClass().add("header-title");
 
 ```java
 Label total = new Label("ทั้งหมด: 0");
-Label running = new Label("กำลังทำงาน: 0");
+Label normal = new Label("สถานะปกติ: 0");
 Label warning = new Label("Sensor ผิดปกติ: 0");
 Label emergency = new Label("หยุดฉุกเฉิน: 0");
 
 total.getStyleClass().add("summary-card");
-running.getStyleClass().add("summary-card");
+normal.getStyleClass().add("summary-card");
 warning.getStyleClass().add("summary-card");
 emergency.getStyleClass().add("summary-card");
 
-HBox summary = new HBox(12, total, running, warning, emergency);
+HBox summary = new HBox(12, total, normal, warning, emergency);
 ```
 
 เก็บ Label ด้านล่างไว้ในตัวแปรและใส่ Class:

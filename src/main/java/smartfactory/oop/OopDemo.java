@@ -35,7 +35,7 @@ public class OopDemo {
             printMachine(machine);
         }
         System.out.printf(
-                "สรุป: ทั้งหมด %d | กำลังทำงาน %d | Sensor ผิดปกติ %d | ควรบำรุง %d%n",
+                "สรุป: ทั้งหมด %d | สถานะปกติ %d | Sensor ผิดปกติ %d | ควรบำรุง %d%n",
                 service.getMachines().size(),
                 service.countByStatus(MachineStatus.RUNNING),
                 service.countByStatus(MachineStatus.WARNING)
