@@ -22,11 +22,17 @@
 | [3.14](ep14-multi-filter-sort.md) | Multi-filter และ SortedList | กรองหลายเงื่อนไขและเรียงข้อมูล |
 | [3.15](ep15-edit-machine-crud.md) | Edit Machine และ Complete CRUD | แก้ไขชื่อและตำแหน่งเครื่องจักร |
 | [3.16 Optional](ep16-scene-builder-optional.md) | Scene Builder Workflow | จัด Form แบบ Drag & Drop |
-| [3.17 Optional Roadmap](camera-integration-roadmap.md#ep-317--rtsp-live-camera-monitor) | RTSP Live Camera Monitor | แสดงภาพกล้องสดและจัดการ Connection Lifecycle |
-| [3.18 Optional Roadmap](camera-integration-roadmap.md#ep-318--camera-capability-probe) | Camera Capability Probe | ตรวจ RTSP, ONVIF และ Dahua Service ก่อนเลือกวิธีเชื่อมต่อ |
-| [3.19 Conditional Roadmap](camera-integration-roadmap.md#ep-319--ptz-control) | PTZ Control | ควบคุม Pan, Tilt และ Stop เมื่อกล้องเปิด API ที่รองรับ |
-| [3.20 Advanced Roadmap](camera-integration-roadmap.md#ep-320--push-to-talk) | Push to Talk | ส่งเสียงไปยังลำโพงกล้องเมื่อยืนยัน Audio Backchannel หรือ NetSDK แล้ว |
 
-EP 3.17–3.20 เป็น [แผน Optional Camera Integration](camera-integration-roadmap.md) จึงยังไม่มีไฟล์บทเรียนหรือ Source Code ให้ทำตาม โดย EP 3.19–3.20 จะเริ่มสร้างเมื่อผล Capability Probe ยืนยันช่องทางที่กล้องรองรับแล้ว
+## Optional Integration หลังจบ Playlist
+
+หลังจบ EP 3.16 สามารถนำ JavaFX ไปเชื่อม RTSP, กล้องเครือข่าย, MQTT หรือบริการภายนอกได้ โดยเนื้อหาเสริมจะเน้นหลักการที่นำกลับมาใช้ซ้ำได้ ได้แก่
+
+- แสดงภาพหรือข้อมูลผ่าน JavaFX Control เช่น `ImageView`
+- รับข้อมูลบน Background Thread เพื่อไม่ให้หน้าต่างค้าง
+- ส่งผลกลับมาอัปเดต UI บน JavaFX Application Thread
+- ออกแบบ Connect, Disconnect และ Resource Cleanup ให้ปลอดภัย
+- แยก URL, Username และ Password ออกจาก Source Code และ Log
+
+โปรแกรมตรวจ RTSP สำหรับช่างและงานแจกพัฒนาแยกอยู่ในโปรเจกต์ `kope-rtsp-camera-checker` เพื่อให้บทเรียน JavaFX ไม่ซ้ำกับ Source Code ของผลิตภัณฑ์ ผู้เรียนยังใช้ความรู้จาก Playlist นี้ไปทำ Integration ฉบับย่อได้ แต่ไม่ต้องสร้างโปรแกรมทั้งชุดตามกันทีละหน้าจอ
 
 เริ่มที่ [EP 3.1](ep01-javafx-maven-stage-scene.md) หรือกลับไป [README หลัก](../../README.md)

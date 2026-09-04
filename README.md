@@ -27,6 +27,8 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 
 [ดูขอบเขต Future Roadmap และหลัก Modern OOP](docs/FUTURE_ROADMAP.md)
 
+หัวข้อ Integration ในอนาคตจะใช้รูปแบบ **Core Lesson → Integration Lab → Production Guide**
+
 ## เลือก Playlist
 
 <details open>
@@ -97,12 +99,8 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 | 3.14 | Multi-filter และ SortedList | [กรองหลายเงื่อนไขและเรียงข้อมูล](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) |
 | 3.15 | Edit Machine และ Complete CRUD | [แก้ไขชื่อและตำแหน่งเครื่องจักร](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) |
 | 3.16 Optional | Scene Builder Workflow | [จัด Form แบบ Drag & Drop](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) |
-| 3.17 Optional Roadmap | RTSP Live Camera Monitor | [ดูขอบเขตที่วางแผนไว้](docs/playlist-03-java-desktop/camera-integration-roadmap.md#ep-317--rtsp-live-camera-monitor) |
-| 3.18 Optional Roadmap | Camera Capability Probe | [ดูขอบเขตที่วางแผนไว้](docs/playlist-03-java-desktop/camera-integration-roadmap.md#ep-318--camera-capability-probe) |
-| 3.19 Conditional Roadmap | PTZ Control | [ดูเงื่อนไขก่อนสร้างบทเรียน](docs/playlist-03-java-desktop/camera-integration-roadmap.md#ep-319--ptz-control) |
-| 3.20 Advanced Roadmap | Push to Talk | [ดูเงื่อนไขก่อนสร้างบทเรียน](docs/playlist-03-java-desktop/camera-integration-roadmap.md#ep-320--push-to-talk) |
 
-**ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้ ส่วน EP 3.17–3.20 เป็น Optional Camera Integration Roadmap ซึ่งยังไม่มีบทเรียนหรือ Source Code ให้ทำตาม
+**ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้ พร้อมพื้นฐาน JavaFX สำหรับนำไปเชื่อม RTSP, IoT และระบบภายนอกในโปรเจกต์แยก
 
 </details>
 
@@ -170,7 +168,7 @@ Java_OOP_DesktopApp/
 │  ├─ FUTURE_ROADMAP.md             # ขอบเขตระยะที่ 4–7 และ Optional Track 4V
 │  ├─ playlist-01-java-basic/       # EP 1.1–1.10
 │  ├─ playlist-02-java-oop/         # EP 2.1–2.10
-│  └─ playlist-03-java-desktop/     # EP 3.1–3.16 และ Optional Camera Roadmap
+│  └─ playlist-03-java-desktop/     # EP 3.1–3.16 และ Optional Integration Guide
 ├─ mvnw.cmd                         # Maven Wrapper สำหรับ Windows
 ├─ pom.xml                          # JavaFX และ Build Configuration
 ├─ scripts/
@@ -296,9 +294,9 @@ PASS: 7 tests
 
 ### Playlist 3 — Java Desktop Workshop
 
-ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML, FilteredList, SortedList และ Background Task พร้อม Optional Lab สำหรับ Scene Builder และ Roadmap เชื่อมกล้องเครือข่าย
+ใช้ OOP และ Service ชุดเดิม สร้าง UI ด้วย JavaFX `Stage`, `Scene`, Layout Pane, TableView, Property Binding, CSS, FXML, FilteredList, SortedList และ Background Task พร้อม Optional Lab สำหรับ Scene Builder และแนวทางนำความรู้ไปเชื่อมระบบภายนอก
 
-- สารบัญ EP 3.1–3.16 และ Optional Camera Integration Roadmap: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
+- สารบัญ EP 3.1–3.16 และ Optional Integration Guide: [playlist-03-java-desktop](docs/playlist-03-java-desktop/README.md)
 - จุดเริ่มรัน: [DesktopApp.java](src/main/java/smartfactory/ui/DesktopApp.java)
 - View: [dashboard-view.fxml](src/main/resources/smartfactory/ui/dashboard-view.fxml)
 - Theme: [smart-factory.css](src/main/resources/smartfactory/ui/smart-factory.css)

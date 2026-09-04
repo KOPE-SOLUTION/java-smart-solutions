@@ -19,6 +19,46 @@ Roadmap นี้ต่อยอด Case Study เดิมจาก Java Consol
 
 หัวข้อด้านล่างเป็นเพียงขอบเขตเบื้องต้น ไม่ใช่ลำดับ EP ฉบับสุดท้าย
 
+## รูปแบบการสอน Integration และ Production
+
+หัวข้อที่เชื่อม Framework, Network, Hardware, AI หรือระบบภายนอกจะไม่พาทำ Production ทั้งระบบแบบบรรทัดต่อบรรทัด แต่แบ่งความลึกเป็นสามระดับเพื่อให้ผู้เรียนเห็นผลจริงและยังนำความรู้ไปออกแบบโครงการของตัวเองได้
+
+| ระดับ | วิธีนำเสนอ | ผลลัพธ์สำหรับผู้เรียน |
+|---|---|---|
+| Core Lesson | พาทำละเอียดทีละส่วน เช่น UI, Thread, Service, Event, Validation และ Resource Lifecycle | เข้าใจแนวคิดที่นำกลับไปใช้กับ Integration อื่นได้ |
+| Integration Lab | เลือกเส้นทางที่ทดสอบแล้วหนึ่งแบบและพาเชื่อมให้ทำงานได้จริงในขอบเขตขั้นต่ำ | ได้ระบบตัวอย่างที่รัน ตรวจสอบ และต่อยอดเองได้ |
+| Production Guide | อธิบาย Architecture, Security, Deployment, Monitoring และข้อจำกัดของอุปกรณ์ | รู้ว่ายังต้องเพิ่มอะไร ก่อนนำ Demo ไปใช้ในระบบจริง |
+
+แนวทางร่วมของทุก Integration Track:
+
+1. เริ่มจาก Demo เพื่อให้เห็นเป้าหมาย แล้วแยกกลับมาเรียนองค์ประกอบที่จำเป็น
+2. ระบุ Prerequisite, รุ่นอุปกรณ์ และช่องทางที่ผ่านการทดสอบให้ชัดเจน
+3. มี Simulator, Mock หรือข้อมูลตัวอย่างเมื่อหัวข้อนั้นไม่จำเป็นต้องใช้อุปกรณ์จริง
+4. ไม่ถือว่าพอร์ตเปิดหรือมีความสามารถใน Mobile App เท่ากับมี API สำหรับโปรแกรมภายนอก
+5. แยก UI, Application Service, Protocol Adapter และ Device-specific Code ออกจากกัน
+6. มีจุดตรวจผล, Error Handling, Resource Cleanup และ Final Challenge ในแต่ละ Lab
+7. ไม่เก็บ Credential, Serial Number, License Key หรือข้อมูลระบบจริงไว้ใน Git และ Log
+8. แสดง Production Readiness Checklist แทนการนำ Source Code ของผลิตภัณฑ์เชิงพาณิชย์มาเปิดทั้งหมด
+
+Demo จึงเป็นภาพของปลายทาง ไม่ได้หมายความว่าทุกหน้าจอหรือความสามารถของ Production จะมีบทพาก๊อปวางครบทั้งหมด ผู้เรียนจะได้สร้าง Minimum Integration ที่พิสูจน์แนวคิดได้ แล้วใช้ความรู้จาก Core Lesson ประกอบเป็นระบบที่เหมาะกับโจทย์ของตัวเอง
+
+## Applied Integration Track ที่รองรับในอนาคต
+
+หัวข้อเหล่านี้เป็นแผนต่อยอดหลังพื้นฐานที่เกี่ยวข้องพร้อมแล้ว ยังไม่กำหนดหมายเลข EP และยังไม่สร้างบทเรียนล่วงหน้า
+
+| Track | จุดเริ่มต้นสำหรับ Integration Lab | ส่วนที่เก็บไว้เป็น Advanced หรือ Production Guide |
+|---|---|---|
+| Camera และ Edge Vision | JavaFX แสดง RTSP, Snapshot และสถานะ Connection | กล้องหลายช่อง, Recording Policy, Hardware Decode และ Remote Deployment |
+| PTZ และ Audio | Adapter ที่ผ่าน Capability Probe กับอุปกรณ์จริง | Vendor SDK, Audio Backchannel และข้อกำหนด License |
+| MQTT และ MCU | ESP32 หรืออุปกรณ์จำลองส่ง Sensor Event เข้าระบบ | Certificate Provisioning, Broker Cluster, OTA และ Fleet Management |
+| AI Service | ส่งผลตรวจจับตัวอย่างจาก AI Service กลับ JavaFX หรือ Web | Model Lifecycle, Accelerator Optimization, Privacy และ Production Monitoring |
+| ROS 2 และ micro-ROS | แสดง Telemetry และส่งคำสั่งพื้นฐานให้ Mobile Robot | Navigation, Safety, Multi-robot และ Autonomous Operation |
+
+ลำดับโดยรวมคือเรียน Core ของแต่ละเทคโนโลยีก่อน จากนั้นทำ Integration Lab ขนาดเล็ก และปิดท้ายด้วย Guide สำหรับประเมินความพร้อมก่อนใช้จริง
+
+โปรแกรมตรวจ RTSP สำหรับช่างและรุ่นแจกพัฒนาแยกในโปรเจกต์ `kope-rtsp-camera-checker` ส่วน Repository นี้เก็บเฉพาะ Minimum Integration และแนวคิดที่ผู้เรียนควรนำไปต่อยอดเอง
+
+
 ## ระยะที่ 4 — Spring Boot REST API
 
 เป้าหมายคือเปิดความสามารถของ `SmartFactoryService` ให้โปรแกรมภายนอกเรียกผ่าน HTTP และรับส่งข้อมูลแบบ JSON โดยไม่ย้าย Business Rule ไปไว้ใน Controller
