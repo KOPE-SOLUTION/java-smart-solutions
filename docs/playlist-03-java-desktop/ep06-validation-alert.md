@@ -4,7 +4,17 @@
 
 ตรวจข้อมูลก่อนเพิ่มเครื่องจักร และแจ้งผู้ใช้ด้วย Popup ภาษาไทยที่อ่านได้ชัดเจน
 
-EP นี้ทำต่อจาก EP 3.5 โดยตรง ให้เก็บ `machineCount`, `totalLabel` และ Property Binding เดิมไว้ทั้งหมด เราจะปรับเฉพาะ Event Handler ให้ตรวจข้อมูลก่อนเพิ่มจำนวน
+## 1. เตรียมค่า Summary ก่อนเริ่ม
+
+ก่อนเพิ่ม Validation ให้ตรวจค่าบน Summary ก่อน หากยังเห็น `กำลังทำงาน: 5` หรือ `Sensor ผิดปกติ: 1` ให้แก้ค่าตัวอย่างใน `buildTopArea()` เป็น:
+
+```java
+Label running = new Label("กำลังทำงาน: 0");
+Label warning = new Label("Sensor ผิดปกติ: 0");
+Label emergency = new Label("หยุดฉุกเฉิน: 0");
+```
+
+เมื่อเปิดโปรแกรมและยังไม่ได้เพิ่มเครื่องจักร Summary ทั้งสี่รายการต้องเริ่มต้นที่ `0`
 
 ```mermaid
 flowchart TD
@@ -13,7 +23,7 @@ flowchart TD
     V -->|ครบ| S[เพิ่มจำนวนและล้าง Form]
 ```
 
-## 1. เพิ่ม Method ตรวจข้อความ
+## 2. เพิ่ม Method ตรวจข้อความ
 
 ```java
 private String requireText(TextField field, String message) {
@@ -25,7 +35,7 @@ private String requireText(TextField field, String message) {
 }
 ```
 
-## 2. แก้ Event Handler
+## 3. แก้ Event Handler
 
 แทนที่ `handleAddMachine()` เดิม:
 
@@ -57,7 +67,7 @@ requireText(temperatureField, "กรุณากรอกอุณหภูม�
 temperatureField.clear();
 ```
 
-## 3. สร้าง Alert
+## 4. สร้าง Alert
 
 เพิ่ม Import:
 
@@ -76,7 +86,7 @@ private void showError(String message) {
 }
 ```
 
-## 4. ทดลองสองกรณี
+## 5. ทดลองสองกรณี
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
