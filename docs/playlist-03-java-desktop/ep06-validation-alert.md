@@ -4,6 +4,8 @@
 
 ตรวจข้อมูลก่อนเพิ่มเครื่องจักร และแจ้งผู้ใช้ด้วย Popup ภาษาไทยที่อ่านได้ชัดเจน
 
+EP นี้ทำต่อจาก EP 3.5 โดยตรง ให้เก็บ `machineCount`, `totalLabel` และ Property Binding เดิมไว้ทั้งหมด เราจะปรับเฉพาะ Event Handler ให้ตรวจข้อมูลก่อนเพิ่มจำนวน
+
 ```mermaid
 flowchart TD
     A[กดเพิ่ม] --> V{ข้อมูลครบหรือไม่}
@@ -11,29 +13,7 @@ flowchart TD
     V -->|ครบ| S[เพิ่มจำนวนและล้าง Form]
 ```
 
-## 1. ปรับชื่อ Summary ให้สื่อความหมายชัดเจน
-
-ใน EP ก่อนหน้า Card ใช้คำว่า `กำลังทำงาน` ตั้งแต่ EP นี้เปลี่ยนเป็น `สถานะปกติ` เพื่อสรุปจำนวนรายการที่อยู่ในสถานะ `RUNNING` โดยไม่สื่อว่าเครื่องสถานะ `WARNING` ได้หยุดทำงานแล้ว
-
-ใน `buildTopArea()` แทนที่ส่วนสร้าง Summary เดิมด้วย:
-
-```java
-Label total = new Label("ทั้งหมด: 0");
-Label normal = new Label("สถานะปกติ: 0");
-Label warning = new Label("Sensor ผิดปกติ: 0");
-Label emergency = new Label("หยุดฉุกเฉิน: 0");
-
-total.getStyleClass().add("summary-card");
-normal.getStyleClass().add("summary-card");
-warning.getStyleClass().add("summary-card");
-emergency.getStyleClass().add("summary-card");
-
-HBox summary = new HBox(12, total, normal, warning, emergency);
-```
-
-ข้อความสถานะรายเครื่องยังใช้ `กำลังทำงาน` ได้ตามเดิม ส่วน `หยุดฉุกเฉิน` ใช้เมื่อค่าถึงระดับวิกฤตจริง
-
-## 2. เพิ่ม Method ตรวจข้อความ
+## 1. เพิ่ม Method ตรวจข้อความ
 
 ```java
 private String requireText(TextField field, String message) {
@@ -45,7 +25,7 @@ private String requireText(TextField field, String message) {
 }
 ```
 
-## 3. แก้ Event Handler
+## 2. แก้ Event Handler
 
 แทนที่ `handleAddMachine()` เดิม:
 
@@ -67,7 +47,17 @@ private void handleAddMachine() {
 }
 ```
 
-## 4. สร้าง Alert
+Method ใหม่นี้ยังคงการเพิ่ม `machineCount`, อัปเดต `statusLabel` และล้าง Form จาก EP 3.5 ไว้ แต่ครอบด้วย Validation เพื่อไม่ให้จำนวนเพิ่มเมื่อข้อมูลไม่ครบ
+
+หากทำ Challenge เพิ่ม `temperatureField` จาก EP 3.4 ให้เพิ่มการตรวจและล้างช่องนั้นด้วย:
+
+```java
+requireText(temperatureField, "กรุณากรอกอุณหภูมิ");
+// หลังเพิ่มข้อมูลสำเร็จ
+temperatureField.clear();
+```
+
+## 3. สร้าง Alert
 
 เพิ่ม Import:
 
@@ -86,7 +76,7 @@ private void showError(String message) {
 }
 ```
 
-## 5. ทดลองสองกรณี
+## 4. ทดลองสองกรณี
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run

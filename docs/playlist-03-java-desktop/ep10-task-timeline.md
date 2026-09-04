@@ -18,7 +18,48 @@ sequenceDiagram
     FX->>FX: Service update + refresh UI
 ```
 
-## 1. สร้างข้อมูลผลลัพธ์
+## 1. เพิ่มคอลัมน์สำหรับดูผลจาก Sensor
+
+ก่อนสร้าง Background Task ให้เพิ่มคอลัมน์อุณหภูมิและแรงสั่นสะเทือนใน `buildMachineTable()` เพื่อให้มองเห็นค่าที่ Task อัปเดต:
+
+```java
+TableColumn<Machine, String> temperatureColumn = new TableColumn<>("อุณหภูมิ °C");
+temperatureColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(
+        format(data.getValue().getLatestReading().getTemperature())
+));
+
+TableColumn<Machine, String> vibrationColumn = new TableColumn<>("แรงสั่น mm/s");
+vibrationColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(
+        format(data.getValue().getLatestReading().getVibration())
+));
+```
+
+แก้ `setAll(...)` ให้เรียงคอลัมน์ดังนี้:
+
+```java
+machineTable.getColumns().setAll(
+        idColumn,
+        nameColumn,
+        locationColumn,
+        statusColumn,
+        temperatureColumn,
+        vibrationColumn,
+        hoursColumn,
+        maintenanceColumn
+);
+```
+
+เพิ่ม Import และ Method สำหรับจัดรูปแบบทศนิยม:
+
+```java
+import java.util.Locale;
+
+private static String format(double value) {
+    return String.format(Locale.ROOT, "%.1f", value);
+}
+```
+
+## 2. สร้างข้อมูลผลลัพธ์
 
 สร้าง `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/SensorUpdate.java`:
 
@@ -28,7 +69,7 @@ package smartfactory.desktop;
 public record SensorUpdate(String machineId, double temperature, double vibration) {}
 ```
 
-## 2. สร้าง Background Task
+## 3. สร้าง Background Task
 
 สร้าง `SensorSimulationTask.java` ใน Package เดียวกัน:
 
@@ -61,7 +102,7 @@ public class SensorSimulationTask extends Task<List<SensorUpdate>> {
 
 `call()` ทำงานบน Background Thread และไม่แก้ JavaFX Component โดยตรง
 
-## 3. รัน Task และกลับมาอัปเดต UI
+## 4. รัน Task และกลับมาอัปเดต UI
 
 เพิ่ม Method ใน `DashboardApp`:
 
@@ -89,7 +130,7 @@ private void simulateInBackground() {
 
 เพิ่ม Import `java.util.List` และ `smartfactory.model.Machine`
 
-## 4. เรียกอัตโนมัติทุก 2 วินาที
+## 5. เรียกอัตโนมัติทุก 2 วินาที
 
 เพิ่ม Import และ Field:
 

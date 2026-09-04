@@ -50,7 +50,7 @@ Controller จึงไม่ต้องค้นหาและแก้ Objec
 
 ## 3. เพิ่ม Test ก่อนทำหน้าจอ
 
-ใน `main()` ของ `SmartFactoryTest` เพิ่ม:
+เปิด `practice/smart-factory-dashboard/src/test/java/smartfactory/SmartFactoryTest.java` ที่คัดลอกมาพร้อม Checkpoint ใน EP 3.9 แล้วเพิ่มใน `main()`:
 
 ```java
 testMachineDetailsCanBeUpdated();
@@ -82,6 +82,17 @@ private static void testMachineDetailsCanBeUpdated() {
 ```java
 System.out.println("PASS: 7 tests");
 ```
+
+รัน Test ของโปรเจกต์ที่ทำตามคลิปโดยตรง:
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml test-compile `
+    org.codehaus.mojo:exec-maven-plugin:3.5.0:java `
+    "-Dexec.mainClass=smartfactory.SmartFactoryTest" `
+    "-Dexec.classpathScope=test"
+```
+
+ผลที่ต้องเห็นคือ `PASS: 7 tests` ก่อนเริ่มแก้ FXML และ Controller
 
 ## 4. เพิ่มปุ่มของโหมดแก้ไขใน FXML
 

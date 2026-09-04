@@ -19,12 +19,30 @@ flowchart LR
 เพิ่ม Field:
 
 ```java
-private final Label normalLabel = new Label();
-private final Label warningLabel = new Label();
-private final Label emergencyLabel = new Label();
+private final Label normalLabel = new Label("สถานะปกติ: 0");
+private final Label warningLabel = new Label("Sensor ผิดปกติ: 0");
+private final Label emergencyLabel = new Label("หยุดฉุกเฉิน: 0");
 ```
 
-ใน `buildTopArea()` ใช้ Field ทั้งสามแทน Label เดิม และใส่ `summary-card` ให้แต่ละตัว
+ใน `buildTopArea()` ลบเฉพาะ Local Variable `running`, `warning` และ `emergency` เดิม แล้วใช้ Field ชุดนี้แทน:
+
+```java
+normalLabel.getStyleClass().add("summary-card");
+warningLabel.getStyleClass().add("summary-card");
+emergencyLabel.getStyleClass().add("summary-card");
+
+HBox summary = new HBox(
+        12,
+        totalLabel,
+        normalLabel,
+        warningLabel,
+        emergencyLabel
+);
+```
+
+ห้ามสร้าง Label `ทั้งหมด` ตัวใหม่ ให้ใช้ `totalLabel` และ Binding ที่สร้างมาตั้งแต่ EP 3.5 ต่อไป
+
+EP นี้เป็นจุดที่เริ่มใช้ชื่อ Card `สถานะปกติ` เพราะเรากำลังจะนับข้อมูลจริงจากสถานะของแต่ละแถว
 
 ## 2. สร้าง Cell ตามสถานะ
 
@@ -86,7 +104,7 @@ private long countStatus(String status) {
 
 `normalLabel` แสดงคำว่า `สถานะปกติ` แต่ยังนับแถวที่มีข้อความสถานะ `กำลังทำงาน` จึงไม่ได้เปลี่ยนข้อมูลเดิม เพียงปรับถ้อยคำบน Summary ให้ชัดขึ้น
 
-หลัง `machines.add(...)` เรียก:
+ใน `handleAddMachine()` หลัง `machines.add(...)` ให้แทนที่ `machineCount.set(machines.size());` ด้วย:
 
 ```java
 refreshSummary();

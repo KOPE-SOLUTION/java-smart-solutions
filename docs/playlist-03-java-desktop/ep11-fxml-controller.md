@@ -24,17 +24,22 @@ flowchart LR
 </dependency>
 ```
 
-## 2. นำโครงฉบับสมบูรณ์มาแยกชั้น
+## 2. ใช้ Checkpoint สำหรับเริ่มแยกชั้น
+
+Source ฉบับสมบูรณ์บน Branch หลักมี Search, Filter และ Edit จาก EP หลัง ๆ อยู่แล้ว จึงไม่ควรคัดลอกไฟล์ปัจจุบันมาใช้ตรง ๆ ใน EP นี้ ให้ใช้ Checkpoint เดียวกับ EP 3.9 ซึ่งมีความสามารถถึง Background Task แต่ยังไม่มีเนื้อหา EP 3.13–EP 3.15
 
 รันจากโฟลเดอร์หลักของ Repository:
 
 ```powershell
-$javaTarget = ".\practice\smart-factory-dashboard\src\main\java\smartfactory\ui"
-$resourceTarget = ".\practice\smart-factory-dashboard\src\main\resources\smartfactory\ui"
-New-Item -ItemType Directory -Force $javaTarget, $resourceTarget
-Copy-Item .\src\main\java\smartfactory\ui\*.java $javaTarget -Force
-Copy-Item .\src\main\resources\smartfactory\ui\* $resourceTarget -Force
+$checkpointArchive = Join-Path $env:TEMP "javafx-ep311-checkpoint.tar"
+git archive --format=tar --output=$checkpointArchive 3da3c5d `
+    src/main/java/smartfactory/ui `
+    src/main/resources/smartfactory/ui
+tar -xf $checkpointArchive -C .\practice\smart-factory-dashboard
+Remove-Item -LiteralPath $checkpointArchive
 ```
+
+คำสั่งนี้นำไฟล์จาก Git Commit ที่ระบุเวอร์ชันแน่นอนมาไว้ใน `practice` จึงไม่เขียนทับ Source ฉบับสมบูรณ์ของ Repository และไม่ดึงความสามารถจาก EP ในอนาคตเข้ามาก่อนเวลา
 
 เปลี่ยน `mainClass` ใน `pom.xml` เป็น:
 
@@ -49,7 +54,35 @@ Copy-Item .\src\main\resources\smartfactory\ui\* $resourceTarget -Force
 - `DesktopApp.java` — โหลด FXML และสร้าง Stage
 - `smart-factory.css` — Theme ของหน้าจอ
 
-## 3. ดูจุดเชื่อม FXML กับ Controller
+## 3. รักษาชื่อ Summary จาก EP 3.8
+
+Checkpoint นี้สร้างก่อนปรับถ้อยคำ Summary จึงยังใช้ชื่อ `runningMachines` และข้อความ `กำลังทำงาน` อยู่ ให้เปลี่ยนชื่อโดยไม่เปลี่ยน Logic ดังนี้:
+
+ใน `DashboardController.java` เปลี่ยนชื่อทุกตำแหน่ง:
+
+```text
+runningMachines -> normalMachines
+runningValue    -> normalValue
+```
+
+ใน `dashboard-view.fxml` เปลี่ยน Card เดิมเป็น:
+
+```xml
+<VBox alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="summary-card,card-normal">
+    <Label fx:id="normalValue" text="0" styleClass="summary-value"/>
+    <Label text="สถานะปกติ" styleClass="summary-label"/>
+</VBox>
+```
+
+ใน `smart-factory.css` เปลี่ยนชื่อ Style Class แต่เก็บสีเดิม:
+
+```css
+.card-normal { -fx-border-color: #20c77a; }
+```
+
+หลังเปลี่ยนชื่อ `refreshDashboard()` ยังคงนับ `MachineStatus.RUNNING` เหมือนเดิม จึงรักษาความหมายจาก EP 3.8 และไม่ทำให้ Binding หาย
+
+## 4. ดูจุดเชื่อม FXML กับ Controller
 
 ใน FXML:
 
@@ -71,7 +104,7 @@ private void handleAddMachine() {
 
 ชื่อหลัง `#` ต้องตรงกับชื่อ Method และ `fx:id` ต้องตรงกับ Field ที่มี `@FXML`
 
-## 4. ดูการส่ง Service เข้า Controller
+## 5. ดูการส่ง Service เข้า Controller
 
 `DesktopApp` ใช้ Controller Factory เพื่อไม่ให้ Controller สร้าง Service เอง:
 
@@ -87,7 +120,7 @@ loader.setControllerFactory(type -> {
 
 จุดนี้ทำให้ Dependency ชัดและเปลี่ยน Service สำหรับการทดสอบได้ง่ายขึ้น
 
-## 5. ตรวจ Event ที่เปลี่ยนข้อมูล
+## 6. ตรวจ Event ที่เปลี่ยนข้อมูล
 
 ทั้งการอัปเดต Sensor และการบำรุงรักษาต้องเรียก `refreshDashboard()` หลัง Service เสมอ:
 
@@ -103,7 +136,7 @@ refreshDashboard();
 
 `M-003` แสดงสถานะ `RUNNING` ได้อย่างถูกต้อง เพราะค่า Sensor ปกติ ขณะเดียวกันคอลัมน์บำรุงรักษาแสดง `ต้องบำรุง` เพราะทำงานเกิน 500 ชั่วโมง
 
-## 6. รัน
+## 7. รัน
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run

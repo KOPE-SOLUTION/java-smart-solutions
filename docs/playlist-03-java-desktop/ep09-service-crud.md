@@ -17,16 +17,20 @@ flowchart LR
 
 ## 1. นำ OOP Core จาก Playlist 2 มาใช้
 
-รันจากโฟลเดอร์หลักของ Repository:
+รันจากโฟลเดอร์หลักของ Repository โดยใช้ Checkpoint ก่อนเพิ่ม Search และ Edit เพื่อไม่ให้ความสามารถจาก EP หลัง ๆ ติดเข้ามาก่อนเวลา:
 
 ```powershell
-$destination = ".\practice\smart-factory-dashboard\src\main\java\smartfactory"
-Copy-Item .\src\main\java\smartfactory\model $destination -Recurse -Force
-Copy-Item .\src\main\java\smartfactory\oop $destination -Recurse -Force
-Copy-Item .\src\main\java\smartfactory\service $destination -Recurse -Force
+$checkpointArchive = Join-Path $env:TEMP "javafx-ep39-checkpoint.tar"
+git archive --format=tar --output=$checkpointArchive 3da3c5d `
+    src/main/java/smartfactory/model `
+    src/main/java/smartfactory/oop `
+    src/main/java/smartfactory/service `
+    src/test/java/smartfactory/SmartFactoryTest.java
+tar -xf $checkpointArchive -C .\practice\smart-factory-dashboard
+Remove-Item -LiteralPath $checkpointArchive
 ```
 
-คำสั่งนี้คัดลอก Source ที่ทำเสร็จจาก Playlist 2 เข้าโปรเจกต์ฝึกบนเครื่อง ไม่ได้เพิ่มไฟล์ใน Repository
+Checkpoint `3da3c5d` เป็น Git Commit ที่ระบุเวอร์ชันแน่นอน จึงได้ OOP Core ที่ตรงกับลำดับบทเรียนนี้ แม้ Source ฉบับสมบูรณ์บน Branch หลักจะพัฒนาต่อไปแล้ว คำสั่งนี้เขียนเฉพาะใน `practice` ซึ่ง Git ไม่นำขึ้น Repository
 
 ## 2. เปลี่ยนข้อมูลของตารางเป็น `Machine`
 
@@ -61,9 +65,76 @@ TableColumn<Machine, MachineStatus> statusColumn = new TableColumn<>("สถา�
 statusColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getStatus()));
 ```
 
-เพิ่ม Import `ReadOnlyObjectWrapper` และเปลี่ยน `TableCell` ให้รับ `MachineStatus` แล้วแสดง `status.getDisplayName()`
+เพิ่ม Import `ReadOnlyObjectWrapper` และเปลี่ยน `TableCell` ให้รับ `MachineStatus`:
 
-## 3. เพิ่มผ่าน Service
+```java
+statusColumn.setCellFactory(column -> new TableCell<>() {
+    @Override
+    protected void updateItem(MachineStatus status, boolean empty) {
+        super.updateItem(status, empty);
+        getStyleClass().removeAll(
+                "status-running",
+                "status-warning",
+                "status-emergency",
+                "status-offline",
+                "status-maintenance"
+        );
+
+        if (empty || status == null) {
+            setText(null);
+            return;
+        }
+
+        setText(status.getDisplayName());
+        String style = switch (status) {
+            case RUNNING -> "status-running";
+            case WARNING -> "status-warning";
+            case EMERGENCY_STOP -> "status-emergency";
+            case OFFLINE -> "status-offline";
+            case MAINTENANCE -> "status-maintenance";
+        };
+        getStyleClass().add(style);
+    }
+});
+```
+
+เพิ่ม CSS สำหรับสถานะที่เพิ่งนำมาจาก OOP Core:
+
+```css
+.status-offline { -fx-text-fill: #94a3b8; -fx-font-weight: bold; }
+.status-maintenance { -fx-text-fill: #3b82f6; -fx-font-weight: bold; }
+```
+
+## 3. เพิ่มคอลัมน์ชั่วโมงและการบำรุงรักษา
+
+เพิ่มใน `buildMachineTable()`:
+
+```java
+TableColumn<Machine, Integer> hoursColumn = new TableColumn<>("ชั่วโมง");
+hoursColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(
+        data.getValue().getOperatingHours()
+));
+
+TableColumn<Machine, String> maintenanceColumn = new TableColumn<>("บำรุงรักษา");
+maintenanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(
+        data.getValue().requiresMaintenance() ? "ต้องบำรุง" : "ปกติ"
+));
+```
+
+แทนที่บรรทัด `machineTable.getColumns().addAll(...)` เดิม เพื่อกำหนดรายการคอลัมน์เพียงครั้งเดียว:
+
+```java
+machineTable.getColumns().setAll(
+        idColumn,
+        nameColumn,
+        locationColumn,
+        statusColumn,
+        hoursColumn,
+        maintenanceColumn
+);
+```
+
+## 4. เพิ่มผ่าน Service
 
 แทนที่ `machines.add(...)` ใน `handleAddMachine()`:
 
@@ -71,6 +142,8 @@ statusColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getVal
 service.addMachine(new Machine(id, name, location));
 refreshDashboard();
 ```
+
+Constructor แบบสามค่าเริ่มเครื่องใหม่ด้วยสถานะ `OFFLINE` ตามกฎของ Model เครื่องจะเปลี่ยนเป็น `RUNNING`, `WARNING` หรือ `EMERGENCY_STOP` เมื่อได้รับค่าจาก Sensor ใน EP 3.10
 
 เพิ่ม Method กลางสำหรับ Refresh:
 
@@ -87,7 +160,27 @@ private void refreshDashboard() {
 
 `normalLabel` นับเฉพาะ `MachineStatus.RUNNING` ส่วนสถานะรายเครื่องยังแสดง `กำลังทำงาน` ผ่าน `getDisplayName()` ตามเดิม
 
-เพิ่ม Field `maintenanceLabel` แบบเดียวกับ Summary Label อื่น แล้วนำไปวางในส่วนบนของหน้าจอ ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
+เพิ่ม Field แล้วนำไปวางเป็น Card สุดท้ายใน `HBox summary`:
+
+```java
+private final Label maintenanceLabel = new Label("ต้องบำรุงทั้งหมด: 0");
+```
+
+ใน `buildTopArea()` ใส่ `summary-card` และเพิ่มต่อจาก `emergencyLabel` โดยยังคงใช้ `totalLabel` ตัวเดิม:
+
+```java
+maintenanceLabel.getStyleClass().add("summary-card");
+HBox summary = new HBox(
+        12,
+        totalLabel,
+        normalLabel,
+        warningLabel,
+        emergencyLabel,
+        maintenanceLabel
+);
+```
+
+ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
 
 ```mermaid
 flowchart LR
@@ -98,7 +191,7 @@ flowchart LR
 
 สองการ์ดนี้จึงอาจมีตัวเลขต่างกัน เช่น `M-003` มี Sensor ปกติจึงยังเป็น `RUNNING` แต่ถูกนับใน `ต้องบำรุงทั้งหมด` เพราะทำงานเกิน 500 ชั่วโมง
 
-## 4. เพิ่มปุ่มลบ
+## 5. เพิ่มปุ่มลบ
 
 สร้างปุ่มและวางข้างปุ่มเพิ่ม:
 
@@ -117,7 +210,7 @@ deleteButton.setOnAction(event -> {
 
 ตอนนี้ UI รู้เพียงว่าเรียก Service อะไร แต่กฎเพิ่ม ลบ ค้นหา และตรวจสถานะยังอยู่ใน OOP Core
 
-## 5. เพิ่มปุ่มบำรุงรักษา
+## 6. เพิ่มปุ่มบำรุงรักษา
 
 หลังเรียก Service ต้อง Refresh ทั้งตารางและ Summary:
 

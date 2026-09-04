@@ -72,19 +72,28 @@ content.setDividerPositions(0.68);
 root.setCenter(content);
 ```
 
-## 4. เพิ่มข้อมูลจริงเมื่อกดปุ่ม
+## 4. ต่อยอด Event Handler เดิม
 
-ใน `handleAddMachine()` หลังตรวจข้อมูลครบ:
+ใน `handleAddMachine()` จาก EP 3.6 เปลี่ยนบรรทัดตรวจตำแหน่งจาก:
+
+```java
+requireText(locationField, "กรุณากรอกตำแหน่ง");
+```
+
+เป็น:
 
 ```java
 String location = requireText(locationField, "กรุณากรอกตำแหน่ง");
+```
+
+จากนั้นแทนที่บรรทัด `machineCount.set(machineCount.get() + 1);` ด้วย:
+
+```java
 machines.add(new MachineRow(id, name, location, "กำลังทำงาน"));
 machineCount.set(machines.size());
 ```
 
-`กำลังทำงาน` ในบรรทัดนี้เป็นสถานะของเครื่องจักรแต่ละแถว ส่วน Card ด้านบนใช้ชื่อ `สถานะปกติ` เพื่อสรุปจำนวนแถวที่อยู่ในสถานะนี้
-
-ลบบรรทัดเดิมที่เพิ่ม `machineCount` ทีละหนึ่ง เพื่อไม่ให้นับซ้ำ
+ส่วน Validation, `statusLabel` และการล้าง Form ให้เก็บไว้ตามเดิม การคำนวณ Summary แยกตามสถานะจะเริ่มใน EP 3.8
 
 ## 5. รัน
 
