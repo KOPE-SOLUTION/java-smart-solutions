@@ -85,6 +85,8 @@ private void refreshDashboard() {
 }
 ```
 
+`normalLabel` นับเฉพาะ `MachineStatus.RUNNING` ส่วนสถานะรายเครื่องยังแสดง `กำลังทำงาน` ผ่าน `getDisplayName()` ตามเดิม
+
 เพิ่ม Field `maintenanceLabel` แบบเดียวกับ Summary Label อื่น แล้วนำไปวางในส่วนบนของหน้าจอ ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
 
 ```mermaid

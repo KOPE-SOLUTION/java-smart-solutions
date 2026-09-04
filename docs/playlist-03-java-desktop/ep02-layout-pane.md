@@ -47,7 +47,7 @@ private VBox buildTopArea() {
     HBox summary = new HBox(12);
     summary.getChildren().addAll(
             new Label("ทั้งหมด: 0"),
-            new Label("สถานะปกติ: 0"),
+            new Label("กำลังทำงาน: 0"),
             new Label("Sensor ผิดปกติ: 0")
     );
 
