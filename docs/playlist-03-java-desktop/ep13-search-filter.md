@@ -7,6 +7,8 @@
 - ค้นหาโดยไม่สนใจตัวพิมพ์เล็กและตัวพิมพ์ใหญ่
 - แสดงจำนวนรายการที่พบ
 
+EP นี้แก้ `practice/smart-factory-dashboard/src/main/resources/smartfactory/ui/dashboard-view.fxml`, `practice/smart-factory-dashboard/src/main/java/smartfactory/ui/DashboardController.java` และ `practice/smart-factory-dashboard/src/main/resources/smartfactory/ui/smart-factory.css`
+
 ```mermaid
 flowchart LR
     O[ObservableList] --> F[FilteredList]
@@ -19,7 +21,7 @@ EP นี้เพิ่มเฉพาะการค้นหาด้วย�
 
 ## 1. เพิ่มช่องค้นหาใน FXML
 
-เพิ่ม `HBox` ระหว่างหัวข้อ `ข้อมูลเครื่องจักร` กับ `TableView`:
+ใน `dashboard-view.fxml` หา `<VBox styleClass="content-area">` ภายใน `<center>` แล้วเพิ่ม `HBox` ระหว่าง Label `ข้อมูลเครื่องจักร` กับ `<TableView>`:
 
 ```xml
 <HBox alignment="CENTER_LEFT" spacing="8" styleClass="filter-row">
@@ -38,7 +40,7 @@ EP นี้เพิ่มเฉพาะการค้นหาด้วย�
 import javafx.collections.transformation.FilteredList;
 ```
 
-ต่อจาก `machineItems` เพิ่ม:
+ภายใน Class ต่อจาก Field `machineItems` เพิ่ม:
 
 ```java
 private final FilteredList<Machine> filteredMachines =
@@ -47,7 +49,7 @@ private final FilteredList<Machine> filteredMachines =
 
 `machineItems` ยังเป็นข้อมูลหลัก ส่วน `filteredMachines` เป็นมุมมองที่เลือกเฉพาะรายการซึ่งผ่านเงื่อนไข
 
-เพิ่ม Field ที่เชื่อมกับ FXML:
+เพิ่ม Field ที่เชื่อมกับ FXML ไว้กับกลุ่ม Field `@FXML` เดิม:
 
 ```java
 @FXML private TextField searchField;
@@ -75,7 +77,7 @@ Listener จะเรียกค้นหาใหม่ทุกครั้�
 
 ## 4. สร้าง Predicate สำหรับค้นหา
 
-เพิ่ม Method ต่อไปนี้ใน Controller:
+เพิ่ม Method ต่อไปนี้ภายใน `DashboardController` โดยวางก่อน `refreshDashboard()`:
 
 ```java
 private void applySearch() {
@@ -104,7 +106,7 @@ private static String normalize(String value) {
 
 ## 5. ค้นหาใหม่หลังข้อมูลเปลี่ยน
 
-ใน `refreshDashboard()` เรียก `applySearch()` หลังนำข้อมูลจาก Service มาใส่ในรายการ:
+ใน `refreshDashboard()` เพิ่มเฉพาะบรรทัด `applySearch();` ทันทีหลัง `machineItems.setAll(...)` โดยเก็บคำสั่งอัปเดต Summary ที่เหลือไว้ตามเดิม:
 
 ```java
 machineItems.setAll(service.getMachines());
@@ -116,7 +118,7 @@ Summary Card ยังคงเป็นยอดรวมของเครื�
 
 ## 6. เพิ่ม CSS ของจำนวนผลลัพธ์
 
-เพิ่มใน `smart-factory.css`:
+เพิ่มต่อท้ายไฟล์ `smart-factory.css`:
 
 ```css
 .filter-result {

@@ -4,6 +4,14 @@
 
 ไฟล์ที่ทำตามคลิปให้เก็บใน `practice/smart-factory-dashboard` ซึ่ง Git จะไม่นำขึ้น Repository ส่วนตัวอย่างฉบับสมบูรณ์อยู่ใน `src/main/java/smartfactory/ui` และ `src/main/resources/smartfactory/ui`
 
+## วิธีอ่านตำแหน่งโค้ดในบทเรียน
+
+- `เพิ่ม Import` — วางด้านบนของไฟล์ `.java` ต่อจาก `package` และ Import เดิม
+- `เพิ่ม Field` — วางภายใน Class หลัง Constant หรือ Field เดิม และก่อน Constructor หรือ Method
+- `เพิ่ม Method` — วางภายใน Class ก่อนปีกกาปิดตัวสุดท้ายของ Class
+- `แทนที่` — ลบโค้ดเดิมตามชื่อที่ระบุ แล้ววางโค้ดใหม่เพียงชุดเดียว
+- โค้ด FXML และ CSS จะระบุชื่อไฟล์กับตำแหน่งที่แก้ไว้ในแต่ละ EP
+
 | EP | เนื้อหา | ผลลัพธ์ |
 |---|---|---|
 | [3.1](ep01-javafx-maven-stage-scene.md) | JavaFX, Maven, Stage และ Scene | เปิดหน้าต่าง JavaFX แรก |

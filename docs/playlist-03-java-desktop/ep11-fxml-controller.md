@@ -41,7 +41,7 @@ Remove-Item -LiteralPath $checkpointArchive
 
 คำสั่งนี้นำไฟล์จาก Git Commit ที่ระบุเวอร์ชันแน่นอนมาไว้ใน `practice` จึงไม่เขียนทับ Source ฉบับสมบูรณ์ของ Repository และไม่ดึงความสามารถจาก EP ในอนาคตเข้ามาก่อนเวลา
 
-เปลี่ยน `mainClass` ใน `pom.xml` เป็น:
+ใน `practice/smart-factory-dashboard/pom.xml` หา `<mainClass>` ภายใน `javafx-maven-plugin` แล้วแทนที่ด้วย:
 
 ```xml
 <mainClass>smartfactory.ui.DesktopApp</mainClass>
@@ -84,6 +84,8 @@ runningValue    -> normalValue
 
 ## 4. ดูจุดเชื่อม FXML กับ Controller
 
+ส่วนนี้ใช้เปิดไฟล์ที่ได้จาก Checkpoint แล้วดูจุดเชื่อม ไม่ต้องคัดลอกโค้ดตัวอย่างไปเพิ่มซ้ำ
+
 ใน FXML:
 
 ```xml
@@ -108,6 +110,8 @@ private void handleAddMachine() {
 
 `DesktopApp` ใช้ Controller Factory เพื่อไม่ให้ Controller สร้าง Service เอง:
 
+โค้ดนี้มีอยู่ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/ui/DesktopApp.java` จาก Checkpoint แล้ว ให้เปิดดูโดยไม่ต้องเพิ่มซ้ำ:
+
 ```java
 SmartFactoryService service = SmartFactoryService.createWithSampleData();
 loader.setControllerFactory(type -> {
@@ -123,6 +127,8 @@ loader.setControllerFactory(type -> {
 ## 6. ตรวจ Event ที่เปลี่ยนข้อมูล
 
 ทั้งการอัปเดต Sensor และการบำรุงรักษาต้องเรียก `refreshDashboard()` หลัง Service เสมอ:
+
+เปิด `DashboardController.java` แล้วตรวจใน `handleUpdateSensor()` และ `handleMaintenance()` โค้ดต่อไปนี้มีอยู่จาก Checkpoint แล้ว ไม่ต้องเพิ่มซ้ำ:
 
 ```java
 service.updateSensor(selected.getId(), temperature, vibration);

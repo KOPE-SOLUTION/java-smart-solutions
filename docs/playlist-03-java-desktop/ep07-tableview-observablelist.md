@@ -4,6 +4,8 @@
 
 แสดงข้อมูลเครื่องจักรใน `TableView` และให้ตารางติดตามรายการจาก `ObservableList`
 
+EP นี้แก้ไฟล์ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java`
+
 ```mermaid
 flowchart LR
     O[ObservableList] --> T[TableView]
@@ -21,7 +23,7 @@ flowchart LR
 private record MachineRow(String id, String name, String location, String status) {}
 ```
 
-เพิ่ม Import และ Field:
+เพิ่ม Import ด้านบนไฟล์ต่อจาก Import เดิม:
 
 ```java
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -29,12 +31,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+```
 
+เพิ่ม Field ภายใน Class ต่อจาก `totalLabel`:
+
+```java
 private final ObservableList<MachineRow> machines = FXCollections.observableArrayList();
 private final TableView<MachineRow> machineTable = new TableView<>();
 ```
 
 ## 2. สร้างตาราง
+
+เพิ่ม Method นี้ภายใน Class โดยวางต่อจาก `buildMachineForm()`:
 
 ```java
 private TableView<MachineRow> buildMachineTable() {
@@ -58,13 +66,13 @@ private TableView<MachineRow> buildMachineTable() {
 
 ## 3. วางตารางกับ Form คนละฝั่ง
 
-เพิ่ม Import:
+เพิ่ม Import ด้านบนไฟล์:
 
 ```java
 import javafx.scene.control.SplitPane;
 ```
 
-ใน `start()` แทนที่ `root.setCenter(...)` เดิม:
+ใน `start()` แทนที่บรรทัด `root.setCenter(buildMachineForm());` เดิม:
 
 ```java
 SplitPane content = new SplitPane(buildMachineTable(), buildMachineForm());

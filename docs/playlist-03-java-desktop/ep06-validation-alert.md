@@ -4,6 +4,8 @@
 
 ตรวจข้อมูลก่อนเพิ่มเครื่องจักร และแจ้งผู้ใช้ด้วย Popup ภาษาไทยที่อ่านได้ชัดเจน
 
+EP นี้แก้ไฟล์ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java`
+
 ## 1. เตรียมค่า Summary ก่อนเริ่ม
 
 ก่อนเพิ่ม Validation ให้ตรวจค่าบน Summary ก่อน หากยังเห็น `กำลังทำงาน: 5` หรือ `Sensor ผิดปกติ: 1` ให้แก้ค่าตัวอย่างใน `buildTopArea()` เป็น:
@@ -25,6 +27,8 @@ flowchart TD
 
 ## 2. เพิ่ม Method ตรวจข้อความ
 
+เปิด `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java` แล้วเพิ่ม Method นี้ภายใน Class โดยวางก่อน `handleAddMachine()`:
+
 ```java
 private String requireText(TextField field, String message) {
     String value = field.getText().trim();
@@ -37,7 +41,7 @@ private String requireText(TextField field, String message) {
 
 ## 3. แก้ Event Handler
 
-แทนที่ `handleAddMachine()` เดิม:
+ในไฟล์ `DashboardApp.java` แทนที่ `handleAddMachine()` เดิมทั้ง Method:
 
 ```java
 private void handleAddMachine() {
@@ -69,14 +73,14 @@ temperatureField.clear();
 
 ## 4. สร้าง Alert
 
-เพิ่ม Import:
+เพิ่ม Import ด้านบนของ `DashboardApp.java` ต่อจาก Import เดิม:
 
 ```java
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 ```
 
-เพิ่ม Method:
+เพิ่ม Method นี้ภายใน Class โดยวางต่อจาก `handleAddMachine()`:
 
 ```java
 private void showError(String message) {

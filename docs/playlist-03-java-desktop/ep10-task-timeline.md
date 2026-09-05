@@ -6,6 +6,8 @@
 - ใช้ `Timeline` เรียกงานเป็นช่วงเวลา
 - อัปเดต UI เมื่อ Task สำเร็จโดยไม่ทำให้หน้าต่างค้าง
 
+EP นี้แก้ `DashboardApp.java` และสร้าง `SensorUpdate.java` กับ `SensorSimulationTask.java` ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
+
 ```mermaid
 sequenceDiagram
     participant FX as JavaFX Application Thread
@@ -49,11 +51,15 @@ machineTable.getColumns().setAll(
 );
 ```
 
-เพิ่ม Import และ Method สำหรับจัดรูปแบบทศนิยม:
+เพิ่ม Import `Locale` ด้านบนของ `DashboardApp.java`:
 
 ```java
 import java.util.Locale;
+```
 
+เพิ่ม Method จัดรูปแบบทศนิยมภายใน Class โดยวางต่อจาก `buildMachineTable()`:
+
+```java
 private static String format(double value) {
     return String.format(Locale.ROOT, "%.1f", value);
 }
@@ -71,7 +77,7 @@ public record SensorUpdate(String machineId, double temperature, double vibratio
 
 ## 3. สร้าง Background Task
 
-สร้าง `SensorSimulationTask.java` ใน Package เดียวกัน:
+สร้าง `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/SensorSimulationTask.java`:
 
 ```java
 package smartfactory.desktop;
@@ -104,7 +110,7 @@ public class SensorSimulationTask extends Task<List<SensorUpdate>> {
 
 ## 4. รัน Task และกลับมาอัปเดต UI
 
-เพิ่ม Method ใน `DashboardApp`:
+เพิ่ม Method นี้ภายใน `DashboardApp` โดยวางต่อจาก `refreshDashboard()`:
 
 ```java
 private void simulateInBackground() {
@@ -128,21 +134,25 @@ private void simulateInBackground() {
 }
 ```
 
-เพิ่ม Import `java.util.List` และ `smartfactory.model.Machine`
+เพิ่ม Import `java.util.List` และ `smartfactory.model.Machine` ด้านบนของ `DashboardApp.java`
 
 ## 5. เรียกอัตโนมัติทุก 2 วินาที
 
-เพิ่ม Import และ Field:
+เพิ่ม Import ด้านบนของ `DashboardApp.java`:
 
 ```java
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+```
 
+เพิ่ม Field ภายใน Class ต่อจาก Field เดิม:
+
+```java
 private Timeline sensorTimeline;
 ```
 
-ใน `start()` หลังสร้างหน้าจอ:
+ใน `start()` วางชุดนี้หลัง `stage.show();` และก่อนปีกกาปิดของ Method:
 
 ```java
 sensorTimeline = new Timeline(

@@ -5,6 +5,8 @@
 - เปลี่ยนสีสถานะเฉพาะ Cell
 - สรุปจำนวนแต่ละสถานะจากข้อมูลในรายการ
 
+โค้ด Java ใน EP นี้แก้ที่ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java` ส่วน CSS แก้ที่ `practice/smart-factory-dashboard/src/main/resources/smartfactory/desktop/dashboard.css`
+
 ```mermaid
 flowchart LR
     D[MachineRow.status] --> C[CellFactory]
@@ -16,7 +18,7 @@ flowchart LR
 
 ## 1. เก็บ Label สรุปเป็น Field
 
-เพิ่ม Field:
+เพิ่ม Field ภายใน Class ต่อจาก `totalLabel`:
 
 ```java
 private final Label normalLabel = new Label("สถานะปกติ: 0");
@@ -46,7 +48,7 @@ EP นี้เป็นจุดที่เริ่มใช้ชื่อ C
 
 ## 2. สร้าง Cell ตามสถานะ
 
-เพิ่ม Import:
+เพิ่ม Import ด้านบนของ `DashboardApp.java`:
 
 ```java
 import javafx.scene.control.TableCell;
@@ -77,7 +79,7 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 });
 ```
 
-เพิ่ม CSS:
+เพิ่ม CSS ต่อท้ายไฟล์ `dashboard.css`:
 
 ```css
 .status-running { -fx-text-fill: #22c55e; -fx-font-weight: bold; }
@@ -88,6 +90,8 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 ## 3. Refresh Summary
 
 Summary เป็นยอดรวมของเครื่องจักรทุกแถว ไม่ใช่ข้อมูลของแถวที่กำลังเลือก
+
+เพิ่ม Method ทั้งสองภายใน Class โดยวางต่อจาก `buildMachineTable()`:
 
 ```java
 private void refreshSummary() {
@@ -114,7 +118,7 @@ refreshSummary();
 
 ## 4. ทดลองสถานะอื่นชั่วคราว
 
-เปลี่ยนสถานะที่สร้างจาก `กำลังทำงาน` เป็น `Sensor ผิดปกติ` แล้วรันใหม่เพื่อดูสีและตัวเลข จากนั้นเปลี่ยนกลับ
+ใน `handleAddMachine()` เปลี่ยนข้อความสถานะของ `new MachineRow(...)` จาก `กำลังทำงาน` เป็น `Sensor ผิดปกติ` แล้วรันเพื่อดูสีและตัวเลข จากนั้นเปลี่ยนกลับเป็น `กำลังทำงาน`
 
 ## Challenge
 

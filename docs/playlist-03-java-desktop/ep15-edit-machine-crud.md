@@ -19,9 +19,11 @@ flowchart LR
 
 หลังจบ EP นี้ CRUD จะครบทั้ง Create, Read, Update และ Delete
 
+EP นี้แก้ Model, Service, Test, FXML, Controller และ CSS ภายใน `practice/smart-factory-dashboard` โดยแต่ละขั้นระบุไฟล์ให้ตรงกับชั้นที่รับผิดชอบ
+
 ## 1. เพิ่มพฤติกรรมแก้ไขใน Model
 
-ใน `FactoryDevice.java` เพิ่ม Method:
+เปิด `practice/smart-factory-dashboard/src/main/java/smartfactory/model/FactoryDevice.java` แล้วเพิ่ม Method นี้ก่อน `requireText(...)`:
 
 ```java
 public void updateDetails(String name, String location) {
@@ -38,7 +40,7 @@ public void updateDetails(String name, String location) {
 
 ## 2. เพิ่ม Update ใน Service
 
-ใน `SmartFactoryService.java` เพิ่ม:
+เปิด `practice/smart-factory-dashboard/src/main/java/smartfactory/service/SmartFactoryService.java` แล้วเพิ่ม Method นี้ต่อจาก `findRequired(...)` และก่อน `updateSensor(...)`:
 
 ```java
 public void updateMachineDetails(String id, String name, String location) {
@@ -56,7 +58,7 @@ Controller จึงไม่ต้องค้นหาและแก้ Objec
 testMachineDetailsCanBeUpdated();
 ```
 
-จากนั้นสร้าง Test:
+เพิ่ม Test Method นี้ภายใน Class โดยวางก่อนกลุ่ม Method `assert...` ด้านท้ายไฟล์:
 
 ```java
 private static void testMachineDetailsCanBeUpdated() {
@@ -96,7 +98,7 @@ System.out.println("PASS: 7 tests");
 
 ## 4. เพิ่มปุ่มของโหมดแก้ไขใน FXML
 
-เปลี่ยนปุ่มเดิมในช่อง `จัดการข้อมูล` เป็น `HBox`:
+เปิด `practice/smart-factory-dashboard/src/main/resources/smartfactory/ui/dashboard-view.fxml` หา Label `จัดการ` และปุ่ม `เพิ่มเครื่องจักร` ใน `GridPane` แล้วแทนที่ทั้งสอง Component ด้วย:
 
 ```xml
 <Label fx:id="formModeLabel" text="จัดการข้อมูล"
@@ -114,7 +116,7 @@ System.out.println("PASS: 7 tests");
 </HBox>
 ```
 
-เพิ่มสีของปุ่มบันทึกใน `smart-factory.css`:
+เพิ่มสีของปุ่มบันทึกต่อท้าย `practice/smart-factory-dashboard/src/main/resources/smartfactory/ui/smart-factory.css`:
 
 ```css
 .button-success {
@@ -124,7 +126,7 @@ System.out.println("PASS: 7 tests");
 
 ## 5. เชื่อม Field และการเลือกแถว
 
-เพิ่ม Field ใน `DashboardController`:
+เปิด `practice/smart-factory-dashboard/src/main/java/smartfactory/ui/DashboardController.java` แล้วเพิ่ม Field เหล่านี้ไว้กับกลุ่ม Field `@FXML` เดิม:
 
 ```java
 @FXML private Label formModeLabel;
@@ -133,7 +135,7 @@ System.out.println("PASS: 7 tests");
 @FXML private Button cancelEditButton;
 ```
 
-เปลี่ยน Listener ของ TableView:
+ใน `initialize()` แทนที่ Listener ของ TableView เดิมซึ่งเรียก `fillSensorFields(selected)` ด้วย:
 
 ```java
 machineTable.getSelectionModel().selectedItemProperty().addListener(
@@ -141,7 +143,7 @@ machineTable.getSelectionModel().selectedItemProperty().addListener(
 );
 ```
 
-เพิ่ม Method สำหรับสลับ Form เข้าสู่โหมดแก้ไข:
+เพิ่ม Method สำหรับสลับ Form เข้าสู่โหมดแก้ไขต่อจาก `initialize()`:
 
 ```java
 private void handleMachineSelection(Machine machine) {
@@ -166,7 +168,7 @@ private void handleMachineSelection(Machine machine) {
 
 ## 6. บันทึกและยกเลิกการแก้ไข
 
-เพิ่ม Event บันทึก:
+เพิ่ม Event บันทึกไว้กับกลุ่ม Event Handler ใน `DashboardController` โดยวางต่อจาก `handleAddMachine()`:
 
 ```java
 @FXML
@@ -184,7 +186,7 @@ private void handleUpdateMachine() {
 }
 ```
 
-เพิ่ม Event ยกเลิก:
+เพิ่ม Event ยกเลิกต่อจาก `handleUpdateMachine()`:
 
 ```java
 @FXML
@@ -195,7 +197,7 @@ private void handleCancelEdit() {
 }
 ```
 
-เปลี่ยน `clearMachineForm()` เป็น:
+แทนที่ Method `clearMachineForm()` เดิมทั้ง Method ด้วย:
 
 ```java
 private void resetMachineForm() {
@@ -210,7 +212,7 @@ private void resetMachineForm() {
 }
 ```
 
-ใน `handleAddMachine()` เปลี่ยนให้เรียก `resetMachineForm()` หลังเพิ่มสำเร็จด้วย
+ใน `handleAddMachine()` แทนที่บรรทัด `clearMachineForm();` ด้วย `resetMachineForm();`
 
 ## 7. รันและตรวจผล
 

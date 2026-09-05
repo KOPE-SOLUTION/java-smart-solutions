@@ -6,6 +6,8 @@
 
 EP นี้เริ่มจาก Create, Read และ Delete ก่อน ส่วน Update สำหรับแก้ชื่อกับตำแหน่งจะเติมให้ CRUD ครบใน [EP 3.15](ep15-edit-machine-crud.md)
 
+โค้ดหน้าจอใน EP นี้แก้ที่ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java` และเพิ่มสีสถานะใน `practice/smart-factory-dashboard/src/main/resources/smartfactory/desktop/dashboard.css`
+
 ```mermaid
 flowchart LR
     U[JavaFX UI] -->|เรียก Method| S[SmartFactoryService]
@@ -34,7 +36,7 @@ Checkpoint `3da3c5d` เป็น Git Commit ที่ระบุเวอร�
 
 ## 2. เปลี่ยนข้อมูลของตารางเป็น `Machine`
 
-ลบ `MachineRow` แล้วเพิ่ม Import:
+ใน `DashboardApp.java` ลบ `MachineRow` ที่ท้าย Class แล้วเพิ่ม Import ด้านบนไฟล์:
 
 ```java
 import smartfactory.model.Machine;
@@ -42,15 +44,15 @@ import smartfactory.model.MachineStatus;
 import smartfactory.service.SmartFactoryService;
 ```
 
-เปลี่ยน Field:
+แทนที่ Field `machines` และ `machineTable` เดิมภายใน Class พร้อมเพิ่ม `service`:
 
 ```java
-private final SmartFactoryService service = new SmartFactoryService();
+private final SmartFactoryService service = SmartFactoryService.createWithSampleData();
 private final ObservableList<Machine> machines = FXCollections.observableArrayList();
 private final TableView<Machine> machineTable = new TableView<>();
 ```
 
-เปลี่ยน Generic ของทุก `TableColumn` จาก `MachineRow` เป็น `Machine` และอ่านค่าผ่าน Getter เช่น:
+ใน `buildMachineTable()` เปลี่ยน Generic ของทุก `TableColumn` จาก `MachineRow` เป็น `Machine` และเปลี่ยน Cell Value Factory ของสามคอลัมน์แรกเป็น:
 
 ```java
 idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getId()));
@@ -58,14 +60,20 @@ nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue()
 locationColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLocation()));
 ```
 
-สำหรับสถานะใช้:
+ใน `buildMachineTable()` แทนที่การประกาศ `statusColumn` และ Cell Value Factory เดิมด้วย:
 
 ```java
 TableColumn<Machine, MachineStatus> statusColumn = new TableColumn<>("สถานะ");
 statusColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getStatus()));
 ```
 
-เพิ่ม Import `ReadOnlyObjectWrapper` และเปลี่ยน `TableCell` ให้รับ `MachineStatus`:
+เพิ่ม Import ด้านบนไฟล์:
+
+```java
+import javafx.beans.property.ReadOnlyObjectWrapper;
+```
+
+จากนั้นใน `buildMachineTable()` เก็บการสร้าง `statusColumn` กับ `setCellValueFactory(...)` ด้านบนไว้ และแทนที่เฉพาะ `statusColumn.setCellFactory(...)` เดิมด้วยชุดนี้:
 
 ```java
 statusColumn.setCellFactory(column -> new TableCell<>() {
@@ -98,7 +106,7 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 });
 ```
 
-เพิ่ม CSS สำหรับสถานะที่เพิ่งนำมาจาก OOP Core:
+เพิ่ม CSS สำหรับสถานะที่เพิ่งนำมาจาก OOP Core ต่อท้ายไฟล์ `dashboard.css`:
 
 ```css
 .status-offline { -fx-text-fill: #94a3b8; -fx-font-weight: bold; }
@@ -107,7 +115,7 @@ statusColumn.setCellFactory(column -> new TableCell<>() {
 
 ## 3. เพิ่มคอลัมน์ชั่วโมงและการบำรุงรักษา
 
-เพิ่มใน `buildMachineTable()`:
+เพิ่มใน `buildMachineTable()` ต่อจาก `statusColumn.setCellFactory(...)` และก่อนกำหนดรายการคอลัมน์:
 
 ```java
 TableColumn<Machine, Integer> hoursColumn = new TableColumn<>("ชั่วโมง");
@@ -136,7 +144,7 @@ machineTable.getColumns().setAll(
 
 ## 4. เพิ่มผ่าน Service
 
-แทนที่ `machines.add(...)` ใน `handleAddMachine()`:
+ใน `DashboardApp.java` แทนที่บรรทัด `machines.add(...)` และ `refreshSummary()` ภายใน `handleAddMachine()` ด้วย:
 
 ```java
 service.addMachine(new Machine(id, name, location));
@@ -145,7 +153,7 @@ refreshDashboard();
 
 Constructor แบบสามค่าเริ่มเครื่องใหม่ด้วยสถานะ `OFFLINE` ตามกฎของ Model เครื่องจะเปลี่ยนเป็น `RUNNING`, `WARNING` หรือ `EMERGENCY_STOP` เมื่อได้รับค่าจาก Sensor ใน EP 3.10
 
-เพิ่ม Method กลางสำหรับ Refresh:
+เพิ่ม Method กลางภายใน Class โดยวางต่อจาก `handleAddMachine()`:
 
 ```java
 private void refreshDashboard() {
@@ -160,7 +168,7 @@ private void refreshDashboard() {
 
 `normalLabel` นับเฉพาะ `MachineStatus.RUNNING` ส่วนสถานะรายเครื่องยังแสดง `กำลังทำงาน` ผ่าน `getDisplayName()` ตามเดิม
 
-เพิ่ม Field แล้วนำไปวางเป็น Card สุดท้ายใน `HBox summary`:
+เพิ่ม Field ภายใน Class ต่อจาก `emergencyLabel`:
 
 ```java
 private final Label maintenanceLabel = new Label("ต้องบำรุงทั้งหมด: 0");
@@ -182,6 +190,12 @@ HBox summary = new HBox(
 
 ตัวเลขนี้นับทุกเครื่องที่ `requiresMaintenance()` คืนค่า `true` ไม่ใช่เฉพาะแถวที่เลือก
 
+ใน `start()` เพิ่มบรรทัดนี้หลัง `root.setCenter(content);` และก่อน `stage.show();` เพื่อโหลดข้อมูลตัวอย่างเข้าสู่ตารางเมื่อเปิดโปรแกรม:
+
+```java
+refreshDashboard();
+```
+
 ```mermaid
 flowchart LR
     W[WARNING จาก Sensor] --> WC[Sensor ผิดปกติ]
@@ -193,7 +207,7 @@ flowchart LR
 
 ## 5. เพิ่มปุ่มลบ
 
-สร้างปุ่มและวางข้างปุ่มเพิ่ม:
+ใน `buildMachineForm()` แทนที่บรรทัด `form.add(addButton, 1, 3);` ด้วยชุดนี้ เพื่อสร้างปุ่ม ผูก Event และนำปุ่มไปวางใน Form:
 
 ```java
 Button deleteButton = new Button("ลบรายการที่เลือก");
@@ -206,13 +220,16 @@ deleteButton.setOnAction(event -> {
     service.removeMachine(selected.getId());
     refreshDashboard();
 });
+
+HBox actionButtons = new HBox(8, addButton, deleteButton);
+form.add(actionButtons, 1, 3);
 ```
 
 ตอนนี้ UI รู้เพียงว่าเรียก Service อะไร แต่กฎเพิ่ม ลบ ค้นหา และตรวจสถานะยังอยู่ใน OOP Core
 
 ## 6. เพิ่มปุ่มบำรุงรักษา
 
-หลังเรียก Service ต้อง Refresh ทั้งตารางและ Summary:
+ใน `buildMachineForm()` เพิ่มชุดนี้ต่อจาก `form.add(actionButtons, 1, 3);` และก่อน `return form;` ปุ่มใหม่จะถูกเพิ่มเข้า `actionButtons` ที่สร้างในขั้นก่อนหน้า:
 
 ```java
 Button maintenanceButton = new Button("บำรุงเสร็จแล้ว");
@@ -225,9 +242,19 @@ maintenanceButton.setOnAction(event -> {
     service.performMaintenance(selected.getId());
     refreshDashboard();
 });
+
+actionButtons.getChildren().add(maintenanceButton);
 ```
 
 ลำดับสำคัญคือ `Service เปลี่ยนข้อมูล -> refreshDashboard() อ่านค่าล่าสุด -> UI แสดงผล` หากขาดบรรทัด Refresh ตัวเลขด้านบนจะยังเป็นค่าเดิม
+
+## 7. รันและตรวจผล
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
+```
+
+เมื่อเปิดโปรแกรมต้องเห็นข้อมูลตัวอย่าง 3 เครื่อง จากนั้นทดลองเพิ่ม `M-004`, เลือกแถวเพื่อลบ และเลือก `M-002` เพื่อบันทึกการบำรุงรักษา ตารางกับ Summary ต้องเปลี่ยนทันทีหลังแต่ละคำสั่ง
 
 ## Challenge
 

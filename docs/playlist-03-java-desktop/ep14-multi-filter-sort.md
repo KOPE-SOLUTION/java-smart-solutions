@@ -8,6 +8,8 @@
 - ล้างทุกเงื่อนไขด้วยปุ่มเดียว
 - เรียงผลลัพธ์ด้วยการกดหัวตาราง
 
+EP นี้แก้ `dashboard-view.fxml`, `DashboardController.java` และ `smart-factory.css` ภายใน `practice/smart-factory-dashboard/src/main`
+
 ```mermaid
 flowchart LR
     O[ObservableList] --> F[FilteredList]
@@ -53,7 +55,7 @@ private static final String MAINTENANCE_REQUIRED = "ต้องบำรุง"
 private static final String MAINTENANCE_NORMAL = "ปกติ";
 ```
 
-เพิ่ม Field:
+เพิ่ม `sortedMachines` ภายใน Class ต่อจาก `filteredMachines` และเพิ่ม Field `@FXML` ทั้งสองไว้กับกลุ่ม Field ของ Form:
 
 ```java
 private final SortedList<Machine> sortedMachines =
@@ -65,7 +67,7 @@ private final SortedList<Machine> sortedMachines =
 
 ## 3. ตั้งค่าตัวเลือกและ Listener
 
-เพิ่ม Method:
+เพิ่ม Method นี้ภายใน `DashboardController` โดยวางต่อจาก `initialize()`:
 
 ```java
 private void configureFilters() {
@@ -88,18 +90,20 @@ private void configureFilters() {
 }
 ```
 
-ใน `initialize()` เรียก Method นี้ และเปลี่ยนให้ TableView ใช้ `sortedMachines`:
+ใน `initialize()` เพิ่มคำสั่งนี้ต่อจาก `configureTable();`:
 
 ```java
-configureTable();
 configureFilters();
-bindSummaryCards();
+```
 
+จากนั้นแทนที่ `machineTable.setItems(filteredMachines);` ด้วย:
+
+```java
 sortedMachines.comparatorProperty().bind(machineTable.comparatorProperty());
 machineTable.setItems(sortedMachines);
 ```
 
-ลบ Listener ของ `applySearch()` จาก EP 3.13 เพราะ `configureFilters()` สร้าง Listener ชุดใหม่ให้แล้ว
+ลบเฉพาะ Listener ที่เรียก `applySearch()` จาก EP 3.13 เพราะ `configureFilters()` สร้าง Listener ชุดใหม่ให้แล้ว ส่วนคำสั่งอื่นใน `initialize()` ให้เก็บไว้ตามเดิม
 
 ## 4. รวมเงื่อนไขใน Predicate เดียว
 
@@ -147,6 +151,8 @@ applyFilters();
 
 ## 5. เพิ่ม Event ล้างตัวกรอง
 
+เพิ่ม Method นี้ภายใน `DashboardController` ไว้กับกลุ่ม Event Handler อื่น ปุ่มใน FXML จะเรียกผ่าน `onAction="#handleClearFilters"`:
+
 ```java
 @FXML
 private void handleClearFilters() {
@@ -159,6 +165,8 @@ private void handleClearFilters() {
 ```
 
 ## 6. เพิ่ม CSS ให้ ComboBox
+
+เพิ่มชุดนี้ต่อท้ายไฟล์ `smart-factory.css`:
 
 ```css
 .combo-box {

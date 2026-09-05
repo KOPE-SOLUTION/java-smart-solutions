@@ -50,7 +50,7 @@ module smartfactory.dashboard {
 
 ## 3. ตั้งค่า Runtime Image
 
-ใน Plugin `javafx-maven-plugin` เปลี่ยน `mainClass` และเพิ่มค่าเหล่านี้:
+เปิด `practice/smart-factory-dashboard/pom.xml` แล้วหา `<configuration>` ภายใน Plugin `javafx-maven-plugin` จากนั้นแทนที่ `<mainClass>` เดิมและเพิ่มค่าที่เหลือไว้ใน `<configuration>` เดียวกัน:
 
 ```xml
 <mainClass>smartfactory.dashboard/smartfactory.ui.DesktopApp</mainClass>
