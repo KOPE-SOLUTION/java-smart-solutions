@@ -39,7 +39,6 @@ module smartfactory.dashboard {
     requires javafx.fxml;
 
     exports smartfactory.model;
-    exports smartfactory.oop;
     exports smartfactory.service;
     exports smartfactory.ui;
     opens smartfactory.ui to javafx.fxml;
@@ -75,7 +74,21 @@ module smartfactory.dashboard {
 
 Runtime Image รวม Java Runtime และ Module ที่แอปใช้ เหมาะเป็นฐานก่อนสร้าง Installer ในขั้นต่อยอด
 
-## 4. ขอบเขตต่อยอด IoT
+## 4. เตรียมและรัน Test
+
+1. เปิดไฟล์ [SmartFactoryTest.java](../../lesson-resources/ep3-9-oop-core/tests/SmartFactoryTest.java) จากชุด OOP Core
+2. สร้างโฟลเดอร์ `practice/smart-factory-dashboard/src/test/java/smartfactory/`
+3. คัดลอกไฟล์ไปไว้ที่ `practice/smart-factory-dashboard/src/test/java/smartfactory/SmartFactoryTest.java` หากมีไฟล์นี้อยู่แล้วจากขั้นเตรียมชุดเดิม ให้ใช้ไฟล์เดิมต่อได้
+
+รันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml test-compile org.codehaus.mojo:exec-maven-plugin:3.5.0:java "-Dexec.mainClass=smartfactory.SmartFactoryTest" "-Dexec.classpathScope=test"
+```
+
+ผลที่ต้องเห็นคือ `PASS: 6 tests` โดยครอบคลุมสถานะ Sensor การบำรุงรักษา และการป้องกันรหัสซ้ำ
+
+## 5. ขอบเขตต่อยอด IoT
 
 ให้สร้าง Adapter ใหม่สำหรับ MQTT หรือ Database แล้วเรียก `SmartFactoryService` แทนการเขียน Network Code ไว้ใน Controller โดยตรง วิธีนี้รักษา OOP และทำให้เปลี่ยน Broker หรือ Database ได้ง่ายกว่า
 
@@ -86,7 +99,7 @@ Runtime Image รวม Java Runtime และ Module ที่แอปใช�
 - ข้อมูลเริ่มต้นแสดง `Sensor ผิดปกติ = 1` และ `ต้องบำรุงทั้งหมด = 2`
 - หยุด Auto Sensor ก่อนตรวจ แล้ว Summary ลดจาก `2 -> 1 -> 0` เมื่อบำรุง `M-002` และ `M-003` ตามลำดับ
 - Auto Sensor ทำงานโดยหน้าต่างไม่ค้าง
-- `SmartFactoryTest` ใน Checkpoint ของบทนี้ยังเป็น `PASS: 6 tests` ส่วน Test ลำดับที่ 7 จะเพิ่มพร้อมความสามารถแก้ไขเครื่องจักรใน EP 3.15
+- `SmartFactoryTest` จากชุด OOP Core แสดง `PASS: 6 tests` ส่วน Test ลำดับที่ 7 จะเพิ่มพร้อมความสามารถแก้ไขเครื่องจักรใน EP 3.15
 - Runtime Image เปิดได้บน Windows
 
 ซอร์สฉบับเต็ม: [`src/main/java/smartfactory/ui`](../../src/main/java/smartfactory/ui)

@@ -26,7 +26,7 @@ flowchart LR
 
 ## 2. ใช้ Checkpoint สำหรับเริ่มแยกชั้น
 
-Source ฉบับสมบูรณ์บน Branch หลักมี Search, Filter และ Edit จาก EP หลัง ๆ อยู่แล้ว จึงไม่ควรคัดลอกไฟล์ปัจจุบันมาใช้ตรง ๆ ใน EP นี้ ให้ใช้ Checkpoint เดียวกับ EP 3.9 ซึ่งมีความสามารถถึง Background Task แต่ยังไม่มีเนื้อหา EP 3.13–EP 3.15
+Source ฉบับสมบูรณ์บน Branch หลักมี Search, Filter และ Edit จาก EP หลัง ๆ อยู่แล้ว จึงไม่ควรคัดลอกไฟล์ปัจจุบันมาใช้ตรง ๆ ใน EP นี้ ให้ใช้ Checkpoint ที่เข้ากับชุด OOP Core จาก EP3.9 ซึ่งมีความสามารถถึง Background Task แต่ยังไม่มีเนื้อหา EP 3.13–EP 3.15
 
 รันจากโฟลเดอร์หลักของ Repository:
 

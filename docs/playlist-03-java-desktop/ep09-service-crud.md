@@ -17,22 +17,31 @@ flowchart LR
     S -->|ส่งรายการกลับ| U
 ```
 
-## 1. นำ OOP Core จาก Playlist 2 มาใช้
+## 1. เตรียม OOP Core
 
-รันจากโฟลเดอร์หลักของ Repository โดยใช้ Checkpoint ก่อนเพิ่ม Search และ Edit เพื่อไม่ให้ความสามารถจาก EP หลัง ๆ ติดเข้ามาก่อนเวลา:
+ใช้ [ชุดไฟล์ OOP Core สำหรับ EP3.9](../../lesson-resources/ep3-9-oop-core/) ซึ่งเตรียม Model และ Service ที่ต่อยอดจาก Playlist 2 ไว้ให้แล้ว
 
-```powershell
-$checkpointArchive = Join-Path $env:TEMP "javafx-ep39-checkpoint.tar"
-git archive --format=tar --output=$checkpointArchive 3da3c5d `
-    src/main/java/smartfactory/model `
-    src/main/java/smartfactory/oop `
-    src/main/java/smartfactory/service `
-    src/test/java/smartfactory/SmartFactoryTest.java
-tar -xf $checkpointArchive -C .\practice\smart-factory-dashboard
-Remove-Item -LiteralPath $checkpointArchive
+1. [ดาวน์โหลด ZIP](../../lesson-resources/ep3-9-oop-core/ep3-9-oop-core.zip?raw=true) แล้วแตกไฟล์ หรือเปิดโฟลเดอร์ `lesson-resources/ep3-9-oop-core` ใน Repository ที่ดาวน์โหลดไว้
+2. คัดลอกทั้งโฟลเดอร์ `model` และ `service` ไปวางใน `practice/smart-factory-dashboard/src/main/java/smartfactory/` ข้างโฟลเดอร์ `desktop`
+3. ตรวจโครงสร้างให้ตรงตามนี้:
+
+```text
+practice/smart-factory-dashboard/src/main/java/smartfactory/
+├── desktop/
+│   └── DashboardApp.java
+├── model/
+│   ├── FactoryDevice.java
+│   ├── Machine.java
+│   ├── MachineStatus.java
+│   ├── Maintainable.java
+│   └── SensorReading.java
+└── service/
+    └── SmartFactoryService.java
 ```
 
-Checkpoint `3da3c5d` เป็น Git Commit ที่ระบุเวอร์ชันแน่นอน จึงได้ OOP Core ที่ตรงกับลำดับบทเรียนนี้ แม้ Source ฉบับสมบูรณ์บน Branch หลักจะพัฒนาต่อไปแล้ว คำสั่งนี้เขียนเฉพาะใน `practice` ซึ่ง Git ไม่นำขึ้น Repository
+หากมี `model` หรือ `service` อยู่แล้ว ให้สำรองสองโฟลเดอร์นั้นก่อนใช้ชุดนี้ เก็บ `DashboardApp.java` และ `dashboard.css` ที่ทำไว้ต่อได้เลย
+
+`Machine` แทนเครื่องจักรแต่ละเครื่อง ส่วน `SmartFactoryService` จัดการรายการเครื่องจักรและเป็นจุดที่หน้าจอเรียกใช้งาน
 
 ## 2. เปลี่ยนข้อมูลของตารางเป็น `Machine`
 
@@ -52,6 +61,12 @@ private final ObservableList<Machine> machines = FXCollections.observableArrayLi
 private final TableView<Machine> machineTable = new TableView<>();
 ```
 
+เปลี่ยนบรรทัดประกาศ Method `buildMachineTable()` ให้คืนตารางชนิด `Machine` ด้วย:
+
+```java
+private TableView<Machine> buildMachineTable() {
+```
+
 ใน `buildMachineTable()` เปลี่ยน Generic ของทุก `TableColumn` จาก `MachineRow` เป็น `Machine` และเปลี่ยน Cell Value Factory ของสามคอลัมน์แรกเป็น:
 
 ```java
@@ -59,6 +74,8 @@ idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().g
 nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
 locationColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLocation()));
 ```
+
+หากเพิ่ม Event เลือกแถวไว้ใน EP3.7 ให้เปลี่ยน `MachineRow selected` เป็น `Machine selected` และใช้ `selected.getId()` กับ `selected.getName()` แทน `selected.id()` กับ `selected.name()`
 
 ใน `buildMachineTable()` แทนที่การประกาศ `statusColumn` และ Cell Value Factory เดิมด้วย:
 
@@ -153,6 +170,8 @@ refreshDashboard();
 
 Constructor แบบสามค่าเริ่มเครื่องใหม่ด้วยสถานะ `OFFLINE` ตามกฎของ Model เครื่องจะเปลี่ยนเป็น `RUNNING`, `WARNING` หรือ `EMERGENCY_STOP` เมื่อได้รับค่าจาก Sensor ใน EP 3.10
 
+ลบ Method `refreshSummary()` และ `countStatus(String status)` เดิมจาก EP3.8 ทั้งสอง Method แล้วใช้ `refreshDashboard()` ด้านล่างเพื่ออ่านรายการและจำนวนจาก Service
+
 เพิ่ม Method กลางภายใน Class โดยวางต่อจาก `handleAddMachine()`:
 
 ```java
@@ -225,11 +244,13 @@ HBox actionButtons = new HBox(8, addButton, deleteButton);
 form.add(actionButtons, 1, 3);
 ```
 
+หากเพิ่มช่องอุณหภูมิจาก Challenge จนปุ่มเดิมอยู่ที่ `form.add(addButton, 1, 4);` ให้แทนที่บรรทัดนั้นและวางชุดปุ่มที่ `form.add(actionButtons, 1, 4);` เพื่อให้อยู่ใต้ช่องกรอกสุดท้าย
+
 ตอนนี้ UI รู้เพียงว่าเรียก Service อะไร แต่กฎเพิ่ม ลบ ค้นหา และตรวจสถานะยังอยู่ใน OOP Core
 
 ## 6. เพิ่มปุ่มบำรุงรักษา
 
-ใน `buildMachineForm()` เพิ่มชุดนี้ต่อจาก `form.add(actionButtons, 1, 3);` และก่อน `return form;` ปุ่มใหม่จะถูกเพิ่มเข้า `actionButtons` ที่สร้างในขั้นก่อนหน้า:
+ใน `buildMachineForm()` เพิ่มชุดนี้ต่อจากบรรทัด `form.add(actionButtons, ...);` และก่อน `return form;` ปุ่มใหม่จะถูกเพิ่มเข้า `actionButtons` ที่สร้างในขั้นก่อนหน้า:
 
 ```java
 Button maintenanceButton = new Button("บำรุงเสร็จแล้ว");

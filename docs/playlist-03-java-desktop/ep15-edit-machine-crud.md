@@ -52,7 +52,7 @@ Controller จึงไม่ต้องค้นหาและแก้ Objec
 
 ## 3. เพิ่ม Test ก่อนทำหน้าจอ
 
-เปิด `practice/smart-factory-dashboard/src/test/java/smartfactory/SmartFactoryTest.java` ที่คัดลอกมาพร้อม Checkpoint ใน EP 3.9 แล้วเพิ่มใน `main()`:
+เปิด `practice/smart-factory-dashboard/src/test/java/smartfactory/SmartFactoryTest.java` ที่เตรียมใน [EP3.12](ep12-thai-package-iot.md#4-เตรียมและรัน-test) แล้วเพิ่มใน `main()`:
 
 ```java
 testMachineDetailsCanBeUpdated();
