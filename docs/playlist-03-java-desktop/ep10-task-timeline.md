@@ -20,6 +20,20 @@ sequenceDiagram
     FX->>FX: Service update + refresh UI
 ```
 
+## ก่อนเริ่ม
+
+ใช้ผลจาก [EP3.9 ตอนที่ 3](ep09c-service-maintenance.md) ซึ่งมี `service`, `machines`, `machineTable`, `refreshDashboard()`, คอลัมน์ชั่วโมงและบำรุงรักษา รวมถึงปุ่มเพิ่ม ลบ และบำรุงเสร็จแล้ว
+
+หากเริ่มที่ EP นี้โดยตรง ใช้ [ชุดจบ EP3.9 ตอนที่ 3](../../lesson-resources/ep3-9-steps/03-maintenance/) คัดลอกเนื้อหาภายในไปยัง `practice/smart-factory-dashboard` ให้ `pom.xml` อยู่ใต้โฟลเดอร์นี้ทันที หากมีงานเดิมให้เปลี่ยนชื่อโฟลเดอร์เดิมเก็บไว้ก่อน ไม่รวมไฟล์หลายเวอร์ชัน
+
+รันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
+```
+
+ต้องเห็น 3 เครื่อง สถานะปกติ 2, Sensor ผิดปกติ 1, หยุดฉุกเฉิน 0 และต้องบำรุงทั้งหมด 2 ปิดหน้าต่างก่อนเริ่มแก้โค้ด
+
 ## 1. เพิ่มคอลัมน์สำหรับดูผลจาก Sensor
 
 ก่อนสร้าง Background Task ให้เพิ่มคอลัมน์อุณหภูมิและแรงสั่นสะเทือนใน `buildMachineTable()` เพื่อให้มองเห็นค่าที่ Task อัปเดต:

@@ -1,0 +1,202 @@
+package smartfactory.desktop;
+
+import smartfactory.model.Machine;
+import smartfactory.model.MachineStatus;
+import smartfactory.service.SmartFactoryService;
+
+import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class DashboardApp extends Application {
+    private final TextField idField = new TextField();
+    private final TextField nameField = new TextField();
+    private final TextField locationField = new TextField();
+    private final Button addButton = new Button("เพิ่มเครื่องจักร");
+    private final Label statusLabel = new Label("พร้อมใช้งาน");
+    private final IntegerProperty machineCount = new SimpleIntegerProperty(0);
+    private final Label totalLabel = new Label();
+    private final Label normalLabel = new Label("สถานะปกติ: 0");
+    private final Label warningLabel = new Label("Sensor ผิดปกติ: 0");
+    private final Label emergencyLabel = new Label("หยุดฉุกเฉิน: 0");
+    private final SmartFactoryService service = SmartFactoryService.createWithSampleData();
+    private final ObservableList<Machine> machines = FXCollections.observableArrayList();
+    private final TableView<Machine> machineTable = new TableView<>();
+
+    @Override
+    public void start(Stage stage) {
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(20));
+        root.setTop(buildTopArea());
+
+        SplitPane content = new SplitPane(buildMachineTable(), buildMachineForm());
+        content.setDividerPositions(0.68);
+        root.setCenter(content);
+        refreshDashboard();
+
+        statusLabel.getStyleClass().add("status-bar");
+
+        root.setBottom(statusLabel);
+
+        Scene scene = new Scene(root, 1100, 700);
+        scene.getStylesheets().add(getClass().getResource("dashboard.css").toExternalForm());
+
+        stage.setTitle("KOPE SOLUTION - Smart Factory Dashboard");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private VBox buildTopArea() {
+        Label title = new Label("Smart Factory Dashboard");
+        title.getStyleClass().add("header-title");
+
+        totalLabel.textProperty().bind(machineCount.asString("ทั้งหมด: %d"));
+        totalLabel.getStyleClass().add("summary-card");
+        normalLabel.getStyleClass().add("summary-card");
+        warningLabel.getStyleClass().add("summary-card");
+        emergencyLabel.getStyleClass().add("summary-card");
+
+        HBox summary = new HBox(12, totalLabel, normalLabel, warningLabel, emergencyLabel);
+
+        return new VBox(12, title, summary);
+    }
+
+    private GridPane buildMachineForm() {
+        idField.setPromptText("เช่น M-001");
+        nameField.setPromptText("เช่น Conveyor Motor");
+        locationField.setPromptText("เช่น Production Line A");
+
+        GridPane form = new GridPane();
+        form.setHgap(10);
+        form.setVgap(10);
+        form.setPadding(new Insets(24));
+        form.addRow(0, new Label("รหัสเครื่องจักร:"), idField);
+        form.addRow(1, new Label("ชื่อเครื่องจักร:"), nameField);
+        form.addRow(2, new Label("ตำแหน่งเครื่องจักร:"), locationField);
+        Button deleteButton = new Button("ลบรายการที่เลือก");
+        deleteButton.setOnAction(event -> handleDeleteMachine());
+        VBox actionButtons = new VBox(8, addButton, deleteButton);
+        form.add(actionButtons, 1, 3);
+        addButton.setOnAction(event -> handleAddMachine());
+
+        return form;
+    }
+
+    private TableView<Machine> buildMachineTable() {
+        TableColumn<Machine, String> idColumn = new TableColumn<>("รหัส");
+        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getId()));
+
+        TableColumn<Machine, String> nameColumn = new TableColumn<>("ชื่อเครื่องจักร");
+        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
+
+        TableColumn<Machine, String> locationColumn = new TableColumn<>("ตำแหน่ง");
+        locationColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLocation()));
+
+        TableColumn<Machine, String> statusColumn = new TableColumn<>("สถานะ");
+        statusColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getStatus().getDisplayName()));
+        statusColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                getStyleClass().removeAll("status-running", "status-warning", "status-emergency", "status-offline");
+
+                if (empty || status == null) {
+                    setText(null);
+                    return;
+                }
+
+                setText(status);
+                String style = switch (status) {
+                    case "Sensor ผิดปกติ" -> "status-warning";
+                    case "หยุดฉุกเฉิน" -> "status-emergency";
+                    case "ปิดเครื่อง" -> "status-offline";
+                    default -> "status-running";
+                };
+                getStyleClass().add(style);
+            }
+        });
+
+        machineTable.getColumns().addAll(idColumn, nameColumn, locationColumn, statusColumn);
+        machineTable.setItems(machines);
+
+
+        return machineTable;
+    }
+
+    private void refreshDashboard() {
+        machines.setAll(service.getMachines());
+        machineCount.set(machines.size());
+        normalLabel.setText("สถานะปกติ: " + service.countByStatus(MachineStatus.RUNNING));
+        warningLabel.setText("Sensor ผิดปกติ: " + service.countByStatus(MachineStatus.WARNING));
+        emergencyLabel.setText("หยุดฉุกเฉิน: " + service.countByStatus(MachineStatus.EMERGENCY_STOP));
+    }
+
+    private String requireText(TextField field, String message) {
+        String value = field.getText().trim();
+        if (value.isBlank()) {
+            throw new IllegalArgumentException(message);
+        }
+        return value;
+    }
+
+    private void handleAddMachine() {
+        try {
+            String id = requireText(idField, "กรุณากรอกรหัสเครื่องจักร");
+
+
+            String name = requireText(nameField, "กรุณากรอกชื่อเครื่องจักร");
+            String location = requireText(locationField, "กรุณากรอกตำแหน่งเครื่องจักร");
+
+            service.addMachine(new Machine(id, name, location));
+            refreshDashboard();
+            statusLabel.setText("เพิ่ม " + id + " - " + name + " เรียบร้อยแล้ว");
+            idField.clear();
+            nameField.clear();
+            locationField.clear();
+        } catch (IllegalArgumentException exception) {
+            showError(exception.getMessage());
+        }
+    }
+
+    private void handleDeleteMachine() {
+        Machine selected = machineTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showError("กรุณาเลือกเครื่องจักรในตารางก่อน");
+            return;
+        }
+        service.removeMachine(selected.getId());
+        refreshDashboard();
+        statusLabel.setText("ลบ " + selected.getId() + " แล้ว");
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setHeaderText("ข้อมูลไม่ถูกต้อง");
+        alert.showAndWait();
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+}

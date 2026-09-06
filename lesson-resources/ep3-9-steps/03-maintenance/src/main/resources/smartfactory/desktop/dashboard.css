@@ -1,0 +1,27 @@
+.root {
+    -fx-font-family: "Leelawadee UI", "Tahoma", sans-serif;
+    -fx-background-color: #0f172a;
+}
+
+.header-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f8fafc;
+}
+
+.summary-card {
+    -fx-padding: 14px 22px;
+    -fx-background-color: #1e293b;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #e2e8f0;
+}
+
+.status-bar {
+    -fx-padding: 10px 0 0 0;
+    -fx-text-fill: #93c5fd;
+}
+
+.status-running { -fx-text-fill: #22c55e; -fx-font-weight: bold; }
+.status-warning { -fx-text-fill: #f59e0b; -fx-font-weight: bold; }
+.status-emergency { -fx-text-fill: #ef4444; -fx-font-weight: bold; }
+.status-offline { -fx-text-fill: #94a3b8; -fx-font-weight: bold; }
