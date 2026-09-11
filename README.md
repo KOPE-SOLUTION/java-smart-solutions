@@ -91,9 +91,10 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 | 3.6 | Validation และ Alert | [ตรวจข้อมูลก่อนบันทึก](docs/playlist-03-java-desktop/ep06-validation-alert.md) |
 | 3.7 | TableView และ ObservableList | [แสดงรายการเครื่องจักร](docs/playlist-03-java-desktop/ep07-tableview-observablelist.md) |
 | 3.8 | CellFactory และ Summary Card | [แยกสีและสรุปสถานะ](docs/playlist-03-java-desktop/ep08-cellfactory-summary.md) |
-| 3.9 ตอนที่ 1 | เชื่อม OOP Core กับตาราง | [อ่านข้อมูลจาก Service](docs/playlist-03-java-desktop/ep09a-service-table.md) |
-| 3.9 ตอนที่ 2 | เพิ่มและลบเครื่องจักร | [เพิ่ม ลบ และตรวจรหัสซ้ำ](docs/playlist-03-java-desktop/ep09b-service-add-delete.md) |
-| 3.9 ตอนที่ 3 | ชั่วโมงและการบำรุงรักษา | [อัปเดตสถานะและจำนวนที่ต้องบำรุง](docs/playlist-03-java-desktop/ep09c-service-maintenance.md) |
+| 3.9 ตอนที่ 1 | ทบทวนและเตรียม OOP Core | [สร้าง Model และ Service ทีละไฟล์](docs/playlist-03-java-desktop/ep09-preparation.md) |
+| 3.9 ตอนที่ 2 | เชื่อม OOP Core กับตาราง | [อ่านข้อมูลจาก Service](docs/playlist-03-java-desktop/ep09a-service-table.md) |
+| 3.9 ตอนที่ 3 | เพิ่มและลบเครื่องจักร | [เพิ่ม ลบ และตรวจรหัสซ้ำ](docs/playlist-03-java-desktop/ep09b-service-add-delete.md) |
+| 3.9 ตอนที่ 4 | ชั่วโมงและการบำรุงรักษา | [อัปเดตสถานะและจำนวนที่ต้องบำรุง](docs/playlist-03-java-desktop/ep09c-service-maintenance.md) |
 | 3.10 | Task, Thread และ Timeline | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep10-task-timeline.md) |
 | 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |

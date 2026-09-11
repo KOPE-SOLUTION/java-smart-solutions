@@ -22,9 +22,10 @@
 | [3.6](ep06-validation-alert.md) | Validation และ Alert | ป้องกันข้อมูลไม่ครบหรือผิดรูปแบบ |
 | [3.7](ep07-tableview-observablelist.md) | TableView และ ObservableList | แสดงข้อมูลเครื่องจักรในตาราง |
 | [3.8](ep08-cellfactory-summary.md) | CellFactory และ Summary Card | แยกสีสถานะและสรุปจำนวน |
-| [3.9 ตอนที่ 1](ep09a-service-table.md) | อ่านข้อมูลจาก Service | เปิดแล้วเห็นเครื่องจักรตัวอย่าง 3 เครื่อง |
-| [3.9 ตอนที่ 2](ep09b-service-add-delete.md) | เพิ่มและลบผ่าน Service | ตรวจรหัสซ้ำและอัปเดตตารางกับ Summary |
-| [3.9 ตอนที่ 3](ep09c-service-maintenance.md) | ชั่วโมงและการบำรุงรักษา | รีเซ็ตชั่วโมงและสรุปจำนวนที่ต้องบำรุง |
+| [3.9 ตอนที่ 1](ep09-preparation.md) | ทบทวนและเตรียม OOP Core | สร้าง Model และ Service ก่อนเชื่อมหน้าจอ |
+| [3.9 ตอนที่ 2](ep09a-service-table.md) | อ่านข้อมูลจาก Service | เปิดแล้วเห็นเครื่องจักรตัวอย่าง 3 เครื่อง |
+| [3.9 ตอนที่ 3](ep09b-service-add-delete.md) | เพิ่มและลบผ่าน Service | ตรวจรหัสซ้ำและอัปเดตตารางกับ Summary |
+| [3.9 ตอนที่ 4](ep09c-service-maintenance.md) | ชั่วโมงและการบำรุงรักษา | รีเซ็ตชั่วโมงและสรุปจำนวนที่ต้องบำรุง |
 | [3.10](ep10-task-timeline.md) | Task, Thread และ Timeline | จำลอง Sensor โดยหน้าต่างไม่ค้าง |
 | [3.11](ep11-fxml-controller.md) | FXML และ Controller | แยก View ออกจาก Logic |
 | [3.12](ep12-thai-package-iot.md) | ภาษาไทย, Runtime Image และ IoT | ตรวจภาษาไทยและเตรียมส่งมอบ |

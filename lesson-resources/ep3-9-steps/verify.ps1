@@ -26,7 +26,7 @@ foreach ($part in $parts) {
     if ($part -eq "03-maintenance" -and $source -notmatch 'machineTable\.refresh\(\)') { throw "Missing table refresh" }
     Write-Output "PASS source kit: $part"
 }
-$lessonFiles = @("ep09-service-crud.md", "ep09a-service-table.md", "ep09b-service-add-delete.md", "ep09c-service-maintenance.md", "ep10-task-timeline.md")
+$lessonFiles = @("ep09-service-crud.md", "ep09-preparation.md", "ep09a-service-table.md", "ep09b-service-add-delete.md", "ep09c-service-maintenance.md", "ep10-task-timeline.md")
 $linkCount = 0
 foreach ($lesson in $lessonFiles) {
     $lessonPath = Join-Path $repoRoot "docs/playlist-03-java-desktop/$lesson"
@@ -43,5 +43,20 @@ foreach ($lesson in $lessonFiles) {
     }
 }
 Write-Output "PASS lesson links: $linkCount"
-Write-Output "Static checks only. Compile or run each Maven project separately."
 
+$preparationPath = Join-Path $repoRoot "docs/playlist-03-java-desktop/ep09-preparation.md"
+$preparation = Read-Utf8 $preparationPath
+$codeBlocks = [regex]::Matches($preparation, '(?ms)^```java\n(.*?)^```')
+$verifiedCore = 0
+foreach ($file in $coreFiles) {
+    $expected = (Read-Utf8 (Join-Path $coreRoot $file)).Trim()
+    $className = [IO.Path]::GetFileNameWithoutExtension($file)
+    $pattern = '\b(class|enum|interface)\s+' + [regex]::Escape($className) + '\b'
+    $matchingBlocks = @($codeBlocks | Where-Object { $_.Groups[1].Value -match $pattern })
+    if ($matchingBlocks.Count -ne 1) { throw "Missing or duplicate lesson source: $file" }
+    if ($matchingBlocks[0].Groups[1].Value.Trim() -cne $expected) { throw "Lesson source differs from core: $file" }
+    $verifiedCore++
+}
+Write-Output "PASS preparation lesson source files: $verifiedCore"
+
+Write-Output "Static checks only. Compile or run each Maven project separately."

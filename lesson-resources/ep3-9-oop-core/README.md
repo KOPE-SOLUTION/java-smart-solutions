@@ -1,23 +1,13 @@
-# OOP Core สำหรับ EP3.9
+# OOP Core อ้างอิงสำหรับ EP3.9
 
-ชุดไฟล์สำหรับเชื่อม `Machine` และ `SmartFactoryService` กับหน้าจอ JavaFX
-
-[ดาวน์โหลด ZIP](ep3-9-oop-core.zip?raw=true) · [เปิดบทเรียน EP3.9](../../docs/playlist-03-java-desktop/ep09-service-crud.md)
-
-หากต้องการทั้งหน้าจอและ Core พร้อมรัน เลือก [ชุดซอร์สแยกสามตอน](../ep3-9-steps/) ได้เลย
-
-## นำไปใช้
-
-1. ดาวน์โหลด ZIP แล้วแตกไฟล์ หรือเปิดโฟลเดอร์นี้ใน Repository ที่ดาวน์โหลดไว้
-2. คัดลอกทั้งโฟลเดอร์ `model` และ `service` ไปไว้ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/` ข้างโฟลเดอร์ `desktop`
-3. ตรวจว่าพบไฟล์ `model/Machine.java` และ `service/SmartFactoryService.java` แล้วทำขั้นถัดไปใน EP3.9
-
-หากมี `model` หรือ `service` อยู่แล้ว ให้สำรองสองโฟลเดอร์นั้นก่อนใช้ชุดนี้ เก็บ `desktop/DashboardApp.java` และ `dashboard.css` ที่ทำไว้ต่อได้เลย
+[ตอนที่ 1 — ทบทวนและเตรียม OOP Core](../../docs/playlist-03-java-desktop/ep09-preparation.md) พาสร้างไฟล์ทีละตัว โฟลเดอร์นี้เก็บโค้ดเดียวกันสำหรับเทียบคำตอบ
 
 | โฟลเดอร์ | ไฟล์ |
 | --- | --- |
 | `model` | `FactoryDevice.java`, `Machine.java`, `MachineStatus.java`, `Maintainable.java`, `SensorReading.java` |
 | `service` | `SmartFactoryService.java` |
+
+[ZIP อ้างอิง](ep3-9-oop-core.zip?raw=true) · [ซอร์สหลังจบทั้งสี่ตอน](../ep3-9-steps/)
 
 ## ข้อมูลตัวอย่าง
 

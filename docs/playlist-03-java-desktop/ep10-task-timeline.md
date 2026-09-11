@@ -22,9 +22,9 @@ sequenceDiagram
 
 ## ก่อนเริ่ม
 
-ใช้ผลจาก [EP3.9 ตอนที่ 3](ep09c-service-maintenance.md) ซึ่งมี `service`, `machines`, `machineTable`, `refreshDashboard()`, คอลัมน์ชั่วโมงและบำรุงรักษา รวมถึงปุ่มเพิ่ม ลบ และบำรุงเสร็จแล้ว
+ใช้ผลจาก [EP3.9 ตอนที่ 4](ep09c-service-maintenance.md) ซึ่งมี `service`, `machines`, `machineTable`, `refreshDashboard()`, คอลัมน์ชั่วโมงและบำรุงรักษา รวมถึงปุ่มเพิ่ม ลบ และบำรุงเสร็จแล้ว
 
-หากเริ่มที่ EP นี้โดยตรง ใช้ [ชุดจบ EP3.9 ตอนที่ 3](../../lesson-resources/ep3-9-steps/03-maintenance/) คัดลอกเนื้อหาภายในไปยัง `practice/smart-factory-dashboard` ให้ `pom.xml` อยู่ใต้โฟลเดอร์นี้ทันที หากมีงานเดิมให้เปลี่ยนชื่อโฟลเดอร์เดิมเก็บไว้ก่อน ไม่รวมไฟล์หลายเวอร์ชัน
+หากเริ่มที่ EP นี้โดยตรง ใช้ [ชุดจบ EP3.9 ตอนที่ 4](../../lesson-resources/ep3-9-steps/03-maintenance/) คัดลอกเนื้อหาภายในไปยัง `practice/smart-factory-dashboard` ให้ `pom.xml` อยู่ใต้โฟลเดอร์นี้ทันที หากมีงานเดิมให้เปลี่ยนชื่อโฟลเดอร์เดิมเก็บไว้ก่อน ไม่รวมไฟล์หลายเวอร์ชัน
 
 รันจากโฟลเดอร์หลักของ Repository:
 
