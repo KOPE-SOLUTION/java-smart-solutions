@@ -419,18 +419,28 @@ public class SmartFactoryService {
 
 </details>
 
-## 3. ดูความสัมพันธ์
+## 3. ความสัมพันธ์ของแต่ละคลาส
+
+อ่านจาก `Machine` ตรงกลางภาพ แล้วแยกการสืบทอดออกจากการเก็บข้อมูล:
 
 ```mermaid
-classDiagram
-    FactoryDevice <|-- Machine
-    Maintainable <|.. Machine
-    Machine --> MachineStatus : สถานะ
-    Machine --> SensorReading : ค่าล่าสุด
-    SmartFactoryService --> Machine : เก็บรายการ
+flowchart TB
+    F["FactoryDevice<br/>คลาสแม่ (abstract)<br/>เก็บรหัส ชื่อ และตำแหน่ง"]
+    I["Maintainable<br/>Interface<br/>สัญญาการบำรุงรักษา"]
+    S["SmartFactoryService<br/>จัดการรายการเครื่องจักร<br/>ไม่ใช่คลาสแม่ของ Machine"]
+    M["Machine<br/>คลาสลูก / เครื่องจักรหนึ่งเครื่อง"]
+    R["SensorReading<br/>อุณหภูมิ แรงสั่น และเวลาที่อ่าน"]
+    T["MachineStatus<br/>Enum ของสถานะเครื่องจักร"]
+
+    F -->|"extends<br/>Machine สืบทอดจาก FactoryDevice"| M
+    I -.->|"implements<br/>Machine ทำตามสัญญา Maintainable"| M
+    S -->|"machines<br/>เก็บรายการ Machine หลายเครื่อง"| M
+    M -->|"latestReading<br/>อ้างถึงค่า Sensor ล่าสุด"| R
+    M -->|"status<br/>เก็บสถานะปัจจุบัน"| T
 ```
 
-Service ไม่ใช่คลาสแม่ของ Machine แต่เป็นตัวจัดการรายการ ส่วน Model และ Service ไม่ขึ้นกับ JavaFX
+- `extends` คือสืบทอดจากคลาสแม่ ส่วน `implements` คือทำตามข้อกำหนดของ Interface
+- `machines`, `latestReading` และ `status` คือชื่อ Field ที่เก็บหรืออ้างถึงข้อมูล ไม่ใช่ความเป็นแม่–ลูก
 
 ## 4. รันและตรวจผล
 
