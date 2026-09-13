@@ -432,15 +432,15 @@ flowchart TB
     R["SensorReading<br/>อุณหภูมิ แรงสั่น และเวลาที่อ่าน"]
     T["MachineStatus<br/>Enum ของสถานะเครื่องจักร"]
 
-    F -->|"extends<br/>Machine สืบทอดจาก FactoryDevice"| M
-    I -.->|"implements<br/>Machine ทำตามสัญญา Maintainable"| M
-    S -->|"machines<br/>เก็บรายการ Machine หลายเครื่อง"| M
-    M -->|"latestReading<br/>อ้างถึงค่า Sensor ล่าสุด"| R
-    M -->|"status<br/>เก็บสถานะปัจจุบัน"| T
+    F -->|"extends (is-a)<br/>Machine สืบทอดจาก FactoryDevice"| M
+    I -.->|"implements (is-a ผ่าน Interface)<br/>Machine ทำตามสัญญา Maintainable"| M
+    S -->|"machines (has-many)<br/>เก็บรายการ Machine หลายเครื่อง"| M
+    M -->|"latestReading (has-a)<br/>อ้างถึงค่า Sensor ล่าสุด"| R
+    M -->|"status (has-a)<br/>เก็บสถานะปัจจุบัน"| T
 ```
 
-- `extends` คือสืบทอดจากคลาสแม่ ส่วน `implements` คือทำตามข้อกำหนดของ Interface
-- `machines`, `latestReading` และ `status` คือชื่อ Field ที่เก็บหรืออ้างถึงข้อมูล ไม่ใช่ความเป็นแม่–ลูก
+- `(is-a)` คือเป็นชนิดนั้นได้: `Machine` เป็น `FactoryDevice` และใช้ผ่าน `Maintainable` ได้ โดย `Maintainable` เป็น Interface ไม่ใช่คลาสแม่
+- `(has-a)` คือมีหรืออ้างถึงข้อมูลหนึ่งค่า/หนึ่ง Object ส่วน `(has-many)` คือมีรายการหลาย Object เช่น `List<Machine>`
 
 ## 4. รันและตรวจผล
 
