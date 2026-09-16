@@ -26,13 +26,17 @@
 | [3.9 ตอนที่ 2](ep09a-service-table.md) | อ่านข้อมูลจาก Service | เปิดแล้วเห็นเครื่องจักรตัวอย่าง 3 เครื่อง |
 | [3.9 ตอนที่ 3](ep09b-service-add-delete.md) | เพิ่มและลบผ่าน Service | ตรวจรหัสซ้ำและอัปเดตตารางกับ Summary |
 | [3.9 ตอนที่ 4](ep09c-service-maintenance.md) | ชั่วโมงและการบำรุงรักษา | รีเซ็ตชั่วโมงและสรุปจำนวนที่ต้องบำรุง |
-| [3.10](ep10-task-timeline.md) | Task, Thread และ Timeline | จำลอง Sensor โดยหน้าต่างไม่ค้าง |
+| [3.10 ตอนที่ 1](ep10a-sensor-button.md) | กดปุ่มจำลอง Sensor | แสดงอุณหภูมิ แรงสั่น และ Summary |
+| [3.10 ตอนที่ 2](ep10b-task-thread.md) | Task และ Thread | ทดลองงานช้าโดยหน้าจอยังตอบสนอง |
+| [3.10 ตอนที่ 3](ep10c-sensor-task-result.md) | ส่งผล Sensor กลับมา | อัปเดตข้อมูลจาก Background Task |
+| [3.10 ตอนที่ 4](ep10d-auto-sensor-timeline.md) | Auto Sensor ด้วย Timeline | เริ่ม–หยุดการอัปเดตโดยไม่สร้างงานซ้อน |
 | [3.11](ep11-fxml-controller.md) | FXML และ Controller | แยก View ออกจาก Logic |
 | [3.12](ep12-thai-package-iot.md) | ภาษาไทย, Runtime Image และ IoT | ตรวจภาษาไทยและเตรียมส่งมอบ |
 | [3.13](ep13-search-filter.md) | Search และ FilteredList | ค้นหาข้อมูลแบบทันที |
 | [3.14](ep14-multi-filter-sort.md) | Multi-filter และ SortedList | กรองหลายเงื่อนไขและเรียงข้อมูล |
 | [3.15](ep15-edit-machine-crud.md) | Edit Machine และ Complete CRUD | แก้ไขชื่อและตำแหน่งเครื่องจักร |
 | [3.16 Optional](ep16-scene-builder-optional.md) | Scene Builder Workflow | จัด Form แบบ Drag & Drop |
+| [Case Study: STM32 Motion Dashboard](case-study-stm32-motion-dashboard.md) | USB Serial, Background callback และ Canvas | รับข้อมูล 9 แกนจาก STM32F3 จริง |
 
 ## Optional Integration หลังจบ Playlist
 
@@ -43,6 +47,9 @@
 - ส่งผลกลับมาอัปเดต UI บน JavaFX Application Thread
 - ออกแบบ Connect, Disconnect และ Resource Cleanup ให้ปลอดภัย
 - แยก URL, Username และ Password ออกจาก Source Code และ Log
+
+ตัวอย่างที่ทำงานครบเส้นทาง Device → USB → Desktop UI อยู่ใน
+[STM32F3 Motion Dashboard Case Study](case-study-stm32-motion-dashboard.md) พร้อม Demo Mode สำหรับผู้ที่ยังไม่มีบอร์ด
 
 โปรแกรมตรวจ RTSP สำหรับช่างและงานแจกพัฒนาแยกอยู่ในโปรเจกต์ `kope-rtsp-camera-checker` เพื่อให้บทเรียน JavaFX ไม่ซ้ำกับ Source Code ของผลิตภัณฑ์ ผู้เรียนยังใช้ความรู้จาก Playlist นี้ไปทำ Integration ฉบับย่อได้ แต่ไม่ต้องสร้างโปรแกรมทั้งชุดตามกันทีละหน้าจอ
 

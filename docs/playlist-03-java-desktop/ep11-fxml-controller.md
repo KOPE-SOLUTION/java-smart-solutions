@@ -12,6 +12,8 @@ flowchart LR
     CSS[smart-factory.css] --> F
 ```
 
+ใช้โปรเจกต์ที่จบ [EP3.10 ตอนที่ 4](ep10d-auto-sensor-timeline.md) ต่อ
+
 ## 1. เพิ่ม FXML Dependency
 
 ใน `practice/smart-factory-dashboard/pom.xml` เพิ่มใต้ `javafx-controls`:

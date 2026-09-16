@@ -95,13 +95,17 @@ Angular ยังคงเป็นเส้นทางหลักสำหร
 | 3.9 ตอนที่ 2 | เชื่อม OOP Core กับตาราง | [อ่านข้อมูลจาก Service](docs/playlist-03-java-desktop/ep09a-service-table.md) |
 | 3.9 ตอนที่ 3 | เพิ่มและลบเครื่องจักร | [เพิ่ม ลบ และตรวจรหัสซ้ำ](docs/playlist-03-java-desktop/ep09b-service-add-delete.md) |
 | 3.9 ตอนที่ 4 | ชั่วโมงและการบำรุงรักษา | [อัปเดตสถานะและจำนวนที่ต้องบำรุง](docs/playlist-03-java-desktop/ep09c-service-maintenance.md) |
-| 3.10 | Task, Thread และ Timeline | [จำลอง Sensor แบบ Live](docs/playlist-03-java-desktop/ep10-task-timeline.md) |
+| 3.10 ตอนที่ 1 | ปุ่มจำลอง Sensor | [แสดงอุณหภูมิและแรงสั่น](docs/playlist-03-java-desktop/ep10a-sensor-button.md) |
+| 3.10 ตอนที่ 2 | Task และ Thread | [ทดลองงานเบื้องหลัง](docs/playlist-03-java-desktop/ep10b-task-thread.md) |
+| 3.10 ตอนที่ 3 | ผลลัพธ์จาก Sensor Task | [รับผลกลับมาอัปเดตหน้าจอ](docs/playlist-03-java-desktop/ep10c-sensor-task-result.md) |
+| 3.10 ตอนที่ 4 | Auto Sensor ด้วย Timeline | [เริ่ม–หยุดการอัปเดตอัตโนมัติ](docs/playlist-03-java-desktop/ep10d-auto-sensor-timeline.md) |
 | 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
 | 3.13 | Search และ FilteredList | [ค้นหาข้อมูลแบบทันที](docs/playlist-03-java-desktop/ep13-search-filter.md) |
 | 3.14 | Multi-filter และ SortedList | [กรองหลายเงื่อนไขและเรียงข้อมูล](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) |
 | 3.15 | Edit Machine และ Complete CRUD | [แก้ไขชื่อและตำแหน่งเครื่องจักร](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) |
 | 3.16 Optional | Scene Builder Workflow | [จัด Form แบบ Drag & Drop](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) |
+| Case Study | STM32F3 Motion Dashboard | [รับข้อมูลเข็มทิศและ Motion 9 แกนผ่าน USB Serial](docs/playlist-03-java-desktop/case-study-stm32-motion-dashboard.md) |
 
 **ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้ พร้อมพื้นฐาน JavaFX สำหรับนำไปเชื่อม RTSP, IoT และระบบภายนอกในโปรเจกต์แยก
 

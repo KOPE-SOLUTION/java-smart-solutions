@@ -121,4 +121,4 @@ statusLabel.setText("บำรุงรักษา " + selected.getId() + " แ
 
 </details>
 
-[ซอร์สหลังจบตอนนี้](../../lesson-resources/ep3-9-steps/03-maintenance/) · [ต่อ EP3.10 — Task, Thread และ Timeline](ep10-task-timeline.md)
+[ซอร์สหลังจบตอนนี้](../../lesson-resources/ep3-9-steps/03-maintenance/) · [ต่อ EP3.10 ตอนที่ 1 — กดปุ่มจำลอง Sensor](ep10a-sensor-button.md)
