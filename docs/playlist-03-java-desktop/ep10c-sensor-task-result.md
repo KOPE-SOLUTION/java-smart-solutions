@@ -2,7 +2,7 @@
 
 เป้าหมาย: ใช้ปุ่มเดิมรันงาน Sensor เบื้องหลัง แล้วนำผลกลับมาอัปเดต Service ตาราง และ Summary
 
-ใช้โปรเจกต์จาก [ตอนที่ 2](ep10b-task-thread.md) ต่อ สร้างไฟล์ใหม่สองไฟล์ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
+ใช้โปรเจกต์ที่จบทั้งสองรอบทดลองของ [ตอนที่ 2](ep10b-task-thread.md) ต่อ สร้างไฟล์ใหม่สองไฟล์ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
 
 ## 1. สร้างกล่องใส่ผลลัพธ์
 
@@ -18,7 +18,7 @@ public record SensorUpdate(String machineId, double temperature, double vibratio
 
 ## 2. สร้างงาน Sensor
 
-สร้าง `SensorSimulationTask.java` แล้ววาง:
+สร้าง `SensorSimulationTask.java` แล้ววาง เป็นคลาสลูกของ Task แบบมีชื่อเหมือน `DemoTask` แต่เปลี่ยนจากคืนข้อความเป็นคืนรายการผล Sensor:
 
 ```java
 package smartfactory.desktop;
@@ -104,7 +104,7 @@ private void simulateInBackground() {
 }
 ```
 
-เก็บ `finishSensorTask()` และ `stage.setOnHidden(...)` จากตอนที่ 2 ไว้ ไม่เพิ่มซ้ำ
+เก็บ Field `sensorBusy`, `activeSensorTask`, Import `javafx.concurrent.Task`, Method `finishSensorTask()` และ `stage.setOnHidden(...)` จากตอนที่ 2 ไว้ ไม่เพิ่มซ้ำ
 
 - `task.getValue()` คือรายการผลจาก `call()` แล้วส่งให้ Service อัปเดตทีละเครื่อง
 - `snapshot` เก็บรายการ Machine ตอนเริ่มรอบ ใช้ข้ามผลของเครื่องที่ถูกลบหรือถูกสร้างใหม่ด้วยรหัสเดิมระหว่างรอ งานเบื้องหลังได้รับเฉพาะรหัส ไม่ได้อ่าน Object เหล่านี้
@@ -117,7 +117,7 @@ sensorButton.setText("จำลอง Sensor 1 ครั้ง");
 sensorButton.setOnAction(event -> simulateInBackground());
 ```
 
-งานใหม่ไม่มี `Thread.sleep(3000)` แล้ว จึงเสร็จเร็วขึ้น แต่ยังใช้ Thread แยกและสร้าง Task ใหม่ทุกครั้ง
+งานใหม่ไม่มี `Thread.sleep(3000)` แล้ว จึงเสร็จเร็วขึ้น แต่ยังใช้ Thread แยกและสร้าง Task ใหม่ทุกครั้ง ไฟล์ `DemoTask.java` เก็บไว้ทบทวนได้ แต่ปุ่มนี้จะไม่เรียกใช้งานแล้ว
 
 ## 4. รันและตรวจผล
 

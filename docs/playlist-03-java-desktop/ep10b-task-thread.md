@@ -2,15 +2,83 @@
 
 เป้าหมาย: กดปุ่มแล้วรอผล 3 วินาที แต่หน้าจอยังตอบสนอง ตอนนี้ยังไม่อัปเดต Sensor
 
-ใช้โปรเจกต์จาก [ตอนที่ 1](ep10a-sensor-button.md) ต่อ แก้ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java`
+ใช้โปรเจกต์จาก [ตอนที่ 1](ep10a-sensor-button.md) ต่อ ปิดโปรแกรมก่อนแก้ไฟล์ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
 
-จำก่อนเพียงสองคำ: **Task คือชุดงาน ส่วน Thread คือตัวที่รันงานนั้นแยกจากหน้าจอ**
+**Task คือชุดงาน ส่วน Thread คือตัวรันงานแยกจากหน้าจอ** ตอนนี้มีสองรอบทดลอง: รับผลสำเร็จก่อน แล้วค่อยดูแลปุ่ม ข้อผิดพลาด และการปิดหน้าต่าง
 
-เราจะประกอบ Method ทีละช่วง: เตรียมปุ่ม → สร้างงาน → รับผล → เริ่ม Thread แล้วจึงรันทดสอบเมื่อครบขั้นตอน
+## รอบแรก — เห็นผลโดยหน้าจอไม่ค้าง
 
-## 1. เตรียมตัวแปร
+### 1. สร้างคลาสงานที่มีชื่อ
 
-เพิ่ม Import ต่อจาก Import เดิม:
+สร้างไฟล์ `DemoTask.java` ในโฟลเดอร์เดียวกับ `DashboardApp.java` แล้ววางทั้งไฟล์:
+
+```java
+package smartfactory.desktop;
+
+import javafx.concurrent.Task;
+
+public class DemoTask extends Task<String> {
+    @Override
+    protected String call() throws Exception {
+        Thread.sleep(3000);
+        return "งานเบื้องหลังเสร็จแล้ว";
+    }
+}
+```
+
+- `DemoTask` เป็นคลาสลูกของ `Task<String>` จึงส่งผลกลับเป็นข้อความ
+- `@Override call()` ใส่เนื้อหางานที่คลาสแม่กำหนดไว้: รอ 3 วินาทีแล้วคืนข้อความ
+- ไม่เรียก `call()` เอง และไม่แก้ Label หรือตารางภายใน Method นี้
+
+### 2. สร้างงานและรับผลสำเร็จ
+
+กลับมา `DashboardApp.java` ลบ `simulateOnce()` ทั้ง Method แล้ววาง Method นี้แทนตำแหน่งเดิม หลังปีกกาปิด `refreshDashboard()`:
+
+```java
+private void runBackgroundDemo() {
+    statusLabel.setText("กำลังทำงานเบื้องหลัง...");
+
+    DemoTask task = new DemoTask();
+    task.setOnSucceeded(event -> {
+        statusLabel.setText(task.getValue());
+    });
+
+    Thread worker = new Thread(task, "sensor-worker");
+    worker.start();
+}
+```
+
+- `new DemoTask()` สร้างงานไว้ ส่วน `worker.start()` จึงเริ่ม Thread ให้รันงานนั้น
+- `setOnSucceeded` ฝากคำสั่งไว้ทำเมื่องานสำเร็จ ส่วน `getValue()` รับข้อความที่ `call()` คืนมา
+- ตัวรับเหตุการณ์นี้ทำงานบน JavaFX Application Thread จึงแก้ Label ได้
+
+ใน `buildMachineForm()` แทนที่ `sensorButton.setOnAction(...)` เดิมด้วยสองบรรทัดนี้:
+
+```java
+sensorButton.setText("ทดสอบงานเบื้องหลัง");
+sensorButton.setOnAction(event -> runBackgroundDemo());
+```
+
+เก็บ `actionButtons.getChildren().add(sensorButton);` ไว้ครั้งเดียว ลบ `import java.util.Random;` ที่ไม่ได้ใช้แล้ว ส่วน `DemoTask` อยู่ Package เดียวกันจึงไม่ต้อง Import
+
+### 3. รันทันทีแล้วสังเกตหน้าจอ
+
+บันทึกทั้งสองไฟล์ แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
+```
+
+- กดปุ่มครั้งเดียว ระหว่างรอลองพิมพ์ชื่อหรือเลือกแถว หน้าจอต้องยังตอบสนอง
+- ประมาณ 3 วินาทีต่อมา Label แสดงว่างานเสร็จ ค่า Sensor และชั่วโมงไม่เปลี่ยน
+
+รอบนี้ยังไม่ป้องกันการกดซ้ำ ให้รอผลก่อนกดอีกครั้ง และรอให้งานจบก่อนปิดโปรแกรมเพื่อแก้รอบถัดไป
+
+## รอบที่สอง — ดูแลการเริ่มและจบงาน
+
+### 4. ป้องกันงานซ้อน
+
+ใน `DashboardApp.java` เพิ่ม Import ต่อจาก Import เดิม:
 
 ```java
 import javafx.concurrent.Task;
@@ -23,33 +91,19 @@ private boolean sensorBusy;
 private Task<?> activeSensorTask;
 ```
 
-- `sensorBusy` เช็กว่ามีงานค้างอยู่หรือไม่ ค่าเริ่มต้นคือ `false`
-- `activeSensorTask` เก็บงานไว้ขอยกเลิก ส่วน `<?>` ไม่เจาะจงชนิดผลลัพธ์
+`sensorBusy` เช็กว่ามีงานค้างหรือไม่ ส่วน `activeSensorTask` เก็บงานไว้ขอยกเลิก โดย `<?>` ไม่เจาะจงชนิดผลลัพธ์
 
-## 2. สร้างโครง Method สำหรับปุ่ม
-
-ลบ `simulateOnce()` ทั้ง Method แล้ววางโครงนี้แทน:
+เพิ่มโค้ดนี้ **บรรทัดแรกภายใน `runBackgroundDemo()` ก่อน `statusLabel.setText(...)`**:
 
 ```java
-private void runBackgroundDemo() {
-    if (sensorBusy) {
-        return;
-    }
-    sensorBusy = true;
-    sensorButton.setDisable(true);
-    statusLabel.setText("กำลังทำงานเบื้องหลัง...");
-
-    // A: สร้างงาน
-
-    // B: รับผลเมื่องานจบ
-
-    // C: เริ่ม Thread
+if (sensorBusy) {
+    return;
 }
+sensorBusy = true;
+sensorButton.setDisable(true);
 ```
 
-มีงานอยู่ให้ออกจาก Method ด้วย `return`; ถ้ายังไม่มีจึงปิดปุ่มและเริ่มเตรียมงาน
-
-เพิ่ม `finishSensorTask()` **ถัดจากปีกกา `}` ที่ปิด Method `runBackgroundDemo()` ด้านบนทันที** และก่อน Method ถัดไปที่มีอยู่ในไฟล์ ให้บรรทัด `private void` ของทั้งสอง Method อยู่ระดับเดียวกัน ไม่วางไว้ภายใน `runBackgroundDemo()` หรือหลังปีกกาปิด Class `DashboardApp`:
+เพิ่ม Method นี้ **ถัดจากปีกกา `}` ที่ปิด `runBackgroundDemo()` ทันที ก่อน Method ถัดไป** ให้ `private void` อยู่ระดับเดียวกัน ไม่ซ้อน Method:
 
 ```java
 private void finishSensorTask() {
@@ -59,41 +113,7 @@ private void finishSensorTask() {
 }
 ```
 
-`finishSensorTask()` คืนสถานะว่างและเปิดปุ่ม ไม่ได้สั่งหยุด Thread หากเพิ่มไว้แล้ว ให้ย้าย Method เดิมมาไว้ตำแหน่งนี้ ไม่เพิ่มซ้ำ
-
-## 3. ใส่งานที่จะทำใน Task
-
-ภายใน `runBackgroundDemo()` แทนที่คอมเมนต์ `// A: สร้างงาน` ด้วย:
-
-```java
-Task<String> task = new Task<>() {
-    @Override
-    protected String call() throws Exception {
-        Thread.sleep(3000);
-        return "งานเบื้องหลังเสร็จแล้ว";
-    }
-};
-```
-
-- `Task<String>` ส่งผลกลับเป็นข้อความ จึงใช้ `String` เป็นชนิดผลลัพธ์ของ `call()`
-- `call()` เป็น Abstract Method ของ `Task` ที่คลาสลูกต้องเขียนเนื้อหาให้ ส่วน `@Override` ระบุว่าเรากำลังทำตาม Method ของคลาสแม่
-- `Thread.sleep(3000)` จำลองงานช้า 3 วินาที แล้ว `return` ส่งข้อความกลับ
-
-**สร้าง Task ยังไม่ใช่เริ่มงาน** ไม่เรียก `call()` เอง และไม่แก้หน้าจอภายใน `call()`
-
-<details>
-<summary>อ่านเพิ่ม: ทำไมมีปีกกาหลัง new Task และคำอื่น ๆ ในบรรทัด call</summary>
-
-- `new Task<>() { ... }` สร้าง Object จากคลาสลูกแบบไม่ตั้งชื่อ จึงเขียน `call()` ของคลาสลูกในปีกกานี้ได้
-- `<>` ให้ Java อนุมานชนิดผลลัพธ์จาก `Task<String>` ด้านซ้าย
-- `protected` ใช้ระดับการเข้าถึงตาม Method เดิม
-- `throws Exception` ยอมให้ข้อผิดพลาดส่งออกจาก Method เช่น การรอถูกขัดจังหวะ
-
-</details>
-
-## 4. รับผลเมื่องานสำเร็จ
-
-แทนที่คอมเมนต์ `// B: รับผลเมื่องานจบ` ด้วย:
+กลับเข้าไปใน `runBackgroundDemo()` แทนที่เฉพาะ `task.setOnSucceeded(...)` เดิมด้วย:
 
 ```java
 task.setOnSucceeded(event -> {
@@ -102,12 +122,11 @@ task.setOnSucceeded(event -> {
 });
 ```
 
-- `setOnSucceeded` ฝากคำสั่งไว้ทำเมื่องานสำเร็จ ไม่ได้ทำทันที รูปแบบ `event ->` เหมือนที่เคยใช้กับปุ่ม
-- `task.getValue()` รับผลจาก `call()` ตัวรับเหตุการณ์นี้อยู่บน JavaFX Application Thread จึงเปลี่ยน Label ได้
+รันด้วยคำสั่งเดิม: ระหว่างรอ ปุ่มนี้ถูกปิด แต่ช่องกรอกยังใช้ได้ พองานเสร็จปุ่มกลับมาใช้งานได้ แล้วปิดโปรแกรมก่อนแก้ขั้นต่อไป
 
-## 5. รองรับงานล้มเหลวและการยกเลิก
+### 5. เพิ่มทางออกเมื่องานล้มเหลว
 
-เพิ่มสองส่วนนี้ **หลัง `task.setOnSucceeded(...);` และก่อนคอมเมนต์ `// C`**:
+ใน `runBackgroundDemo()` เพิ่มหลัง `task.setOnSucceeded(...);` และก่อนบรรทัด `Thread worker = ...`:
 
 ```java
 task.setOnFailed(event -> {
@@ -116,43 +135,26 @@ task.setOnFailed(event -> {
 });
 ```
 
-`setOnFailed` คืนปุ่มและแจ้งผู้ใช้เมื่องานล้มเหลว
+ถ้างานล้มเหลว ต้องคืนปุ่มด้วย ไม่เช่นนั้นปุ่มจะถูกปิดค้างไว้
+
+**ทดลองข้อผิดพลาด:** ใน `DemoTask.java` แทนที่เฉพาะบรรทัด `return "งานเบื้องหลังเสร็จแล้ว";` ชั่วคราวด้วย:
+
+```java
+throw new IllegalStateException("ทดลองงานล้มเหลว");
+```
+
+รันแล้วกดปุ่ม รอประมาณ 3 วินาที ต้องเห็นข้อความงานไม่สำเร็จและปุ่มกลับมาใช้งานได้ จากนั้นปิดโปรแกรมและ **เปลี่ยนบรรทัด `throw` กลับเป็น `return` เดิม** ก่อนทำขั้นถัดไป
+
+### 6. ขอยกเลิกงานเมื่อปิดหน้าต่าง
+
+ใน `runBackgroundDemo()` เพิ่มหลัง `task.setOnFailed(...);` และก่อนบรรทัด `Thread worker = ...`:
 
 ```java
 task.setOnCancelled(event -> finishSensorTask());
-```
-
-`setOnCancelled` คืนสถานะเมื่องานถูกยกเลิก
-
-ทั้งสามตัวเป็น **ทางเลือกตามผลของงาน** ไม่ได้ทำเรียงกันทั้งสำเร็จ ล้มเหลว และยกเลิก
-
-## 6. เริ่มทำงานบน Thread แยก
-
-แทนที่คอมเมนต์ `// C: เริ่ม Thread` ด้วย:
-
-```java
 activeSensorTask = task;
-Thread worker = new Thread(task, "sensor-worker");
-worker.setDaemon(true);
-worker.start();
 ```
 
-- `activeSensorTask` เก็บงานไว้ ส่วน `new Thread(...)` เตรียมตัวรันงานชื่อ `sensor-worker`
-- `setDaemon(true)` ไม่ให้ Thread นี้รั้งโปรแกรมไว้ตอนออก ไม่ใช่คำสั่งยกเลิกงาน
-- **`start()` เริ่ม Thread ใหม่** ให้รันงานใน `call()` แยกจาก Thread ของหน้าจอ
-
-ทุกครั้งที่กดปุ่ม Method นี้จะสร้าง Task ใหม่ เพราะ Task หนึ่งตัวใช้รันได้ครั้งเดียว
-
-## 7. เชื่อมปุ่มและดูแลตอนปิดหน้าต่าง
-
-ใน `buildMachineForm()` แทนที่เฉพาะ `sensorButton.setOnAction(...)` เดิมด้วย:
-
-```java
-sensorButton.setText("ทดสอบงานเบื้องหลัง");
-sensorButton.setOnAction(event -> runBackgroundDemo());
-```
-
-เก็บ `actionButtons.getChildren().add(sensorButton);` ไว้เพียงครั้งเดียว และลบ `import java.util.Random;` เพราะตอนนี้ไม่ได้ใช้แล้ว
+`setOnCancelled` คืนสถานะเมื่องานถูกยกเลิก ส่วน `activeSensorTask` เก็บงานปัจจุบันไว้ ทั้ง Succeeded, Failed และ Cancelled เป็นคนละกรณี ไม่ได้ทำเรียงกัน
 
 ใน `start()` เพิ่มหลัง `stage.show();` ก่อนปีกกาปิด Method:
 
@@ -164,21 +166,35 @@ stage.setOnHidden(event -> {
 });
 ```
 
-`cancel()` ขอให้ยกเลิกงานเมื่อปิดหน้าต่าง ไม่ใช่การบังคับฆ่า Thread; การรอด้วย `sleep` ในตัวอย่างนี้ถูกขัดจังหวะได้
+`cancel()` ขอยกเลิกงาน ไม่ใช่การบังคับฆ่า Thread; การรอด้วย `sleep` ในตัวอย่างนี้ถูกขัดจังหวะได้
 
-## 8. รันและตรวจผล
+กลับไป `runBackgroundDemo()` เพิ่มบรรทัดนี้ **ระหว่าง `new Thread(...)` กับ `worker.start();`**:
 
-บันทึกไฟล์หลังทำครบ แล้วรันจากโฟลเดอร์หลักของ Repository:
-
-```powershell
-.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
+```java
+worker.setDaemon(true);
 ```
 
-- กดปุ่ม เห็นข้อความกำลังทำงาน และปุ่มนี้ถูกปิดชั่วคราว
-- ระหว่างรอ ลองเลือกแถวหรือพิมพ์ชื่อเครื่องจักร ยังใช้งานได้
-- ประมาณ 3 วินาทีต่อมา เห็นข้อความงานเสร็จและกดปุ่มได้อีก ค่า Sensor และชั่วโมงยังไม่เปลี่ยน
-- ลองปิดหน้าต่างระหว่างรอ โปรแกรมต้องปิดได้
+Daemon หมายถึง Thread นี้ไม่ทำให้ JVM ต้องอยู่ต่อเมื่อไม่มี Thread แบบ non-daemon เหลือแล้ว ไม่ใช่คำสั่งยกเลิกงานแทน `cancel()`
 
-สรุป: `call()` ทำงานเบื้องหลัง ส่วน `setOnSucceeded` รับผลมาแสดงบนหน้าจอ
+### 7. รันตรวจรอบสุดท้าย
+
+ตรวจว่า `DemoTask.call()` ใช้ `return` ตามเดิม บันทึกทั้งสองไฟล์ แล้วรันด้วยคำสั่งเดิม:
+
+- กดปุ่ม รอผลโดยหน้าจอยังตอบสนอง ปุ่มกลับมาเมื่อสำเร็จ และกดรอบใหม่ได้
+- กดปุ่มอีกครั้งแล้วปิดหน้าต่างทันที โปรแกรมต้องปิดได้และ Terminal กลับมารับคำสั่ง
+- ค่า Sensor และชั่วโมงยังไม่เปลี่ยน เพราะตอนนี้เป็นเพียงงานทดลอง
+
+ทุกครั้งที่กดปุ่มจะสร้าง `DemoTask` ใหม่ เพราะ Task หนึ่งตัวใช้รันได้ครั้งเดียว
+
+<details>
+<summary>อ่านเพิ่ม: ถ้าเจอ new Task() แล้วมีปีกกาต่อท้าย</summary>
+
+รูปแบบ `new Task<>() { ... }` คือการสร้างคลาสลูกแบบไม่ตั้งชื่อ (Anonymous Class) แล้วสร้าง Object ตรงจุดใช้งาน คล้ายกับ `new TableCell<>() { ... }` ที่เคยใช้ใน EP3.8
+
+ยังเป็นการสืบทอดและ Override เหมือน `DemoTask` แต่บทนี้ใช้คลาสมีชื่อเพื่อแยกงานออกจากหน้าจอให้ชัดเจน ไม่ต้องเปลี่ยนโค้ดตามรูปแบบนี้
+
+</details>
+
+สรุป: งานไม่ได้เร็วขึ้น แต่ Thread ของหน้าจอไม่ต้องหยุดรอ ตอนหน้าจะเปลี่ยน `DemoTask` เป็นงาน Sensor ที่ส่งผลจริงกลับมาให้ Service
 
 ถัดไป: [ตอนที่ 3 — ส่งผล Sensor กลับมาอัปเดตตาราง](ep10c-sensor-task-result.md)
