@@ -10,18 +10,49 @@
 
 Repo นี้วางเส้นทางจาก Java Console ไปสู่ระบบ Smart Factory แบบ Full Stack และ IoT โดยสามระยะแรกมีบทเรียนแล้ว ส่วนระยะที่ 4–7 และ Optional Track 4V เป็น Roadmap สำหรับพัฒนาในอนาคต ยังไม่มี EP หรือ Source Code ให้ทำตาม
 
-| ระยะ | Track | ผลลัพธ์ปลายทาง | สถานะ |
-|---|---|---|---|
-| 1 | Java Basic | Smart Factory Console | มีบทเรียนแล้ว |
-| 2 | Java OOP | Smart Factory Core | มีบทเรียนแล้ว |
-| 3 | Java Desktop Application | JavaFX Dashboard | มีบทเรียนแล้ว |
-| 4 | Spring Boot REST API | นำ OOP Core ให้บริการผ่าน HTTP และ JSON | Roadmap — ยังไม่มีบทเรียน |
-| 4V | Vaadin Flow Web UI | ทางเลือก Java-first หลัง Spring Boot สำหรับ Dashboard ภายใน | Optional Roadmap — ยังไม่มีบทเรียน |
-| 5 | Angular และ TypeScript | สร้าง Frontend ที่มี Component, Service และ DI | Roadmap — ยังไม่มีบทเรียน |
-| 6 | Smart Factory Web Dashboard | เชื่อม Angular กับ Java API เป็นระบบเดียว | Roadmap — ยังไม่มีบทเรียน |
-| 7 | MQTT, Database และ IoT Device | รับข้อมูลจริง บันทึกประวัติ และอัปเดต Dashboard | Roadmap — ยังไม่มีบทเรียน |
+**OOP Core จากระยะที่ 2 เป็นพื้นฐานร่วม ไม่ได้รอใช้เฉพาะตอนทำ API:** ระยะที่ 3 นำ Model และ Service มาใช้กับ JavaFX แล้ว ส่วนระยะถัดไปจะต่อยอดกฎของระบบชุดเดิมไปสู่ Web และ IoT
 
-Angular ยังคงเป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend/Backend ส่วน Vaadin เป็น Optional Track สำหรับผู้ที่ต้องการพัฒนา Web UI ด้วย Java และ OOP ต่อเนื่องจาก JavaFX
+```mermaid
+flowchart TB
+    subgraph Available[มีบทเรียนแล้ว]
+        Basic["1 · Java Basic<br/>Smart Factory Console"]
+        Core["2 · Java OOP Core<br/>Model และ Service"]
+        Desktop["3 · JavaFX Dashboard<br/>เรียก Model และ Service โดยตรง"]
+        Basic -->|พัฒนาโค้ดเป็น OOP| Core
+        Core -->|นำ Core มาใช้สร้างหน้าจอ| Desktop
+    end
+
+    subgraph Future[Roadmap · ยังไม่มีบทเรียน]
+        Backend["4 · Spring Boot<br/>Application Service และ REST API"]
+        Vaadin["4V · Vaadin Flow<br/>Optional Web UI แบบ Java-first"]
+        Angular["5 · Angular และ TypeScript<br/>พื้นฐาน Frontend"]
+        Web["6 · Smart Factory Web Dashboard<br/>Angular เชื่อม Java API"]
+        Integration["7 · MQTT, Database และ IoT<br/>เชื่อมผ่าน Interface และ Adapter"]
+    end
+
+    Core -.->|นำ Core ไปใช้ฝั่ง Backend| Backend
+    Backend -.->|ใช้ Service ภายในแอปผ่าน DI| Vaadin
+    Backend -.->|ให้บริการผ่าน REST API| Web
+    Angular -.->|นำ Frontend มาประกอบ| Web
+    Core -.->|ต่อยอดการรับและจัดเก็บข้อมูล| Integration
+    Integration -.->|ข้อมูลจริงสำหรับ Desktop| Desktop
+    Integration -.->|ข้อมูลจริงสำหรับ Backend| Backend
+```
+
+ลูกศรแสดงการต่อยอดและการนำส่วนต่าง ๆ มาใช้ร่วมกัน ไม่ใช่การสืบทอด Class เส้นทึบคือเส้นทางที่มีบทเรียนแล้ว เส้นประคือแผนในอนาคต
+
+| ระยะ | Track | สิ่งที่สร้างและการต่อยอด | สถานะ |
+|---|---|---|---|
+| 1 | Java Basic | สร้าง Console และพื้นฐานก่อนจัดโครงสร้างเป็น OOP | มีบทเรียนแล้ว |
+| 2 | Java OOP | สร้าง Core: Model และ Service สำหรับตรวจ Sensor จัดการเครื่องจักร และสรุปผล | มีบทเรียนแล้ว |
+| 3 | Java Desktop Application | นำ OOP Core มาใช้โดยตรงใน JavaFX Dashboard โดยไม่เขียนกฎของเครื่องจักรซ้ำใน UI | มีบทเรียนแล้ว |
+| 4 | Spring Boot REST API | นำ OOP Core ไปใช้ใน Backend และเปิดความสามารถผ่าน HTTP และ JSON | Roadmap — ยังไม่มีบทเรียน |
+| 4V | Vaadin Flow Web UI | สร้าง Web UI ด้วย Java โดยใช้ Application Service ร่วมกับ REST API ภายใน Spring Boot | Optional Roadmap — ยังไม่มีบทเรียน |
+| 5 | Angular และ TypeScript | เตรียม Frontend ด้วย Component, Service และ DI เพื่อเรียก Java API ในระยะที่ 6 | Roadmap — ยังไม่มีบทเรียน |
+| 6 | Smart Factory Web Dashboard | ประกอบ Angular จากระยะที่ 5 กับ API จากระยะที่ 4 โดยกฎของเครื่องจักรยังอยู่ใน Java Core ฝั่ง Backend | Roadmap — ยังไม่มีบทเรียน |
+| 7 | MQTT, Database และ IoT Device | เพิ่มช่องทางรับข้อมูลจริงและบันทึกประวัติผ่าน Interface/Adapter เพื่อต่อยอด Core กับ Desktop หรือ Backend | Roadmap — ยังไม่มีบทเรียน |
+
+Angular เป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend/Backend และใช้ Core **ผ่าน REST API ไม่ได้รันคลาส Java ใน Browser** ส่วน Vaadin เป็นทางเลือกหลังระยะที่ 4 โดยเรียก Application Service ผ่าน DI โดยตรงเมื่ออยู่ใน Spring Boot แอปเดียวกัน ไม่ต้องเรียก REST API ของตัวเองซ้ำ และไม่ต้องเรียน Vaadin ก่อนจึงจะไปต่อ Angular ได้
 
 หัวข้อในอนาคตจะสอนด้วยแนวทาง **Modern OOP** โดยใช้ Composition เป็นหลัก ใช้ Inheritance เฉพาะความสัมพันธ์แบบ is-a แยก Business Rule ออกจาก Framework และใช้ Interface, Value Object, Dependency Injection รวมถึง Test เพื่อให้ระบบเปลี่ยน UI, Database หรือช่องทางรับข้อมูลได้โดยไม่ต้องรื้อ Domain Core
 
