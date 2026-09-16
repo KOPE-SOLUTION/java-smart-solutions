@@ -2,7 +2,7 @@
 
 เป้าหมาย: เรียกงาน Sensor เดิมประมาณทุก 2 วินาที และกดเริ่ม–หยุดได้ โดยไม่สร้างงานซ้อน
 
-ใช้โปรเจกต์จาก [ตอนที่ 3](ep10c-sensor-task-result.md) ต่อ แก้ `DashboardApp.java` และ `SensorSimulationTask.java` ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop` โดยเริ่มจากหน้า Dashboard ก่อน
+ใช้โปรเจกต์จาก [ตอนที่ 3B](ep10c2-sensor-task-safety.md) ต่อ โดยคืนโค้ดทดลองล้มเหลวและนำการรอ 3 วินาทีออกแล้ว แก้ `DashboardApp.java` และ `SensorSimulationTask.java` ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop` โดยเริ่มจากหน้า Dashboard ก่อน
 
 ```mermaid
 sequenceDiagram

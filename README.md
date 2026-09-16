@@ -4,7 +4,7 @@
 
 เรียน Java ผ่าน Case Study **Smart Factory Machine Monitor** โดยพัฒนาโค้ดชุดเดียวอย่างต่อเนื่องจากโปรแกรม Console ไปสู่ Business Logic แบบ OOP และ Dashboard ด้วย JavaFX
 
-ทุกบทใช้รูปแบบ **สร้างโครงไฟล์ → เพิ่มโค้ดทีละช่วง → รันดูผล → ทำ Challenge** จึงไม่ต้องคัดลอกโค้ดก้อนใหญ่ในครั้งเดียว ส่วนโค้ดฉบับเต็มเก็บไว้ในโฟลเดอร์ `src` สำหรับใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ JDK 21, Maven Wrapper และ JavaFX 21
+เรียนโดยตั้งเป้าทีละเรื่อง **เข้าใจสิ่งที่จะทำ → เพิ่มโค้ดตรงจุด → รันดูผล** แล้วจึงต่อยอดหรือทำ Challenge ไม่จำเป็นต้องจบหลายความสามารถในคลิปเดียว ส่วนโค้ดฉบับเต็มเก็บไว้ในโฟลเดอร์ `src` สำหรับใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ JDK 21, Maven Wrapper และ JavaFX 21
 
 ## เส้นทางการเรียนรู้
 
@@ -57,6 +57,8 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 หัวข้อ Integration ในอนาคตจะใช้รูปแบบ **Core Lesson → Integration Lab → Production Guide**
 
 ## เลือก Playlist
+
+[ดูร่างการแบ่งตอนถัดจาก EP3.10](#แผนแบ่งตอนถัดจาก-ep310)
 
 <details open>
 <summary><strong>Playlist 1 — Java Basic Lab: Smart Factory Console</strong></summary>
@@ -124,7 +126,8 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 | 3.9 ตอนที่ 4 | ชั่วโมงและการบำรุงรักษา | [อัปเดตสถานะและจำนวนที่ต้องบำรุง](docs/playlist-03-java-desktop/ep09c-service-maintenance.md) |
 | 3.10 ตอนที่ 1 | ปุ่มจำลอง Sensor | [แสดงอุณหภูมิและแรงสั่น](docs/playlist-03-java-desktop/ep10a-sensor-button.md) |
 | 3.10 ตอนที่ 2 | Task และ Thread | [ทดลองงานเบื้องหลัง](docs/playlist-03-java-desktop/ep10b-task-thread.md) |
-| 3.10 ตอนที่ 3 | ผลลัพธ์จาก Sensor Task | [รับผลกลับมาอัปเดตหน้าจอ](docs/playlist-03-java-desktop/ep10c-sensor-task-result.md) |
+| 3.10 ตอนที่ 3A | ผลลัพธ์จาก Sensor Task | [รับผลกลับมาอัปเดตหน้าจอ](docs/playlist-03-java-desktop/ep10c-sensor-task-result.md) |
+| 3.10 ตอนที่ 3B | ป้องกันงานซ้อนและรับข้อผิดพลาด | [คืนสถานะปุ่มและข้ามผลของเครื่องที่ถูกลบ](docs/playlist-03-java-desktop/ep10c2-sensor-task-safety.md) |
 | 3.10 ตอนที่ 4 | Auto Sensor ด้วย Timeline | [เริ่ม–หยุดการอัปเดตอัตโนมัติ](docs/playlist-03-java-desktop/ep10d-auto-sensor-timeline.md) |
 | 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
@@ -137,6 +140,30 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 **ผลลัพธ์ของ Playlist:** Smart Factory Desktop Dashboard ที่ใช้งานและต่อยอดได้ พร้อมพื้นฐาน JavaFX สำหรับนำไปเชื่อม RTSP, IoT และระบบภายนอกในโปรเจกต์แยก
 
 </details>
+
+## แผนแบ่งตอนถัดจาก EP3.10
+
+เริ่มเรื่องใหม่ทีละอย่าง ให้แต่ละตอนรันเห็นผลได้ก่อนเพิ่มเรื่องถัดไป EP3.10 เรียนตามลำดับ 1 → 2 → 3A → 3B → 4 โดยแบ่งเฉพาะตอนที่ 3 ให้ค่อย ๆ เข้าใจ ไม่เปลี่ยนเนื้อหาคลิปตอนที่ 1–2 ที่อัดแล้ว ส่วนด้านล่างเป็นแผนของ EP ถัดไป
+
+<details>
+<summary><strong>ดูร่าง EP3.11–3.16 แบบค่อยเป็นค่อยไป</strong></summary>
+
+นี่คือร่างการจัดตอนก่อนเริ่มอัด ไม่ใช่บทพาทำตอนย่อยที่เสร็จแล้ว ลิงก์ในตารางยังเป็นเอกสารเดิมสำหรับตรวจขอบเขต เมื่อเริ่มแต่ละ EP จึงค่อยปรับขั้นตอนและทดสอบจากโค้ดจบตอนก่อนหน้า โดยไม่บังคับโหลดหน้าจอสำเร็จรูปมาแทนงานที่ทำอยู่
+
+| EP เดิม | ร่างตอนย่อยตามลำดับ | ผลที่ต้องเห็นเมื่อจบแต่ละตอน |
+|---|---|---|
+| [3.11 — FXML และ Controller](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | 1) โหลด FXML เล็ก ๆ โดยเก็บ Dashboard เดิมไว้; 2) เชื่อม `fx:id` และปุ่มกับ Controller; 3) ส่ง Service เข้า Controller แล้วแสดงตาราง; 4) ย้าย Form และการจัดการเครื่องจักรเดิม; 5) ย้ายงาน Sensor และการปิดงาน | เปิด View ได้ → กดปุ่มแล้วข้อความเปลี่ยน → เห็นข้อมูลจาก Service → เพิ่ม/ลบ/บำรุงได้ → Auto Sensor ทำงานและปิดได้ ก่อนเปลี่ยนจุดเริ่มไปใช้ Dashboard แบบ FXML |
+| [3.12 — เตรียมส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | 1) ตรวจภาษาไทยและรัน Test ที่มีอยู่; 2) เพิ่ม Module และเปิดแอป; 3) สร้างและเปิด Runtime Image | อ่านภาษาไทยได้และ Test ผ่าน → แอปรันแบบ Module → เปิดจาก Runtime Image ได้ ส่วน IoT แยกเป็นแผนต่อยอด ไม่พาเชื่อมในตอนแพ็กโปรแกรม |
+| [3.13 — Search](docs/playlist-03-java-desktop/ep13-search-filter.md) | 1) ช่องค้นหาและ FilteredList จากรหัส; 2) ขยายเป็นชื่อ/ตำแหน่ง พร้อมจำนวนผลลัพธ์และ Refresh | พิมพ์รหัสแล้วเหลือแถวที่ตรง → ค้นหาได้หลายช่องและจำนวนถูกต้องหลังข้อมูลเปลี่ยน |
+| [3.14 — Filter และ Sort](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) | 1) กรองสถานะร่วมกับข้อความ; 2) เพิ่มเงื่อนไขบำรุงและปุ่มล้าง; 3) เพิ่ม SortedList และการเรียงหัวตาราง | ตัวกรองสถานะทำงาน → รวม/ล้างเงื่อนไขได้ → เรียงข้อมูลได้โดยยังคงตัวกรอง |
+| [3.15 — Edit Machine](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) | 1) แก้ Model/Service และทดสอบโดยยังไม่แก้ UI; 2) เลือกแถวแล้วบันทึกชื่อ/ตำแหน่งโดยล็อกรหัส; 3) ยกเลิกและตรวจร่วมกับ Search/Auto Sensor | Test พิสูจน์การแก้ข้อมูล → แก้ผ่าน Form ได้ → สลับโหมดและกรองข้อมูลแล้วไม่เสียสถานะ |
+| [3.16 — Scene Builder, Optional](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) | คงเป็น Mini Lab เดียว เน้นปรับ Layout ของ Form เดิม ไม่เพิ่ม Logic ใหม่ | Preview ได้ อ่าน FXML ที่เปลี่ยน และรันแล้วปุ่มเดิมยังทำงาน |
+
+ชื่อและจำนวนตอนย่อยยืนยันอีกครั้งก่อนเริ่มอัดแต่ละ EP ไม่สร้างไฟล์บทใหม่หรือเปลี่ยนลิงก์เดิมล่วงหน้า รายละเอียดที่ต้องอ่านเพิ่มแยกจากทางทำหลัก เพื่อให้เปิดบทมาแล้วรู้ว่าจะเริ่มตรงไหน
+
+</details>
+
+สำหรับ Spring Boot, Angular, Vaadin และ IoT ให้เริ่มจากผลเล็ก ๆ เช่น อ่าน JSON หนึ่งรายการ หรือรับข้อความหนึ่ง Topic ก่อนประกอบเป็น Dashboard ดู[ร่างลำดับของ Track อนาคต](docs/FUTURE_ROADMAP.md#จังหวะการเรียนของ-track-ถัดไป)
 
 <details>
 <summary><strong>ดูภาพรวมโปรเจกต์และหัวข้อ Java ที่ใช้</strong></summary>

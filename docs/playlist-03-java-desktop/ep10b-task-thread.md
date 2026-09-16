@@ -81,4 +81,4 @@ sensorButton.setOnAction(event -> runBackgroundDemo());
 
 สรุป: งานไม่ได้เร็วขึ้น แต่ Thread ของหน้าจอไม่ต้องหยุดรอ
 
-ถัดไป: [ตอนที่ 3 — ส่งผล Sensor กลับมาอัปเดตตาราง](ep10c-sensor-task-result.md)
+ถัดไป: [ตอนที่ 3A — ส่งผล Sensor กลับมาอัปเดตตาราง](ep10c-sensor-task-result.md)
