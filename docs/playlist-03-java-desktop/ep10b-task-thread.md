@@ -8,7 +8,7 @@
 
 เราจะประกอบ Method ทีละช่วง: เตรียมปุ่ม → สร้างงาน → รับผล → เริ่ม Thread แล้วจึงรันทดสอบเมื่อครบขั้นตอน
 
-## 1. เตรียมตัวแปรและคืนสถานะปุ่ม
+## 1. เตรียมตัวแปร
 
 เพิ่ม Import ต่อจาก Import เดิม:
 
@@ -25,18 +25,6 @@ private Task<?> activeSensorTask;
 
 - `sensorBusy` เช็กว่ามีงานค้างอยู่หรือไม่ ค่าเริ่มต้นคือ `false`
 - `activeSensorTask` เก็บงานไว้ขอยกเลิก ส่วน `<?>` ไม่เจาะจงชนิดผลลัพธ์
-
-เพิ่ม Method นี้ภายใน Class `DashboardApp` แต่นอก Method อื่น:
-
-```java
-private void finishSensorTask() {
-    sensorBusy = false;
-    sensorButton.setDisable(false);
-    activeSensorTask = null;
-}
-```
-
-`finishSensorTask()` คืนสถานะว่างและเปิดปุ่ม ไม่ได้สั่งหยุด Thread
 
 ## 2. สร้างโครง Method สำหรับปุ่ม
 
@@ -60,6 +48,18 @@ private void runBackgroundDemo() {
 ```
 
 มีงานอยู่ให้ออกจาก Method ด้วย `return`; ถ้ายังไม่มีจึงปิดปุ่มและเริ่มเตรียมงาน
+
+เพิ่ม `finishSensorTask()` **ถัดจากปีกกา `}` ที่ปิด Method `runBackgroundDemo()` ด้านบนทันที** และก่อน Method ถัดไปที่มีอยู่ในไฟล์ ให้บรรทัด `private void` ของทั้งสอง Method อยู่ระดับเดียวกัน ไม่วางไว้ภายใน `runBackgroundDemo()` หรือหลังปีกกาปิด Class `DashboardApp`:
+
+```java
+private void finishSensorTask() {
+    sensorBusy = false;
+    sensorButton.setDisable(false);
+    activeSensorTask = null;
+}
+```
+
+`finishSensorTask()` คืนสถานะว่างและเปิดปุ่ม ไม่ได้สั่งหยุด Thread หากเพิ่มไว้แล้ว ให้ย้าย Method เดิมมาไว้ตำแหน่งนี้ ไม่เพิ่มซ้ำ
 
 ## 3. ใส่งานที่จะทำใน Task
 
