@@ -6,37 +6,28 @@
 - ใช้ `Timeline` เรียกงานเป็นช่วงเวลา
 - อัปเดต UI เมื่อ Task สำเร็จโดยไม่ทำให้หน้าต่างค้าง
 
-EP นี้แก้ `DashboardApp.java` และสร้าง `SensorUpdate.java` กับ `SensorSimulationTask.java` ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
+## ก่อนเริ่ม
+
+เปิดโปรเจกต์ `practice/smart-factory-dashboard` ที่ทำต่อจาก [EP3.9 ตอนที่ 4](ep09c-service-maintenance.md) ใช้ตาราง Summary และปุ่มเดิมต่อได้เลย
+
+ปิดหน้าต่างโปรแกรมก่อนแก้โค้ด ตอนนี้จะแก้ `DashboardApp.java` และสร้าง `SensorUpdate.java` กับ `SensorSimulationTask.java` เพิ่มใน `src/main/java/smartfactory/desktop` ของโปรเจกต์นี้
+
+`Task` กำหนดงาน, `Thread` รันงานเบื้องหลัง ส่วน `Timeline` เรียกงานตามเวลา ในตอนนี้ใช้ค่าสุ่มแทน Sensor จริง
 
 ```mermaid
 sequenceDiagram
     participant FX as JavaFX Application Thread
-    participant Timeline
-    participant Task as Background Task
-    Timeline->>FX: ถึงรอบทุก 2 วินาที
-    FX->>Task: start
-    Task->>Task: สร้างค่าจาก Sensor
-    Task-->>FX: onSucceeded
+    participant Worker as Background Thread
+    Note over FX: Timeline ถึงรอบประมาณทุก 2 วินาที
+    FX->>Worker: สร้าง Task ใหม่ แล้วเรียก worker.start()
+    Worker->>Worker: call() สุ่มค่า Sensor
+    Worker-->>FX: งานสำเร็จ → onSucceeded รับผล
     FX->>FX: Service update + refresh UI
 ```
 
-## ก่อนเริ่ม
-
-ใช้ผลจาก [EP3.9 ตอนที่ 4](ep09c-service-maintenance.md) ซึ่งมี `service`, `machines`, `machineTable`, `refreshDashboard()`, คอลัมน์ชั่วโมงและบำรุงรักษา รวมถึงปุ่มเพิ่ม ลบ และบำรุงเสร็จแล้ว
-
-หากเริ่มที่ EP นี้โดยตรง ใช้ [ชุดจบ EP3.9 ตอนที่ 4](../../lesson-resources/ep3-9-steps/03-maintenance/) คัดลอกเนื้อหาภายในไปยัง `practice/smart-factory-dashboard` ให้ `pom.xml` อยู่ใต้โฟลเดอร์นี้ทันที หากมีงานเดิมให้เปลี่ยนชื่อโฟลเดอร์เดิมเก็บไว้ก่อน ไม่รวมไฟล์หลายเวอร์ชัน
-
-รันจากโฟลเดอร์หลักของ Repository:
-
-```powershell
-.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
-```
-
-ต้องเห็น 3 เครื่อง สถานะปกติ 2, Sensor ผิดปกติ 1, หยุดฉุกเฉิน 0 และต้องบำรุงทั้งหมด 2 ปิดหน้าต่างก่อนเริ่มแก้โค้ด
-
 ## 1. เพิ่มคอลัมน์สำหรับดูผลจาก Sensor
 
-ก่อนสร้าง Background Task ให้เพิ่มคอลัมน์อุณหภูมิและแรงสั่นสะเทือนใน `buildMachineTable()` เพื่อให้มองเห็นค่าที่ Task อัปเดต:
+ใน `DashboardApp.java` ภายใน `buildMachineTable()` เพิ่มคอลัมน์อุณหภูมิและแรงสั่นสะเทือน หลังตั้งค่า `maintenanceColumn` และก่อน `machineTable.getColumns().setAll(...)`:
 
 ```java
 TableColumn<Machine, String> temperatureColumn = new TableColumn<>("อุณหภูมิ °C");
@@ -89,6 +80,8 @@ package smartfactory.desktop;
 public record SensorUpdate(String machineId, double temperature, double vibration) {}
 ```
 
+`SensorUpdate` เก็บผลหนึ่งเครื่อง: รหัส อุณหภูมิ และแรงสั่น เพื่อส่งจากงานเบื้องหลังกลับมาอัปเดตข้อมูล
+
 ## 3. สร้าง Background Task
 
 สร้าง `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/SensorSimulationTask.java`:
@@ -120,7 +113,7 @@ public class SensorSimulationTask extends Task<List<SensorUpdate>> {
 }
 ```
 
-`call()` ทำงานบน Background Thread และไม่แก้ JavaFX Component โดยตรง
+เมื่อรันผ่าน Thread ในขั้นถัดไป `call()` จะทำงานเบื้องหลังและคืน `List<SensorUpdate>` โดยไม่แก้หน้าจอหรือ `Machine` โดยตรง
 
 ## 4. รัน Task และกลับมาอัปเดต UI
 
@@ -148,7 +141,9 @@ private void simulateInBackground() {
 }
 ```
 
-เพิ่ม Import `java.util.List` และ `smartfactory.model.Machine` ด้านบนของ `DashboardApp.java`
+เพิ่ม `import java.util.List;` ต่อจาก Import เดิมใน `DashboardApp.java` ส่วน `Machine` มี Import จาก EP ก่อนแล้ว
+
+`worker.start()` เริ่มงานเบื้องหลัง ส่วน `setOnSucceeded` รับผลบน JavaFX Application Thread จึงอัปเดต Service และหน้าจอในส่วนนี้ได้ สร้าง Task ใหม่ทุกรอบเพราะ Task หนึ่งตัวรันได้ครั้งเดียว
 
 ## 5. เรียกอัตโนมัติทุก 2 วินาที
 
@@ -177,9 +172,23 @@ sensorTimeline.play();
 stage.setOnHidden(event -> sensorTimeline.stop());
 ```
 
-ผลที่ต้องเห็น: อุณหภูมิ สถานะ และ Summary เปลี่ยนทุก 2 วินาที แต่หน้าต่างยังลากและกดได้ตามปกติ
+`Timeline` เรียกงานประมาณทุก 2 วินาที ไม่ได้ทำให้งานเป็น Background เอง ส่วน `stop()` หยุดเรียกรอบใหม่ ไม่ได้ยกเลิก Task ที่เริ่มไปแล้ว
 
-`refreshDashboard()` ต้องอยู่หลัง Loop เพราะ Summary ต้องคำนวณใหม่หลังอัปเดต Sensor ครบทุกเครื่อง หากเรียกก่อนอัปเดต ตัวเลขที่เห็นจะช้ากว่าข้อมูลจริงหนึ่งรอบ
+## 6. รันและตรวจผล
+
+บันทึกทั้งสามไฟล์ แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
+```
+
+- ก่อนรอบแรก ตารางมีข้อมูลตัวอย่าง 3 เครื่อง: สถานะปกติ 2, Sensor ผิดปกติ 1, หยุดฉุกเฉิน 0 และต้องบำรุงทั้งหมด 2
+- หลังประมาณ 2 วินาที ค่าอุณหภูมิและแรงสั่นเริ่มอัปเดต จากนั้นอัปเดตต่อเป็นรอบ สถานะและ Summary ต้องตรงกับค่าล่าสุด แต่ไม่จำเป็นต้องเปลี่ยนทุกครั้ง
+- ลองเลือกแถวและเลื่อนหน้าต่าง โปรแกรมยังตอบสนองตามปกติ
+
+คง `refreshDashboard()` ไว้หลัง Loop เพื่ออัปเดตตารางและ Summary เมื่อรับค่าครบทุกเครื่องแล้ว
+
+ชั่วโมงใน Model เดิมเพิ่ม 1 ทุกครั้งที่รับค่า Sensor จึงเป็นชั่วโมงจำลอง ไม่ใช่เวลาทำงานจริง และรอบ Sensor ถัดไปสามารถเปลี่ยนสถานะ OFFLINE หลังบำรุงเสร็จได้
 
 ## Challenge
 
