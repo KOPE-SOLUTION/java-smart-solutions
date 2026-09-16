@@ -5,7 +5,7 @@
 | ตอน | สิ่งที่ทำ | ผลเมื่อรัน |
 | --- | --- | --- |
 | [1 — กดปุ่มจำลอง Sensor](ep10a-sensor-button.md) | เพิ่มคอลัมน์และใช้ Service เดิม | กดครั้งเดียว ค่า Sensor และ Summary อัปเดต |
-| [2 — Task และ Thread](ep10b-task-thread.md) | ทดลองงานที่รอ 3 วินาที | หน้าจอยังตอบสนองระหว่างรอ |
+| [2 — Task และ Thread](ep10b-task-thread.md) | ทดลองงานที่รอ 10 วินาที | ยังบำรุงรักษาและลบรายการได้ระหว่างรอ |
 | [3 — ส่งผล Sensor กลับมา](ep10c-sensor-task-result.md) | สร้าง SensorUpdate และงานจำลอง | รับผลจาก Background มาแสดงในตาราง |
 | [4 — Auto Sensor ด้วย Timeline](ep10d-auto-sensor-timeline.md) | เพิ่มปุ่มเริ่ม–หยุดและเรียกงานเป็นรอบ | อัปเดตประมาณทุก 2 วินาทีโดยไม่สร้างงานซ้อน |
 
