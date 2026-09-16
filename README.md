@@ -8,49 +8,45 @@
 
 ## เส้นทางการเรียนรู้
 
-Repo นี้วางเส้นทางจาก Java Console ไปสู่ระบบ Smart Factory แบบ Full Stack และ IoT โดยสามระยะแรกมีบทเรียนแล้ว ส่วนระยะที่ 4–7 และ Optional Track 4V เป็น Roadmap สำหรับพัฒนาในอนาคต ยังไม่มี EP หรือ Source Code ให้ทำตาม
+เส้นทางเริ่มจาก Java Basic สร้าง OOP Core แล้วนำไปต่อยอดเป็น Desktop App, Web Application และระบบ IoT
 
-**OOP Core จากระยะที่ 2 เป็นพื้นฐานร่วม ไม่ได้รอใช้เฉพาะตอนทำ API:** ระยะที่ 3 นำ Model และ Service มาใช้กับ JavaFX แล้ว ส่วนระยะถัดไปจะต่อยอดกฎของระบบชุดเดิมไปสู่ Web และ IoT
+**OOP Core เป็นพื้นฐานร่วม:** JavaFX ใช้ Model และ Service โดยตรง ส่วน Spring Boot นำ Core ไปให้บริการกับ Web และระบบภายนอก โดยไม่ย้ายกฎของเครื่องจักรไปไว้ในหน้าจอ
 
 ```mermaid
-flowchart TB
-    subgraph Available[มีบทเรียนแล้ว]
-        Basic["1 · Java Basic<br/>Smart Factory Console"]
-        Core["2 · Java OOP Core<br/>Model และ Service"]
-        Desktop["3 · JavaFX Dashboard<br/>เรียก Model และ Service โดยตรง"]
-        Basic -->|พัฒนาโค้ดเป็น OOP| Core
-        Core -->|นำ Core มาใช้สร้างหน้าจอ| Desktop
-    end
+flowchart LR
+    Basic["1 · Java Basic<br/>Console"]
+    Core["2 · Java OOP Core<br/>Model และ Service"]
+    Desktop["3 · JavaFX<br/>Desktop Dashboard"]
+    Backend["4 · Spring Boot<br/>Service และ REST API"]
+    Vaadin["4V · Vaadin Flow<br/>Optional Java Web UI"]
+    Angular["5 · Angular / TypeScript<br/>Frontend"]
+    Web["6 · Web Dashboard<br/>Angular + Java API"]
+    Integration["7 · MQTT / Database / IoT<br/>ข้อมูลจริงและประวัติ"]
 
-    subgraph Future[Roadmap · ยังไม่มีบทเรียน]
-        Backend["4 · Spring Boot<br/>Application Service และ REST API"]
-        Vaadin["4V · Vaadin Flow<br/>Optional Web UI แบบ Java-first"]
-        Angular["5 · Angular และ TypeScript<br/>พื้นฐาน Frontend"]
-        Web["6 · Smart Factory Web Dashboard<br/>Angular เชื่อม Java API"]
-        Integration["7 · MQTT, Database และ IoT<br/>เชื่อมผ่าน Interface และ Adapter"]
-    end
-
-    Core -.->|นำ Core ไปใช้ฝั่ง Backend| Backend
-    Backend -.->|ใช้ Service ภายในแอปผ่าน DI| Vaadin
-    Backend -.->|ให้บริการผ่าน REST API| Web
-    Angular -.->|นำ Frontend มาประกอบ| Web
-    Core -.->|ต่อยอดการรับและจัดเก็บข้อมูล| Integration
-    Integration -.->|ข้อมูลจริงสำหรับ Desktop| Desktop
-    Integration -.->|ข้อมูลจริงสำหรับ Backend| Backend
+    Basic -->|จัดโครงสร้างเป็น OOP| Core
+    Core -->|ใช้ Model และ Service โดยตรง| Desktop
+    Core -->|นำ Core ไปใช้ใน Backend| Backend
+    Backend -->|ต่อด้วย Frontend| Angular
+    Angular -->|สร้างหน้าจอ| Web
+    Backend -->|ให้บริการผ่าน REST API| Web
+    Backend -->|ใช้ Service ภายในแอปผ่าน DI| Vaadin
+    Desktop -->|ต่อยอดผ่าน Adapter| Integration
+    Web -->|ต่อยอดผ่าน Backend| Integration
+    Vaadin -->|ต่อยอดผ่าน Backend| Integration
 ```
 
-ลูกศรแสดงการต่อยอดและการนำส่วนต่าง ๆ มาใช้ร่วมกัน ไม่ใช่การสืบทอด Class เส้นทึบคือเส้นทางที่มีบทเรียนแล้ว เส้นประคือแผนในอนาคต
+อ่านจากซ้ายไปขวา ลูกศรแสดงเส้นทางเรียนและการต่อยอด ไม่ใช่การสืบทอด Class หรือทิศทางส่งข้อมูลจริง เลือกต่อ IoT จาก Desktop หรือ Web ได้ โดยไม่ต้องเรียนทุกแขนงก่อน
 
-| ระยะ | Track | สิ่งที่สร้างและการต่อยอด | สถานะ |
-|---|---|---|---|
-| 1 | Java Basic | สร้าง Console และพื้นฐานก่อนจัดโครงสร้างเป็น OOP | มีบทเรียนแล้ว |
-| 2 | Java OOP | สร้าง Core: Model และ Service สำหรับตรวจ Sensor จัดการเครื่องจักร และสรุปผล | มีบทเรียนแล้ว |
-| 3 | Java Desktop Application | นำ OOP Core มาใช้โดยตรงใน JavaFX Dashboard โดยไม่เขียนกฎของเครื่องจักรซ้ำใน UI | มีบทเรียนแล้ว |
-| 4 | Spring Boot REST API | นำ OOP Core ไปใช้ใน Backend และเปิดความสามารถผ่าน HTTP และ JSON | Roadmap — ยังไม่มีบทเรียน |
-| 4V | Vaadin Flow Web UI | สร้าง Web UI ด้วย Java โดยใช้ Application Service ร่วมกับ REST API ภายใน Spring Boot | Optional Roadmap — ยังไม่มีบทเรียน |
-| 5 | Angular และ TypeScript | เตรียม Frontend ด้วย Component, Service และ DI เพื่อเรียก Java API ในระยะที่ 6 | Roadmap — ยังไม่มีบทเรียน |
-| 6 | Smart Factory Web Dashboard | ประกอบ Angular จากระยะที่ 5 กับ API จากระยะที่ 4 โดยกฎของเครื่องจักรยังอยู่ใน Java Core ฝั่ง Backend | Roadmap — ยังไม่มีบทเรียน |
-| 7 | MQTT, Database และ IoT Device | เพิ่มช่องทางรับข้อมูลจริงและบันทึกประวัติผ่าน Interface/Adapter เพื่อต่อยอด Core กับ Desktop หรือ Backend | Roadmap — ยังไม่มีบทเรียน |
+| ระยะ | Track | สิ่งที่สร้างและการต่อยอด |
+|---|---|---|
+| 1 | Java Basic | สร้าง Console และพื้นฐานก่อนจัดโครงสร้างเป็น OOP |
+| 2 | Java OOP | สร้าง Core: Model และ Service สำหรับตรวจ Sensor จัดการเครื่องจักร และสรุปผล |
+| 3 | Java Desktop Application | นำ OOP Core มาใช้โดยตรงใน JavaFX Dashboard โดยไม่เขียนกฎของเครื่องจักรซ้ำใน UI |
+| 4 | Spring Boot REST API | นำ OOP Core ไปใช้ใน Backend และเปิดความสามารถผ่าน HTTP และ JSON |
+| 4V | Vaadin Flow Web UI — Optional | สร้าง Web UI ด้วย Java โดยใช้ Application Service ร่วมกับ REST API ภายใน Spring Boot |
+| 5 | Angular และ TypeScript | เตรียม Frontend ด้วย Component, Service และ DI เพื่อเรียก Java API ในระยะที่ 6 |
+| 6 | Smart Factory Web Dashboard | ประกอบ Angular จากระยะที่ 5 กับ API จากระยะที่ 4 โดยกฎของเครื่องจักรยังอยู่ใน Java Core ฝั่ง Backend |
+| 7 | MQTT, Database และ IoT Device | เพิ่มช่องทางรับข้อมูลจริงและบันทึกประวัติผ่าน Interface/Adapter เพื่อต่อยอด Core กับ Desktop หรือ Backend |
 
 Angular เป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend/Backend และใช้ Core **ผ่าน REST API ไม่ได้รันคลาส Java ใน Browser** ส่วน Vaadin เป็นทางเลือกหลังระยะที่ 4 โดยเรียก Application Service ผ่าน DI โดยตรงเมื่ออยู่ใน Spring Boot แอปเดียวกัน ไม่ต้องเรียก REST API ของตัวเองซ้ำ และไม่ต้องเรียน Vaadin ก่อนจึงจะไปต่อ Angular ได้
 
