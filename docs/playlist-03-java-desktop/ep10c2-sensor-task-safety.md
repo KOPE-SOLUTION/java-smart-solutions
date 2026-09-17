@@ -12,7 +12,7 @@
 private boolean sensorBusy;
 ```
 
-ใน `simulateInBackground()` เพิ่มเป็นส่วนแรก ก่อน `List<String> ids = new ArrayList<>();`:
+ใน `DashboardApp.java` ภายใน `simulateInBackground()` เพิ่มสองเงื่อนไขนี้ทันทีหลังบรรทัดเปิด Method ก่อน `List<String> ids = new ArrayList<>();` ที่มีจาก 3A:
 
 ```java
 if (sensorBusy) {
@@ -24,7 +24,9 @@ if (service.getMachines().isEmpty()) {
 }
 ```
 
-จากนั้นเพิ่ม **หลัง Loop เก็บรหัส** ก่อน `SensorSimulationTask task = ...`:
+ตรวจให้ทั้งสอง `if` อยู่ก่อนการสร้างรายการ: ถ้ายังมีงานหรือไม่มีเครื่องจักร เรา `return` ได้ทันที ไม่ต้องเตรียมข้อมูลที่ไม่ได้ใช้
+
+จากนั้นเพิ่ม **หลังปีกกาปิด Loop `for (Machine machine : service.getMachines())`** ก่อน `SensorSimulationTask task = ...` ไม่วางไว้ภายใน Loop:
 
 ```java
 sensorBusy = true;
@@ -64,7 +66,7 @@ task.setOnFailed(event -> {
 
 ## 3. ข้ามผลของเครื่องที่ถูกลบระหว่างรอ
 
-ใน `simulateInBackground()` เพิ่ม **ก่อน `List<String> ids = ...`** หลังส่วนตรวจงานซ้อนและรายการว่าง:
+ใน `DashboardApp.java` ภายใน `simulateInBackground()` เพิ่มบรรทัดนี้ **หลังปีกกาปิด `if (service.getMachines().isEmpty())` และก่อน `List<String> ids = new ArrayList<>();`** ไม่วางไว้ก่อน `if (sensorBusy)`:
 
 ```java
 List<Machine> snapshot = List.copyOf(service.getMachines());
@@ -75,6 +77,39 @@ List<Machine> snapshot = List.copyOf(service.getMachines());
 ```java
 for (Machine machine : snapshot) {
 ```
+
+เก็บ `ids.add(machine.getId());` และปีกกาปิด Loop เดิมไว้ ลำดับต้น Method ต้องเป็น **ตรวจงานซ้อน → ตรวจรายการว่าง → สร้าง snapshot → เก็บรหัส**
+
+<details>
+<summary>ดูตำแหน่งต้น Method หลังทำขั้นนี้</summary>
+
+ใช้เทียบกับโค้ดที่มี ไม่เพิ่ม Method ซ้ำ ตัวอย่างนี้แสดงเฉพาะส่วนต้น ส่วนสร้าง Task และตัวรับผลด้านล่างเก็บไว้ตามเดิม:
+
+```java
+private void simulateInBackground() {
+    if (sensorBusy) {
+        return;
+    }
+    if (service.getMachines().isEmpty()) {
+        statusLabel.setText("ยังไม่มีเครื่องจักรให้จำลอง");
+        return;
+    }
+
+    List<Machine> snapshot = List.copyOf(service.getMachines());
+    List<String> ids = new ArrayList<>();
+    for (Machine machine : snapshot) {
+        ids.add(machine.getId());
+    }
+
+    sensorBusy = true;
+    sensorButton.setDisable(true);
+    statusLabel.setText("กำลังจำลองค่า Sensor...");
+    // ต่อด้วย SensorSimulationTask task = ... และโค้ดเดิมจนจบ Method
+```
+
+ถ้ามี `snapshot` หรือ `ids` อยู่ก่อนสอง `if` ให้ย้ายลงมา ไม่ประกาศซ้ำ การวางไว้ก่อนยังทำงานได้ในตัวอย่างนี้ แต่จะสร้างรายการโดยไม่จำเป็นในรอบที่ต้อง `return`
+
+</details>
 
 ภายใน `setOnSucceeded` เพิ่มเป็นส่วนแรกของ Loop `for (SensorUpdate update : task.getValue())` ก่อน `service.updateSensor(...);`:
 
