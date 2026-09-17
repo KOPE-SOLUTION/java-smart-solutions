@@ -2,7 +2,14 @@
 
 เป้าหมาย: เรียกงาน Sensor เดิมประมาณทุก 2 วินาที และกดเริ่ม–หยุดได้ โดยไม่สร้างงานซ้อน
 
-ใช้โปรเจกต์จาก [ตอนที่ 3B](ep10c2-sensor-task-safety.md) ต่อ โดยคืนโค้ดทดลองล้มเหลวและนำการรอ 3 วินาทีออกแล้ว แก้ `DashboardApp.java` และ `SensorSimulationTask.java` ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop` โดยเริ่มจากหน้า Dashboard ก่อน
+ใช้โปรเจกต์จาก [ตอนที่ 3B](ep10c2-sensor-task-safety.md) ต่อ ปิดโปรแกรมก่อนแก้ ไม่ต้องสร้างไฟล์ใหม่
+
+ไฟล์ทั้งสองอยู่ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/`:
+
+- `DashboardApp.java` — เริ่มที่ไฟล์นี้ เพิ่ม Timeline ปุ่มเริ่ม–หยุด และการจัดการตอนปิดหน้าต่าง
+- `SensorSimulationTask.java` — เปลี่ยนมาที่ไฟล์นี้เมื่อหัวข้อ 3 ให้เพิ่มการตรวจยกเลิกใน `call()`
+
+ก่อนเริ่ม ตรวจว่าใน `SensorSimulationTask.call()` คืน `return results;` แล้ว และนำ `Thread.sleep(3000);` กับ `throws Exception` ที่ใช้ทดลองใน 3B ออก จากนั้นเปิด `DashboardApp.java` เพื่อเริ่มหัวข้อ 1 โดยใช้ `sensorBusy`, `simulateInBackground()` และ `finishSensorTask()` ที่มีจาก 3B ต่อ ไม่สร้างซ้ำ
 
 ```mermaid
 sequenceDiagram
@@ -15,9 +22,9 @@ sequenceDiagram
     FX->>FX: อัปเดต Service และ refreshDashboard
 ```
 
-## 1. เตรียมตัวตั้งเวลา
+## 1. เตรียมตัวตั้งเวลาใน DashboardApp.java
 
-เพิ่ม Import ต่อจาก Import เดิม:
+ใน `DashboardApp.java` เพิ่ม Import ด้านบนไฟล์ ต่อจาก Import เดิม หากมีแล้วไม่เพิ่มซ้ำ:
 
 ```java
 import javafx.animation.Animation;
@@ -26,14 +33,14 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 ```
 
-เพิ่ม Field ต่อจาก `sensorBusy` นอกทุก Method:
+ใน `DashboardApp.java` เพิ่มสอง Field นี้ทันทีหลัง `private boolean sensorBusy;` ภายใน Class `DashboardApp` ให้อยู่ระดับเดียวกันและนอกทุก Method:
 
 ```java
 private Timeline sensorTimeline;
 private final Button autoSensorButton = new Button("เริ่ม Auto Sensor");
 ```
 
-ใน `start()` เพิ่มหลัง `stage.show();` ก่อนปีกกาปิด Method:
+ใน `DashboardApp.java` ภายใน `start(Stage stage)` เพิ่มหลัง `stage.show();` ก่อนปีกกาปิด Method ไม่แทนที่โค้ดสร้างหน้าต่างเดิม:
 
 ```java
 sensorTimeline = new Timeline(
@@ -44,9 +51,9 @@ sensorTimeline.setCycleCount(Timeline.INDEFINITE);
 
 ตอนนี้ยังไม่เรียก `play()` โปรแกรมจึงรอให้ผู้ใช้กดเริ่มก่อน ส่วน `sensorBusy` ใน Method เดิมป้องกันทั้งงานจากปุ่มและงานจาก Timer ซ้อนกันอยู่แล้ว
 
-## 2. เพิ่มปุ่มเริ่ม–หยุด
+## 2. เพิ่มปุ่มเริ่ม–หยุดใน DashboardApp.java
 
-เพิ่ม Method หลังปีกกาปิดของ `simulateInBackground()` และก่อน `finishSensorTask()` ให้ทั้งสาม Method อยู่ระดับเดียวกัน:
+ยังอยู่ใน `DashboardApp.java` เพิ่ม `toggleAutoSensor()` หลังปีกกาปิดของ `simulateInBackground()` และก่อนบรรทัดประกาศ `finishSensorTask()` ให้ทั้งสาม Method อยู่ระดับเดียวกัน ไม่วางซ้อนใน Method เดิม:
 
 ```java
 private void toggleAutoSensor() {
@@ -62,7 +69,7 @@ private void toggleAutoSensor() {
 }
 ```
 
-ใน `buildMachineForm()` เพิ่มหลัง `actionButtons.getChildren().add(sensorButton);`:
+ใน `DashboardApp.java` ภายใน `buildMachineForm()` เพิ่มสองบรรทัดนี้ทันทีหลัง `actionButtons.getChildren().add(sensorButton);` โดยเก็บปุ่มเดิมไว้ และเพิ่ม `autoSensorButton` เพียงครั้งเดียว:
 
 ```java
 autoSensorButton.setOnAction(event -> toggleAutoSensor());
@@ -75,13 +82,13 @@ actionButtons.getChildren().add(autoSensorButton);
 
 ### เก็บ Task ปัจจุบันไว้ขอยกเลิก
 
-ใน `DashboardApp.java` เพิ่ม Field ต่อจาก `sensorBusy` ไม่เพิ่ม Import `Task` ซ้ำ เพราะมีจากตอนที่ 2 แล้ว:
+ใน `DashboardApp.java` เพิ่ม Field นี้ถัดจากบรรทัดประกาศ `autoSensorButton` ที่เพิ่มในหัวข้อ 1 ให้อยู่ระดับเดียวกันและนอกทุก Method ไม่เพิ่ม Import `Task` ซ้ำ เพราะมีจากตอนที่ 2 แล้ว:
 
 ```java
 private Task<?> activeSensorTask;
 ```
 
-ใน `simulateInBackground()` เพิ่มหลัง `task.setOnFailed(...);` และก่อน `Thread worker = ...`:
+ใน `DashboardApp.java` ภายใน `simulateInBackground()` เพิ่มหลัง `});` ที่ปิด `task.setOnFailed(...)` และก่อน `Thread worker = ...` ไม่ใส่ไว้ภายในตัวรับเหตุการณ์ `setOnFailed`:
 
 ```java
 task.setOnCancelled(event -> finishSensorTask());
@@ -90,7 +97,7 @@ activeSensorTask = task;
 
 `setOnCancelled` คืนสถานะเมื่อถูกยกเลิก เป็นอีกกรณีแยกจากสำเร็จและล้มเหลว ส่วน `<?>` หมายถึงไม่เจาะจงชนิดผลลัพธ์ของ Task ใน Field นี้
 
-ใน `finishSensorTask()` เพิ่มท้าย Method หลัง `sensorButton.setDisable(false);`:
+ใน `DashboardApp.java` ภายใน `finishSensorTask()` เพิ่มบรรทัดนี้หลัง `sensorButton.setDisable(false);` ก่อนปีกกาปิด Method โดยเก็บสองบรรทัดเดิมไว้:
 
 ```java
 activeSensorTask = null;
@@ -98,7 +105,7 @@ activeSensorTask = null;
 
 ### หยุด Timer และขอยกเลิกงาน
 
-ใน `start()` เพิ่มหลัง `sensorTimeline.setCycleCount(Timeline.INDEFINITE);` ก่อนปีกกาปิด Method:
+ใน `DashboardApp.java` กลับไปที่ `start(Stage stage)` เพิ่มหลัง `sensorTimeline.setCycleCount(Timeline.INDEFINITE);` ที่เพิ่มในหัวข้อ 1 ก่อนปีกกาปิด Method:
 
 ```java
 stage.setOnHidden(event -> {
@@ -111,7 +118,7 @@ stage.setOnHidden(event -> {
 
 `stop()` หยุดรอบใหม่ ส่วน `cancel()` ขอยกเลิก Task ที่กำลังทำ ไม่ได้บังคับฆ่า Thread
 
-ให้ Task ตรวจคำขอยกเลิกด้วย: ใน `SensorSimulationTask.java` เพิ่มเป็นบรรทัดแรกภายใน Loop `for (String id : machineIds)` ก่อนสุ่มอุณหภูมิ:
+ตอนนี้สลับไปไฟล์ `SensorSimulationTask.java` ในโฟลเดอร์เดียวกัน ภายใน `call()` เพิ่มโค้ดนี้ทันทีหลังบรรทัด `for (String id : machineIds) {` ก่อน `double temperature = ...` เก็บโค้ดสุ่มค่าและ `return results;` เดิมไว้:
 
 ```java
 if (isCancelled()) {
@@ -123,7 +130,7 @@ if (isCancelled()) {
 
 ### ไม่ให้ Worker เป็นเหตุให้โปรแกรมอยู่ต่อ
 
-กลับมา `DashboardApp.java` ใน `simulateInBackground()` เพิ่มระหว่าง `new Thread(...)` กับ `worker.start();`:
+สลับกลับไฟล์ `DashboardApp.java` ภายใน `simulateInBackground()` เพิ่มบรรทัดนี้หลัง `Thread worker = new Thread(task, "sensor-worker");` และก่อน `worker.start();`:
 
 ```java
 worker.setDaemon(true);
@@ -133,11 +140,13 @@ worker.setDaemon(true);
 
 ## 4. รันและตรวจผล
 
+บันทึก `DashboardApp.java` และ `SensorSimulationTask.java` แล้วเปิด Terminal ที่โฟลเดอร์หลักของ Repository รัน:
+
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
 ```
 
-บันทึกทั้งสองไฟล์ รันจากโฟลเดอร์หลักของ Repository แล้วทดลอง:
+ทดลองตามลำดับ:
 
 - เปิดโปรแกรม ค่า Sensor ยังไม่เปลี่ยนเอง
 - กดเริ่ม Auto Sensor รอประมาณ 2 วินาที ค่าจะเริ่มอัปเดตเป็นรอบ หน้าจอยังเลือกแถวและพิมพ์ได้
