@@ -1,4 +1,5 @@
 module smartfactory.dashboard {
+    requires com.fazecast.jSerialComm;
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -6,7 +7,9 @@ module smartfactory.dashboard {
     exports smartfactory.model;
     exports smartfactory.oop;
     exports smartfactory.service;
+    exports smartfactory.motion;
     exports smartfactory.ui;
 
+    opens smartfactory.motion to javafx.fxml;
     opens smartfactory.ui to javafx.fxml;
 }

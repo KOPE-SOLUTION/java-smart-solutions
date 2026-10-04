@@ -7,10 +7,10 @@ package-input/
 .vscode/
 /src/main/java/labs/
 
-# Local practice files created while recording tutorials
+# Local practice projects
 /labs/
 /practice/
 /try/
 
-# Private notes for video production
+# Local-only notes
 /creator/

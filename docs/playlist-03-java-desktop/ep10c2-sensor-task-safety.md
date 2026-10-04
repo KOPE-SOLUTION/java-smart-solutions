@@ -4,6 +4,19 @@
 
 ใช้โปรเจกต์จาก [ตอนที่ 3A](ep10c-sensor-task-result.md) ต่อ ปิดโปรแกรมก่อนแก้ `DashboardApp.java` ในโฟลเดอร์ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
 
+<details>
+<summary>ต้องการชุดพร้อมเริ่มตอนนี้</summary>
+
+บันทึกไฟล์และปิด Dashboard แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.10-3B -BackupExisting
+```
+
+งานเดิมจะเก็บไว้ใน `practice/_backups/` ก่อนเตรียมชุดเริ่มใหม่ ดู [ชุดเริ่มและชุดจบแต่ละตอน](../../lesson-resources/ep3-10-steps/README.md)
+
+</details>
+
 ## 1. ป้องกันเริ่มงานซ้อน
 
 เพิ่ม Field ถัดจาก `sensorButton` ให้อยู่ระดับเดียวกัน นอกทุก Method:

@@ -14,6 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <javafx.version>21.0.10</javafx.version>
+        <jserialcomm.version>2.11.4</jserialcomm.version>
+        <javafx.mainClass>smartfactory.dashboard/smartfactory.ui.DesktopApp</javafx.mainClass>
     </properties>
 
     <dependencies>
@@ -26,6 +28,11 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>${jserialcomm.version}</version>
         </dependency>
     </dependencies>
 
@@ -45,7 +52,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>smartfactory.dashboard/smartfactory.ui.DesktopApp</mainClass>
+                    <mainClass>${javafx.mainClass}</mainClass>
                     <launcher>smart-factory</launcher>
                     <jlinkImageName>smart-factory</jlinkImageName>
                     <jlinkZipName>smart-factory</jlinkZipName>

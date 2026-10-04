@@ -1,6 +1,6 @@
 # EP 3.1 — JavaFX, Maven, Stage และ Scene
 
-## Intro — ทำไมเลือก JavaFX
+## ทำไมใช้ JavaFX
 
 Java มีทางเลือกสำหรับ Desktop UI หลายแบบ โปรเจกต์นี้เลือก JavaFX เพราะมี Component สมัยใหม่ รองรับ CSS, FXML, Property Binding และแยก View ออกจาก Logic ได้ชัด เหมาะกับการต่อยอด OOP Core เดิมเป็น Smart Factory Dashboard
 
@@ -48,7 +48,7 @@ flowchart LR
 New-Item -ItemType Directory -Force practice/smart-factory-dashboard/src/main/java/smartfactory/desktop
 ```
 
-โฟลเดอร์ `practice` มีไว้ทำตามคลิปบนเครื่องและถูก `.gitignore` ไว้แล้ว
+โฟลเดอร์ `practice` เก็บโปรเจกต์ฝึกบนเครื่องและถูก `.gitignore` ไว้แล้ว
 
 ## 2. สร้าง `pom.xml`
 
@@ -104,7 +104,7 @@ New-Item -ItemType Directory -Force practice/smart-factory-dashboard/src/main/ja
 
 | รายการ | ใช้ทำอะไร | แหล่งอ้างอิง |
 |---|---|---|
-| `org.openjfx:javafx-controls` | เพิ่ม JavaFX Controls เช่น `Label`, `Button` และ `TableView` พร้อม Dependency พื้นฐานที่ต้องใช้ | [JavaFX Controls — Maven Central](https://central.sonatype.com/artifact/org.openjfx/javafx-controls/21) |
+| `org.openjfx:javafx-controls` | เพิ่ม JavaFX Controls เช่น `Label`, `Button` และ `TableView` พร้อม Dependency พื้นฐานที่ต้องใช้ | [JavaFX Controls 21.0.10 — Maven Central](https://central.sonatype.com/artifact/org.openjfx/javafx-controls/21.0.10) |
 | `maven-compiler-plugin` | Compile Source ด้วย `javac` และกำหนดมาตรฐาน Java ผ่าน `release` | [Apache Maven Compiler Plugin 3.13.0](https://maven.apache.org/plugins-archives/maven-compiler-plugin-3.13.0/examples/set-compiler-release.html) |
 | `javafx-maven-plugin` | จัด Classpath หรือ Module Path และเพิ่มคำสั่ง `javafx:run` | [OpenJFX JavaFX Maven Plugin](https://github.com/openjfx/javafx-maven-plugin) |
 

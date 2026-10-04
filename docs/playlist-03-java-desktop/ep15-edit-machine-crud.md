@@ -85,7 +85,7 @@ private static void testMachineDetailsCanBeUpdated() {
 System.out.println("PASS: 7 tests");
 ```
 
-รัน Test ของโปรเจกต์ที่ทำตามคลิปโดยตรง:
+รัน Test ของโปรเจกต์ฝึก:
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml test-compile `
@@ -220,7 +220,7 @@ private void resetMachineForm() {
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
 ```
 
-ทดลองตามลำดับ:
+เปิดโปรแกรมใหม่ หากเปิด Auto Sensor ให้หยุดและรอรอบที่ค้างจบก่อน ล้างตัวกรอง แล้วจดค่า Sensor สถานะ และจำนวนต้องบำรุงของชุดข้อมูลก่อนแก้ จากนั้นทดลองตามลำดับ:
 
 1. เลือก `M-002` จากตาราง
 2. ตรวจว่ารหัส `M-002` แก้ไม่ได้
@@ -228,7 +228,7 @@ private void resetMachineForm() {
 4. เปลี่ยนตำแหน่งเป็น `Packing Line`
 5. กด `บันทึกแก้ไข`
 6. ค้นหา `ลำเลียง` ต้องพบ `M-002`
-7. ค่า Sensor, สถานะ และจำนวนต้องบำรุงต้องเท่าเดิม
+7. ค่า Sensor, สถานะ และจำนวนต้องบำรุงต้องเท่ากับค่าที่จดไว้ เพราะการแก้ชื่อ/ตำแหน่งไม่เปลี่ยนข้อมูลเหล่านี้ และไม่มีรอบ Sensor มาเปลี่ยนระหว่างตรวจ
 8. เลือกเครื่องอีกครั้งแล้วกด `ยกเลิก` Form ต้องกลับสู่โหมดเพิ่ม
 
 ## Challenge

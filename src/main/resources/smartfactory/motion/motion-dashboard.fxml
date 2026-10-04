@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import smartfactory.motion.CompassView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smartfactory.motion.MotionDashboardController"
+            styleClass="motion-root">
+    <top>
+        <VBox spacing="16" styleClass="header-area">
+            <padding><Insets top="18" right="24" bottom="16" left="24"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="18">
+                <VBox alignment="CENTER" styleClass="brand-plate">
+                    <ImageView fx:id="brandLogo" fitWidth="166" fitHeight="76"
+                               preserveRatio="true" smooth="true"/>
+                </VBox>
+                <Region prefWidth="1" prefHeight="64" styleClass="header-rule"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="KOPE SOLUTION  /  EMBEDDED SYSTEMS LAB" styleClass="eyebrow"/>
+                    <Label text="STM32F3 Motion Console" styleClass="hero-title"/>
+                    <Label text="เครื่องมือทดสอบทิศทาง การเอียง และอัตราการหมุนแบบเรียลไทม์"
+                           styleClass="hero-subtitle"/>
+                </VBox>
+                <VBox alignment="CENTER_RIGHT" spacing="6">
+                    <Label fx:id="connectionBadge" text="● DEMO DATA"
+                           styleClass="connection-badge,badge-demo"/>
+                    <Label fx:id="sourceLabel" text="ข้อมูลจำลอง" styleClass="source-label"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="9" styleClass="connection-panel">
+                <Label text="DATA LINK" styleClass="field-caption"/>
+                <ComboBox fx:id="portCombo" prefWidth="300" promptText="เลือก Serial port"/>
+                <Button text="สแกนใหม่" onAction="#handleRefreshPorts" styleClass="button-quiet"/>
+                <Button fx:id="connectButton" text="เชื่อมต่อ USB" onAction="#handleConnect"
+                        styleClass="button-primary"/>
+                <Button text="Demo" onAction="#handleDemoMode" styleClass="button-secondary"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <VBox alignment="CENTER_RIGHT" spacing="1">
+                    <Label text="SERIAL TELEMETRY" styleClass="protocol-title"/>
+                    <Label text="115200 baud  ·  8-N-1  ·  10 Hz" styleClass="protocol-label"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="dashboard-scroll">
+            <content>
+                <VBox spacing="16" styleClass="dashboard-content">
+                    <padding><Insets top="18" right="24" bottom="18" left="24"/></padding>
+                    <HBox spacing="12">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="metric-card,metric-primary">
+                            <Label text="HEADING" styleClass="metric-label"/>
+                            <Label fx:id="headingValue" text="0°" styleClass="metric-value"/>
+                            <Label fx:id="cardinalValue" text="เหนือ · N" styleClass="metric-detail"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="metric-card">
+                            <Label text="ANGULAR RATE" styleClass="metric-label"/>
+                            <Label fx:id="angularRateValue" text="0.0 °/s" styleClass="metric-value"/>
+                            <Label text="Gyroscope · 3-axis" styleClass="metric-detail"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="metric-card">
+                            <Label text="SAMPLE RATE" styleClass="metric-label"/>
+                            <Label fx:id="sampleRateValue" text="0.0 Hz" styleClass="metric-value"/>
+                            <HBox spacing="5">
+                                <Label fx:id="receivedValue" text="0" styleClass="metric-detail"/>
+                                <Label text="frames received" styleClass="metric-detail"/>
+                            </HBox>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="metric-card,metric-alert">
+                            <Label text="DEVICE ERRORS" styleClass="metric-label"/>
+                            <Label fx:id="deviceErrorsValue" text="0" styleClass="metric-value"/>
+                            <Label text="I²C / SPI read errors" styleClass="metric-detail"/>
+                        </VBox>
+                    </HBox>
+
+                    <GridPane hgap="16" vgap="16">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="38" hgrow="ALWAYS"/>
+                            <ColumnConstraints percentWidth="62" hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="390" vgrow="ALWAYS"/>
+                        </rowConstraints>
+                        <VBox alignment="CENTER" spacing="8" styleClass="panel-card"
+                              GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="COMPASS" styleClass="panel-kicker"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label text="LIVE" styleClass="live-indicator"/>
+                            </HBox>
+                            <CompassView fx:id="compassView" VBox.vgrow="ALWAYS"/>
+                            <Label text="Heading คำนวณจาก LSM303AGR · ปลายเข็มสีแดงชี้ทิศ"
+                                   styleClass="panel-hint" wrapText="true"/>
+                        </VBox>
+
+                        <VBox spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <HBox spacing="12">
+                                <VBox spacing="5" HBox.hgrow="ALWAYS" styleClass="orientation-card">
+                                    <Label text="PITCH" styleClass="mini-label"/>
+                                    <Label fx:id="pitchValue" text="+0.0°" styleClass="mini-value"/>
+                                    <Label text="ก้ม / เงย" styleClass="mini-detail"/>
+                                </VBox>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS" styleClass="orientation-card">
+                                    <Label text="ROLL" styleClass="mini-label"/>
+                                    <Label fx:id="rollValue" text="+0.0°" styleClass="mini-value"/>
+                                    <Label text="เอียงซ้าย / ขวา" styleClass="mini-detail"/>
+                                </VBox>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS" styleClass="orientation-card">
+                                    <Label text="MAG FIELD" styleClass="mini-label"/>
+                                    <Label fx:id="magneticValue" text="0 raw" styleClass="mini-value"/>
+                                    <Label text="ขนาดเวกเตอร์ดิบ" styleClass="mini-detail"/>
+                                </VBox>
+                            </HBox>
+                            <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="raw-card">
+                                <Label text="SENSOR VECTORS" styleClass="panel-kicker"/>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="ACC" styleClass="sensor-chip,chip-blue"/>
+                                    <Label fx:id="rawAccelValue" text="X 0  Y 0  Z 0 mg" styleClass="vector-value"/>
+                                </HBox>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="GYRO" styleClass="sensor-chip,chip-neutral"/>
+                                    <Label fx:id="rawGyroValue" text="X +0.0  Y +0.0  Z +0.0 °/s"
+                                           styleClass="vector-value"/>
+                                </HBox>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="MAG" styleClass="sensor-chip,chip-red"/>
+                                    <Label fx:id="rawMagValue" text="X 0  Y 0  Z 0" styleClass="vector-value"/>
+                                </HBox>
+                            </VBox>
+                            <VBox spacing="9" styleClass="command-card">
+                                <Label text="DEVICE CONTROL" styleClass="panel-kicker"/>
+                                <HBox spacing="8">
+                                    <Button fx:id="streamButton" text="หยุด Stream"
+                                            onAction="#handleToggleStream" disable="true"/>
+                                    <Button text="ตั้งศูนย์ Gyro" onAction="#handleZeroGyro"/>
+                                    <Button text="ตั้งทิศนี้เป็น 0°" onAction="#handleSetNorth"/>
+                                </HBox>
+                                <Label text="ค่าทิศอ้างอิงเก็บใน RAM และจะถูกล้างเมื่อ Reset บอร์ด"
+                                       styleClass="panel-hint"/>
+                            </VBox>
+                        </VBox>
+                    </GridPane>
+
+                    <HBox spacing="16">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="chart-card">
+                            <Label text="ACCELEROMETER  /  mg" styleClass="panel-kicker"/>
+                            <LineChart fx:id="accelerationChart" animated="false" legendVisible="true"
+                                       createSymbols="false" VBox.vgrow="ALWAYS">
+                                <xAxis><NumberAxis forceZeroInRange="false" tickLabelsVisible="false"/></xAxis>
+                                <yAxis><NumberAxis forceZeroInRange="false"/></yAxis>
+                            </LineChart>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS" styleClass="chart-card">
+                            <Label text="GYROSCOPE  /  °/s" styleClass="panel-kicker"/>
+                            <LineChart fx:id="gyroscopeChart" animated="false" legendVisible="true"
+                                       createSymbols="false" VBox.vgrow="ALWAYS">
+                                <xAxis><NumberAxis forceZeroInRange="false" tickLabelsVisible="false"/></xAxis>
+                                <yAxis><NumberAxis forceZeroInRange="false"/></yAxis>
+                            </LineChart>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="status-bar">
+            <Label text="SYSTEM" styleClass="status-key"/>
+            <Label fx:id="statusMessage" text="พร้อมใช้งาน" styleClass="status-text" HBox.hgrow="ALWAYS"/>
+            <Label text="KOPE SOLUTION" styleClass="footer-brand"/>
+            <Region prefWidth="1" prefHeight="14" styleClass="footer-rule"/>
+            <Label text="STM32F303VCT6 · LSM303AGR · I3G4250D" styleClass="status-hardware"/>
+        </HBox>
+    </bottom>
+</BorderPane>

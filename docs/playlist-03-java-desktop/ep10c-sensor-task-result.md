@@ -4,6 +4,19 @@
 
 ใช้โปรเจกต์จาก [ตอนที่ 2](ep10b-task-thread.md) ต่อ ปิดโปรแกรมก่อนแก้ไฟล์ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop`
 
+<details>
+<summary>ต้องการชุดพร้อมเริ่มตอนนี้</summary>
+
+บันทึกไฟล์และปิด Dashboard แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.10-3A -BackupExisting
+```
+
+งานเดิมจะเก็บไว้ใน `practice/_backups/` ก่อนเตรียมชุดเริ่มใหม่ ดู [ชุดเริ่มและชุดจบแต่ละตอน](../../lesson-resources/ep3-10-steps/README.md)
+
+</details>
+
 ตอนที่ 2 ส่งกลับข้อความหนึ่งข้อความ ตอนนี้ส่งกลับ **รายการค่าของเครื่องจักร** โดย Task สร้างข้อมูล ส่วนตัวรับผลบน JavaFX Thread นำไปอัปเดตผ่าน Service
 
 ## 1. สร้างชนิดข้อมูลสำหรับผลลัพธ์

@@ -4,7 +4,7 @@
 
 เรียน Java ผ่าน Case Study **Smart Factory Machine Monitor** โดยพัฒนาโค้ดชุดเดียวอย่างต่อเนื่องจากโปรแกรม Console ไปสู่ Business Logic แบบ OOP และ Dashboard ด้วย JavaFX
 
-เรียนโดยตั้งเป้าทีละเรื่อง **เข้าใจสิ่งที่จะทำ → เพิ่มโค้ดตรงจุด → รันดูผล** แล้วจึงต่อยอดหรือทำ Challenge ไม่จำเป็นต้องจบหลายความสามารถในคลิปเดียว ส่วนโค้ดฉบับเต็มเก็บไว้ในโฟลเดอร์ `src` สำหรับใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ JDK 21, Maven Wrapper และ JavaFX 21
+เริ่มจาก Playlist ที่ต้องการ แล้วทำตามแต่ละ EP: **อ่านแนวคิด → เพิ่มโค้ด → รันตรวจผล → ทำ Challenge** โค้ดฉบับเต็มใน `src` ใช้ตรวจคำตอบและต่อยอด โปรเจกต์ใช้ JDK 21, Maven Wrapper และ JavaFX 21
 
 ## เส้นทางการเรียนรู้
 
@@ -50,7 +50,7 @@ flowchart LR
 
 Angular เป็นเส้นทางหลักสำหรับ Full-stack แบบแยก Frontend/Backend และใช้ Core **ผ่าน REST API ไม่ได้รันคลาส Java ใน Browser** ส่วน Vaadin เป็นทางเลือกหลังระยะที่ 4 โดยเรียก Application Service ผ่าน DI โดยตรงเมื่ออยู่ใน Spring Boot แอปเดียวกัน ไม่ต้องเรียก REST API ของตัวเองซ้ำ และไม่ต้องเรียน Vaadin ก่อนจึงจะไปต่อ Angular ได้
 
-หัวข้อในอนาคตจะสอนด้วยแนวทาง **Modern OOP** โดยใช้ Composition เป็นหลัก ใช้ Inheritance เฉพาะความสัมพันธ์แบบ is-a แยก Business Rule ออกจาก Framework และใช้ Interface, Value Object, Dependency Injection รวมถึง Test เพื่อให้ระบบเปลี่ยน UI, Database หรือช่องทางรับข้อมูลได้โดยไม่ต้องรื้อ Domain Core
+หัวข้อในอนาคตใช้แนวทาง **Modern OOP** โดยใช้ Composition เป็นหลัก ใช้ Inheritance เฉพาะความสัมพันธ์แบบ is-a แยก Business Rule ออกจาก Framework และใช้ Interface, Value Object, Dependency Injection รวมถึง Test เพื่อให้ระบบเปลี่ยน UI, Database หรือช่องทางรับข้อมูลได้โดยไม่ต้องรื้อ Domain Core
 
 [ดูขอบเขต Future Roadmap และหลัก Modern OOP](docs/FUTURE_ROADMAP.md)
 
@@ -58,7 +58,7 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 
 ## เลือก Playlist
 
-[ดูร่างการแบ่งตอนถัดจาก EP3.10](#แผนแบ่งตอนถัดจาก-ep310)
+[ดูเส้นทางต่อจาก EP3.10](#เส้นทางต่อจาก-ep310)
 
 <details open>
 <summary><strong>Playlist 1 — Java Basic Lab: Smart Factory Console</strong></summary>
@@ -141,29 +141,29 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 
 </details>
 
-## แผนแบ่งตอนถัดจาก EP3.10
+## เส้นทางต่อจาก EP3.10
 
-เริ่มเรื่องใหม่ทีละอย่าง ให้แต่ละตอนรันเห็นผลได้ก่อนเพิ่มเรื่องถัดไป EP3.10 เรียนตามลำดับ 1 → 2 → 3A → 3B → 4 โดยแบ่งเฉพาะตอนที่ 3 ให้ค่อย ๆ เข้าใจ ไม่เปลี่ยนเนื้อหาคลิปตอนที่ 1–2 ที่อัดแล้ว ส่วนด้านล่างเป็นแผนของ EP ถัดไป
+EP3.10 เรียนตามลำดับ 1 → 2 → 3A → 3B → 4 จากนั้นต่อยอด Dashboard ไปยัง FXML การส่งมอบโปรแกรม การค้นหา และการแก้ไขข้อมูล
+
+กลับมาเรียนต่อได้จาก [ชุดพร้อมเริ่ม EP3.10 แต่ละตอน](lesson-resources/ep3-10-steps/README.md) พร้อมคำสั่งสำรองงานเดิมและโค้ดชุดจบสำหรับเทียบ
 
 <details>
 <summary><strong>ดูร่าง EP3.11–3.16 แบบค่อยเป็นค่อยไป</strong></summary>
 
-นี่คือร่างการจัดตอนก่อนเริ่มอัด ไม่ใช่บทพาทำตอนย่อยที่เสร็จแล้ว ลิงก์ในตารางยังเป็นเอกสารเดิมสำหรับตรวจขอบเขต เมื่อเริ่มแต่ละ EP จึงค่อยปรับขั้นตอนและทดสอบจากโค้ดจบตอนก่อนหน้า โดยไม่บังคับโหลดหน้าจอสำเร็จรูปมาแทนงานที่ทำอยู่
+ตารางนี้เป็นแผนหัวข้อย่อยและผลลัพธ์ที่ต่อยอดจากโค้ดเดิม ตอนย่อยยังเป็นร่าง ลิงก์เปิดเอกสาร EP ปัจจุบัน
 
-| EP เดิม | ร่างตอนย่อยตามลำดับ | ผลที่ต้องเห็นเมื่อจบแต่ละตอน |
+| EP | หัวข้อย่อยที่วางแผนไว้ | ผลลัพธ์ตามลำดับ |
 |---|---|---|
 | [3.11 — FXML และ Controller](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | 1) โหลด FXML เล็ก ๆ โดยเก็บ Dashboard เดิมไว้; 2) เชื่อม `fx:id` และปุ่มกับ Controller; 3) ส่ง Service เข้า Controller แล้วแสดงตาราง; 4) ย้าย Form และการจัดการเครื่องจักรเดิม; 5) ย้ายงาน Sensor และการปิดงาน | เปิด View ได้ → กดปุ่มแล้วข้อความเปลี่ยน → เห็นข้อมูลจาก Service → เพิ่ม/ลบ/บำรุงได้ → Auto Sensor ทำงานและปิดได้ ก่อนเปลี่ยนจุดเริ่มไปใช้ Dashboard แบบ FXML |
-| [3.12 — เตรียมส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | 1) ตรวจภาษาไทยและรัน Test ที่มีอยู่; 2) เพิ่ม Module และเปิดแอป; 3) สร้างและเปิด Runtime Image | อ่านภาษาไทยได้และ Test ผ่าน → แอปรันแบบ Module → เปิดจาก Runtime Image ได้ ส่วน IoT แยกเป็นแผนต่อยอด ไม่พาเชื่อมในตอนแพ็กโปรแกรม |
+| [3.12 — เตรียมส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | 1) ตรวจภาษาไทยและรัน Test ที่มีอยู่; 2) เพิ่ม Module และเปิดแอป; 3) สร้างและเปิด Runtime Image | อ่านภาษาไทยได้และ Test ผ่าน → แอปรันแบบ Module → เปิดจาก Runtime Image ได้ ส่วน IoT เป็นหัวข้อต่อยอดหลังการแพ็กโปรแกรม |
 | [3.13 — Search](docs/playlist-03-java-desktop/ep13-search-filter.md) | 1) ช่องค้นหาและ FilteredList จากรหัส; 2) ขยายเป็นชื่อ/ตำแหน่ง พร้อมจำนวนผลลัพธ์และ Refresh | พิมพ์รหัสแล้วเหลือแถวที่ตรง → ค้นหาได้หลายช่องและจำนวนถูกต้องหลังข้อมูลเปลี่ยน |
 | [3.14 — Filter และ Sort](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) | 1) กรองสถานะร่วมกับข้อความ; 2) เพิ่มเงื่อนไขบำรุงและปุ่มล้าง; 3) เพิ่ม SortedList และการเรียงหัวตาราง | ตัวกรองสถานะทำงาน → รวม/ล้างเงื่อนไขได้ → เรียงข้อมูลได้โดยยังคงตัวกรอง |
 | [3.15 — Edit Machine](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) | 1) แก้ Model/Service และทดสอบโดยยังไม่แก้ UI; 2) เลือกแถวแล้วบันทึกชื่อ/ตำแหน่งโดยล็อกรหัส; 3) ยกเลิกและตรวจร่วมกับ Search/Auto Sensor | Test พิสูจน์การแก้ข้อมูล → แก้ผ่าน Form ได้ → สลับโหมดและกรองข้อมูลแล้วไม่เสียสถานะ |
-| [3.16 — Scene Builder, Optional](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) | คงเป็น Mini Lab เดียว เน้นปรับ Layout ของ Form เดิม ไม่เพิ่ม Logic ใหม่ | Preview ได้ อ่าน FXML ที่เปลี่ยน และรันแล้วปุ่มเดิมยังทำงาน |
-
-ชื่อและจำนวนตอนย่อยยืนยันอีกครั้งก่อนเริ่มอัดแต่ละ EP ไม่สร้างไฟล์บทใหม่หรือเปลี่ยนลิงก์เดิมล่วงหน้า รายละเอียดที่ต้องอ่านเพิ่มแยกจากทางทำหลัก เพื่อให้เปิดบทมาแล้วรู้ว่าจะเริ่มตรงไหน
+| [3.16 — Scene Builder, Optional](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) | Mini Lab ปรับ Layout ของ Form เดิมด้วย Scene Builder โดยใช้ Logic เดิม | Preview ได้ อ่าน FXML ที่เปลี่ยน และรันแล้วปุ่มเดิมยังทำงาน |
 
 </details>
 
-สำหรับ Spring Boot, Angular, Vaadin และ IoT ให้เริ่มจากผลเล็ก ๆ เช่น อ่าน JSON หนึ่งรายการ หรือรับข้อความหนึ่ง Topic ก่อนประกอบเป็น Dashboard ดู[ร่างลำดับของ Track อนาคต](docs/FUTURE_ROADMAP.md#จังหวะการเรียนของ-track-ถัดไป)
+สำหรับ Spring Boot, Angular, Vaadin และ IoT ดู[ลำดับการเรียนของ Track ถัดไป](docs/FUTURE_ROADMAP.md#ลำดับการเรียนของ-track-ถัดไป)
 
 <details>
 <summary><strong>ดูภาพรวมโปรเจกต์และหัวข้อ Java ที่ใช้</strong></summary>

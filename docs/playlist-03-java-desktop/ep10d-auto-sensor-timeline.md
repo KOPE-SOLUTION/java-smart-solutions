@@ -5,6 +5,19 @@
 ใช้โปรเจกต์จาก [ตอนที่ 3B](ep10c2-sensor-task-safety.md) ต่อ ปิดโปรแกรมก่อนแก้ ไฟล์อยู่ใน `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/`
 
 <details>
+<summary>ต้องการชุดพร้อมเริ่มตอนนี้</summary>
+
+บันทึกไฟล์และปิด Dashboard แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.10-4 -BackupExisting
+```
+
+งานเดิมจะเก็บไว้ใน `practice/_backups/` ก่อนเตรียมชุดเริ่มใหม่ ดู [ชุดเริ่มและชุดจบแต่ละตอน](../../lesson-resources/ep3-10-steps/README.md)
+
+</details>
+
+<details>
 <summary>ก่อนเริ่ม: ตรวจโค้ดทดลองจาก 3B และดูภาพรวม</summary>
 
 ใน `SensorSimulationTask.call()` ต้องคืน `return results;` แทน `throw` ที่ทดลอง แล้วลบ `Thread.sleep(3000);` และ `throws Exception` หากคืนแล้วให้ข้าม

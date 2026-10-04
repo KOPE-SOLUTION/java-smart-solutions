@@ -1,0 +1,160 @@
+.root { -fx-font-size: 13px; }
+.motion-root { -fx-background-color: #0b0f14; }
+
+.header-area {
+    -fx-background-color: #10161f;
+    -fx-border-color: transparent transparent #283342 transparent;
+}
+.brand-plate {
+    -fx-min-width: 186;
+    -fx-min-height: 82;
+    -fx-background-color: #030507;
+    -fx-background-radius: 8;
+    -fx-border-color: #2a3442;
+    -fx-border-radius: 8;
+    -fx-padding: 5 10;
+}
+.header-rule, .footer-rule { -fx-background-color: #334052; }
+.eyebrow {
+    -fx-text-fill: #6e8dff;
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+}
+.hero-title { -fx-text-fill: #f4f6f8; -fx-font-size: 27px; -fx-font-weight: 800; }
+.hero-subtitle { -fx-text-fill: #95a2b2; -fx-font-size: 13px; }
+
+.connection-badge {
+    -fx-padding: 6 11;
+    -fx-background-radius: 5;
+    -fx-font-weight: 800;
+    -fx-font-size: 11px;
+}
+.badge-live { -fx-text-fill: #dff7e9; -fx-background-color: #17633b; }
+.badge-demo { -fx-text-fill: #e5ebf4; -fx-background-color: #344052; }
+.badge-offline { -fx-text-fill: #bec7d3; -fx-background-color: #2b3440; }
+.source-label { -fx-text-fill: #7f8c9d; -fx-font-size: 11px; }
+
+.connection-panel {
+    -fx-background-color: #0c1118;
+    -fx-background-radius: 8;
+    -fx-border-color: #283342;
+    -fx-border-radius: 8;
+    -fx-padding: 10 12;
+}
+.field-caption, .protocol-title {
+    -fx-text-fill: #9ba8b8;
+    -fx-font-size: 10px;
+    -fx-font-weight: 800;
+}
+.protocol-label { -fx-text-fill: #687789; -fx-font-size: 11px; }
+
+.combo-box {
+    -fx-background-color: #eef2f7;
+    -fx-background-radius: 6;
+    -fx-mark-color: #283342;
+}
+.combo-box .list-cell { -fx-text-fill: #1d2733; -fx-background-color: #eef2f7; }
+.combo-box-popup .list-view, .combo-box-popup .list-cell {
+    -fx-background-color: #f7f9fc;
+    -fx-text-fill: #1d2733;
+}
+.combo-box-popup .list-cell:hover { -fx-background-color: #dce6f5; }
+
+.button {
+    -fx-background-color: #25303e;
+    -fx-background-radius: 6;
+    -fx-text-fill: #e8edf4;
+    -fx-font-weight: 700;
+    -fx-padding: 8 13;
+    -fx-cursor: hand;
+}
+.button:hover { -fx-background-color: #344256; }
+.button:pressed { -fx-background-color: #1b2430; }
+.button:disabled { -fx-opacity: 0.42; }
+.button-primary { -fx-background-color: #155eef; -fx-text-fill: white; }
+.button-primary:hover { -fx-background-color: #2f71f2; }
+.button-secondary { -fx-background-color: #303b49; }
+.button-quiet {
+    -fx-background-color: transparent;
+    -fx-border-color: #3a485a;
+    -fx-border-radius: 6;
+}
+
+.dashboard-scroll, .dashboard-scroll > .viewport, .dashboard-content {
+    -fx-background-color: #0b0f14;
+}
+.metric-card {
+    -fx-background-color: #121922;
+    -fx-background-radius: 8;
+    -fx-border-color: #293443;
+    -fx-border-radius: 8;
+    -fx-border-width: 1 1 1 3;
+    -fx-padding: 13 15;
+    -fx-min-width: 190;
+}
+.metric-primary { -fx-border-color: #293443 #293443 #293443 #155eef; }
+.metric-alert { -fx-border-color: #293443 #293443 #293443 #e3222d; }
+.metric-label, .mini-label, .panel-kicker {
+    -fx-text-fill: #8997a8;
+    -fx-font-size: 10px;
+    -fx-font-weight: 800;
+}
+.metric-value { -fx-text-fill: #f4f6f8; -fx-font-size: 25px; -fx-font-weight: 800; }
+.metric-detail, .mini-detail, .panel-hint { -fx-text-fill: #778698; }
+
+.panel-card, .raw-card, .command-card, .chart-card, .orientation-card {
+    -fx-background-color: #121922;
+    -fx-background-radius: 9;
+    -fx-border-color: #293443;
+    -fx-border-radius: 9;
+}
+.panel-card, .raw-card, .command-card { -fx-padding: 14 16; }
+.orientation-card { -fx-padding: 13 15; }
+.mini-value { -fx-text-fill: #f4f6f8; -fx-font-size: 21px; -fx-font-weight: 800; }
+.live-indicator {
+    -fx-text-fill: #78dca8;
+    -fx-background-color: #153d2a;
+    -fx-background-radius: 4;
+    -fx-padding: 3 7;
+    -fx-font-size: 9px;
+    -fx-font-weight: 800;
+}
+
+.sensor-chip {
+    -fx-min-width: 58;
+    -fx-alignment: center;
+    -fx-background-radius: 5;
+    -fx-padding: 5 8;
+    -fx-font-size: 10px;
+    -fx-font-weight: 800;
+}
+.chip-blue { -fx-background-color: #173d7e; -fx-text-fill: #dbe8ff; }
+.chip-neutral { -fx-background-color: #303a48; -fx-text-fill: #d8dfe8; }
+.chip-red { -fx-background-color: #5a2027; -fx-text-fill: #ffdfe2; }
+.vector-value {
+    -fx-text-fill: #d0d7e0;
+    -fx-font-family: "Cascadia Mono", "Consolas";
+    -fx-font-size: 13px;
+}
+
+.chart-card { -fx-padding: 13 14; -fx-min-height: 280; }
+.chart { -fx-background-color: transparent; -fx-padding: 4 0 0 0; }
+.chart-plot-background { -fx-background-color: #0d131b; }
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines { -fx-stroke: #222d3a; }
+.axis { -fx-tick-label-fill: #718095; }
+.axis-label { -fx-text-fill: #718095; }
+.chart-legend { -fx-background-color: transparent; }
+.chart-legend-item { -fx-text-fill: #a6b1bf; }
+.default-color0.chart-series-line { -fx-stroke: #3578f6; -fx-stroke-width: 2px; }
+.default-color1.chart-series-line { -fx-stroke: #e7444e; -fx-stroke-width: 2px; }
+.default-color2.chart-series-line { -fx-stroke: #a6b1bf; -fx-stroke-width: 2px; }
+
+.status-bar {
+    -fx-background-color: #10161f;
+    -fx-border-color: #283342 transparent transparent transparent;
+    -fx-padding: 10 24;
+}
+.status-key { -fx-text-fill: #6e8dff; -fx-font-size: 10px; -fx-font-weight: 800; }
+.status-text { -fx-text-fill: #aeb9c7; }
+.footer-brand { -fx-text-fill: #dce3eb; -fx-font-size: 10px; -fx-font-weight: 800; }
+.status-hardware { -fx-text-fill: #667587; }

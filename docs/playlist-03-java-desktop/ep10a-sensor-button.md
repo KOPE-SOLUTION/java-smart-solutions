@@ -4,6 +4,19 @@
 
 ใช้โปรเจกต์ที่จบ [EP3.9 ตอนที่ 4](ep09c-service-maintenance.md) ต่อ ปิดหน้าต่างโปรแกรมก่อนแก้โค้ด
 
+<details>
+<summary>ต้องการชุดพร้อมเริ่มตอนนี้</summary>
+
+บันทึกไฟล์และปิด Dashboard แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.10-1 -BackupExisting
+```
+
+งานเดิมจะเก็บไว้ใน `practice/_backups/` ก่อนเตรียมชุดเริ่มใหม่ ดู [ชุดเริ่มและชุดจบแต่ละตอน](../../lesson-resources/ep3-10-steps/README.md)
+
+</details>
+
 แก้ไฟล์ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java`
 
 ## 1. เพิ่มคอลัมน์ Sensor

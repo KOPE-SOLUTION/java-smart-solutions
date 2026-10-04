@@ -4,6 +4,19 @@
 
 ใช้โปรเจกต์จาก [ตอนที่ 1](ep10a-sensor-button.md) ต่อ ปิดโปรแกรมแล้วแก้เฉพาะ `practice/smart-factory-dashboard/src/main/java/smartfactory/desktop/DashboardApp.java` ไม่ต้องสร้างไฟล์ใหม่
 
+<details>
+<summary>ต้องการชุดพร้อมเริ่มตอนนี้</summary>
+
+บันทึกไฟล์และปิด Dashboard แล้วรันจากโฟลเดอร์หลักของ Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.10-2 -BackupExisting
+```
+
+งานเดิมจะเก็บไว้ใน `practice/_backups/` ก่อนเตรียมชุดเริ่มใหม่ ดู [ชุดเริ่มและชุดจบแต่ละตอน](../../lesson-resources/ep3-10-steps/README.md)
+
+</details>
+
 **Task คือชุดงาน ส่วน Thread คือตัวรันงานแยกจากหน้าจอ** ตอนนี้ทดลองเฉพาะทางสำเร็จ ส่วนการป้องกันงานซ้อนและข้อผิดพลาดอยู่ตอนที่ 3 การหยุดงานเมื่อปิดหน้าต่างอยู่ตอนที่ 4
 
 ## 1. สร้างงาน รับผล แล้วเริ่ม Thread
