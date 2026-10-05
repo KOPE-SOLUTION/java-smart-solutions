@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smartfactory.ui.DashboardController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <top>
+        <VBox spacing="12">
+            <Label text="Smart Factory Dashboard" styleClass="header-title"/>
+            <FlowPane hgap="12" vgap="8">
+                <Label fx:id="totalLabel" styleClass="summary-card"/>
+                <Label fx:id="normalLabel" styleClass="summary-card"/>
+                <Label fx:id="warningLabel" styleClass="summary-card"/>
+                <Label fx:id="emergencyLabel" styleClass="summary-card"/>
+                <Label fx:id="maintenanceLabel" styleClass="summary-card"/>
+            </FlowPane>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.68">
+            <VBox spacing="10" styleClass="content-area">
+                <TextField fx:id="searchField" promptText="ค้นหารหัส ชื่อ หรือตำแหน่ง"/>
+                <ComboBox fx:id="statusFilter" promptText="สถานะ"/>
+                <ComboBox fx:id="maintenanceFilter" promptText="บำรุงรักษา"/>
+                <Button text="ล้างตัวกรอง" onAction="#handleClearFilters"/>
+                <Label fx:id="filterResultLabel"/>
+                <TableView fx:id="machineTable" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <GridPane fx:id="machineForm" hgap="12" vgap="14">
+                <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+                <Label text="รหัสเครื่องจักร:" GridPane.rowIndex="0"/>
+                <TextField fx:id="idField" promptText="เช่น M-004" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="ชื่อเครื่องจักร:" GridPane.rowIndex="1"/>
+                <TextField fx:id="nameField" promptText="เช่น Conveyor Motor" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="ตำแหน่งเครื่องจักร:" GridPane.rowIndex="2"/>
+                <TextField fx:id="locationField" promptText="เช่น Line B" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <VBox fx:id="actionButtons" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Button fx:id="addButton" text="เพิ่มเครื่องจักร" onAction="#handleAddMachine"/>
+                    <Button fx:id="editButton" text="บันทึกการแก้ไข" onAction="#handleUpdateMachine" disable="true"/>
+                    <Button fx:id="cancelEditButton" text="ยกเลิกแก้ไข" onAction="#handleCancelEdit" disable="true"/>
+                    <Button text="ลบรายการที่เลือก" onAction="#handleDeleteMachine"/>
+                    <Button text="บำรุงเสร็จแล้ว" onAction="#handleMaintenance"/>
+                    <Button fx:id="sensorButton" text="จำลอง Sensor 1 ครั้ง" onAction="#simulateInBackground"/>
+                    <Button fx:id="autoSensorButton" text="เริ่ม Auto Sensor" onAction="#toggleAutoSensor"/>
+                </VBox>
+            </GridPane>
+        </SplitPane>
+    </center>
+    <bottom><Label fx:id="statusLabel" text="พร้อมใช้งาน" styleClass="status-bar"/></bottom>
+</BorderPane>

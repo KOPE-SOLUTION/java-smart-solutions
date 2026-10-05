@@ -147,21 +147,19 @@ EP3.10 เรียนตามลำดับ 1 → 2 → 3A → 3B → 4 จ�
 
 กลับมาเรียนต่อได้จาก [ชุดพร้อมเริ่ม EP3.10 แต่ละตอน](lesson-resources/ep3-10-steps/README.md) พร้อมคำสั่งสำรองงานเดิมและโค้ดชุดจบสำหรับเทียบ
 
-<details>
-<summary><strong>ดูร่าง EP3.11–3.16 แบบค่อยเป็นค่อยไป</strong></summary>
+ตั้งแต่ EP3.11 เพิ่มทีละส่วน → รัน → ตรวจผลก่อนต่อขั้นถัดไป รายละเอียดเสริมและโค้ดเทียบพับไว้ เลข EP เดิมไม่เปลี่ยน
 
-ตารางนี้เป็นแผนหัวข้อย่อยและผลลัพธ์ที่ต่อยอดจากโค้ดเดิม ตอนย่อยยังเป็นร่าง ลิงก์เปิดเอกสาร EP ปัจจุบัน
+| EP | ลำดับจุดที่รันตรวจผล |
+|---|---|
+| [3.11 — FXML](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | หน้าต่าง → ปุ่ม → ตาราง → Summary → Form เพิ่ม → ลบ/บำรุง → Sensor/Auto |
+| [3.12 — ส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | ภาษาไทยและ Test → Module → เปิด Runtime Image |
+| [3.13 — Search](docs/playlist-03-java-desktop/ep13-search-filter.md) | ค้นหารหัส → ชื่อ/ตำแหน่ง → ตรวจจำนวนหลังข้อมูลเปลี่ยน |
+| [3.14 — Filter/Sort](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) | สถานะ → บำรุง → ล้าง → เรียง |
+| [3.15 — Edit](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) | ทดสอบ Service → เลือก/ยกเลิก → บันทึก → ตรวจร่วมกับ Auto |
+| [3.16 — Scene Builder (Optional)](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) | ปรับระยะแล้วรัน → ขยายช่องแล้วรัน |
 
-| EP | หัวข้อย่อยที่วางแผนไว้ | ผลลัพธ์ตามลำดับ |
-|---|---|---|
-| [3.11 — FXML และ Controller](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | 1) โหลด FXML เล็ก ๆ โดยเก็บ Dashboard เดิมไว้; 2) เชื่อม `fx:id` และปุ่มกับ Controller; 3) ส่ง Service เข้า Controller แล้วแสดงตาราง; 4) ย้าย Form และการจัดการเครื่องจักรเดิม; 5) ย้ายงาน Sensor และการปิดงาน | เปิด View ได้ → กดปุ่มแล้วข้อความเปลี่ยน → เห็นข้อมูลจาก Service → เพิ่ม/ลบ/บำรุงได้ → Auto Sensor ทำงานและปิดได้ ก่อนเปลี่ยนจุดเริ่มไปใช้ Dashboard แบบ FXML |
-| [3.12 — เตรียมส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | 1) ตรวจภาษาไทยและรัน Test ที่มีอยู่; 2) เพิ่ม Module และเปิดแอป; 3) สร้างและเปิด Runtime Image | อ่านภาษาไทยได้และ Test ผ่าน → แอปรันแบบ Module → เปิดจาก Runtime Image ได้ ส่วน IoT เป็นหัวข้อต่อยอดหลังการแพ็กโปรแกรม |
-| [3.13 — Search](docs/playlist-03-java-desktop/ep13-search-filter.md) | 1) ช่องค้นหาและ FilteredList จากรหัส; 2) ขยายเป็นชื่อ/ตำแหน่ง พร้อมจำนวนผลลัพธ์และ Refresh | พิมพ์รหัสแล้วเหลือแถวที่ตรง → ค้นหาได้หลายช่องและจำนวนถูกต้องหลังข้อมูลเปลี่ยน |
-| [3.14 — Filter และ Sort](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) | 1) กรองสถานะร่วมกับข้อความ; 2) เพิ่มเงื่อนไขบำรุงและปุ่มล้าง; 3) เพิ่ม SortedList และการเรียงหัวตาราง | ตัวกรองสถานะทำงาน → รวม/ล้างเงื่อนไขได้ → เรียงข้อมูลได้โดยยังคงตัวกรอง |
-| [3.15 — Edit Machine](docs/playlist-03-java-desktop/ep15-edit-machine-crud.md) | 1) แก้ Model/Service และทดสอบโดยยังไม่แก้ UI; 2) เลือกแถวแล้วบันทึกชื่อ/ตำแหน่งโดยล็อกรหัส; 3) ยกเลิกและตรวจร่วมกับ Search/Auto Sensor | Test พิสูจน์การแก้ข้อมูล → แก้ผ่าน Form ได้ → สลับโหมดและกรองข้อมูลแล้วไม่เสียสถานะ |
-| [3.16 — Scene Builder, Optional](docs/playlist-03-java-desktop/ep16-scene-builder-optional.md) | Mini Lab ปรับ Layout ของ Form เดิมด้วย Scene Builder โดยใช้ Logic เดิม | Preview ได้ อ่าน FXML ที่เปลี่ยน และรันแล้วปุ่มเดิมยังทำงาน |
+กลับมาเรียนต่อ: [ชุด EP3.11](lesson-resources/ep3-11-steps/README.md) · [ชุด EP3.12–3.16](lesson-resources/ep3-12-16-steps/README.md)
 
-</details>
 
 สำหรับ Spring Boot, Angular, Vaadin และ IoT ดู[ลำดับการเรียนของ Track ถัดไป](docs/FUTURE_ROADMAP.md#ลำดับการเรียนของ-track-ถัดไป)
 

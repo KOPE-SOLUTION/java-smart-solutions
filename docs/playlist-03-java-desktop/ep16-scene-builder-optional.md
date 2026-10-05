@@ -1,133 +1,113 @@
-# EP 3.16 Optional — Scene Builder Workflow
+# EP 3.16 — Scene Builder (Optional)
 
-## เป้าหมายของ Mini Lab
+เป้าหมาย: ปรับระยะและขนาดฟอร์มเดิม โดยไม่แก้กฎของเครื่องจักร
 
-ใช้ Scene Builder ปรับ Layout ของ Form เพิ่มและแก้ไขเครื่องจักร โดยไม่เปลี่ยน Model, Service หรือ Business Logic
-
-```mermaid
-flowchart LR
-    SB[Scene Builder] -->|แก้ View| FXML[dashboard-view.fxml]
-    FXML --> C[DashboardController]
-    C --> S[SmartFactoryService]
-    S --> M[Model]
-```
-
-Scene Builder เป็นเครื่องมือเสริมสำหรับออกแบบ FXML แบบลากวาง แอปยัง Build และ Run ได้โดยไม่ต้องติดตั้งเครื่องมือนี้
-
-## 1. ติดตั้ง Scene Builder
-
-ดาวน์โหลดจากเว็บไซต์ทางการ:
-
-- [Gluon Scene Builder](https://gluonhq.com/products/scene-builder/)
-
-เลือกตัวติดตั้งให้ตรงกับ Windows, macOS หรือ Linux ที่ใช้งาน แล้วเปิดโปรแกรมหลังติดตั้งเสร็จ
-
-## 2. เปิดไฟล์ FXML
-
-ใน Scene Builder เลือก `Open` แล้วเปิด:
-
-```text
-practice/smart-factory-dashboard/
-└─ src/main/resources/smartfactory/ui/dashboard-view.fxml
-```
-
-หน้าจอหลักที่ใช้ใน Lab:
-
-| ส่วน | ใช้ทำอะไร |
-|---|---|
-| Library | เลือก Control และ Layout Pane |
-| Hierarchy | ดูโครงสร้าง Parent–Child ของ Scene Graph |
-| Content | ลาก วาง และจัดตำแหน่ง Component |
-| Inspector | แก้ Properties, Layout และ Code |
-
-## 3. หา Form จาก Hierarchy
-
-เปิดตามลำดับ:
-
-```text
-BorderPane
-└─ bottom
-   └─ VBox
-      └─ GridPane
-         ├─ idField
-         ├─ nameField
-         ├─ locationField
-         └─ HBox
-            ├─ addMachineButton
-            ├─ editMachineButton
-            └─ cancelEditButton
-```
-
-การเลือกผ่าน Hierarchy แม่นยำกว่าคลิกบน Canvas เมื่อ Component อยู่ชิดกัน
-
-## 4. ปรับ Layout แบบ Drag & Drop
-
-ทดลองปรับค่าต่อไปนี้ใน Inspector:
-
-- `GridPane` กำหนด `HGap = 10` และ `VGap = 8`
-- Column ของรหัสใช้ประมาณ 18%
-- Column ชื่อและตำแหน่งใช้ประมาณ 26% ต่อช่อง
-- Column ปุ่มจัดการใช้ประมาณ 30%
-- `HBox` ของปุ่มกำหนด `Spacing = 6`
-- ปุ่มทั้งสามกำหนด `Max Width = Infinity`
-- กำหนด `HBox.hgrow = ALWAYS` ให้ปุ่มขยายเท่ากัน
-
-ใช้ Preview ตรวจว่าข้อความ `บันทึกแก้ไข` ไม่ถูกตัดเมื่อหน้าต่างมีขนาดเริ่มต้น
-
-## 5. ตรวจ fx:id และ onAction
-
-เลือก Component แล้วเปิดส่วน `Code` ใน Inspector ตรวจค่าเหล่านี้:
-
-| Component | fx:id | onAction |
-|---|---|---|
-| ช่องรหัส | `idField` | — |
-| ช่องชื่อ | `nameField` | — |
-| ช่องตำแหน่ง | `locationField` | — |
-| ปุ่มเพิ่ม | `addMachineButton` | `#handleAddMachine` |
-| ปุ่มบันทึก | `editMachineButton` | `#handleUpdateMachine` |
-| ปุ่มยกเลิก | `cancelEditButton` | `#handleCancelEdit` |
-
-ชื่อเหล่านี้ต้องตรงกับ Field และ Method ใน `DashboardController` ทุกตัว
-
-## 6. Preview CSS และภาษาไทย
-
-เปิด Preview แล้วตรวจ:
-
-- Theme สีเข้มยังแสดงครบ
-- ปุ่มบันทึกเป็นสีเขียวจาก `.button-success`
-- ข้อความภาษาไทยไม่เป็นสี่เหลี่ยมหรือเครื่องหมายคำถาม
-- Form ด้านล่างไม่ชิดด้านใดด้านหนึ่ง
-
-ถ้า Preview ไม่แสดง Theme ให้เลือก `smart-factory.css` ผ่านตัวเลือก Style Sheet สำหรับ Preview ไม่ต้องเพิ่ม CSS ซ้ำใน FXML หาก `DesktopApp` โหลดไฟล์นี้อยู่แล้ว
-
-## 7. บันทึกและอ่าน FXML ที่ได้
-
-กด Save แล้วเปิด `dashboard-view.fxml` ใน Editor ตรวจสามจุด:
-
-1. `fx:id` ยังครบ
-2. `onAction` ยังขึ้นต้นด้วย `#`
-3. Scene Builder แก้เฉพาะ View และไม่ได้เพิ่ม Business Logic ลงใน FXML
-
-การอ่าน Diff หรือ FXML หลังบันทึกช่วยให้ยังควบคุม Source Code ได้ แม้จะออกแบบหน้าจอด้วยเครื่องมือ Visual
-
-## 8. รันผลลัพธ์
+ทำต่อจากบทก่อนใน `practice/smart-factory-dashboard` ปิดแอปก่อนแก้ไฟล์ รันจากโฟลเดอร์หลัก Repository:
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
 ```
 
-ทดสอบทั้งสองโหมด:
+เพิ่มโค้ดครบหนึ่งขั้นแล้วรันตรวจผลก่อนทำขั้นถัดไป เปิดแอปใหม่และยังไม่เปิด Auto เมื่อทดสอบจำนวนจากข้อมูลเริ่มต้น
 
-1. ไม่เลือกแถว ต้องใช้ปุ่ม `เพิ่ม` ได้
-2. เลือก `M-002` ปุ่ม `เพิ่ม` ต้องปิดใช้งาน
-3. เปลี่ยนชื่อเป็น `สายพานลำเลียง` แล้วบันทึกได้
-4. เลือกอีกครั้งแล้วกด `ยกเลิก` ได้
-5. Search, Filter, Sensor และ Maintenance ยังทำงานเหมือนเดิม
+<details>
+<summary>กลับมาเรียนต่อและต้องการชุดเริ่มต้น</summary>
 
-## Challenge
+ถ้าทำต่อจากบทก่อนหน้า ใช้งานเดิมได้เลย ไม่ต้องเตรียมใหม่
 
-ใช้ Scene Builder จัดปุ่มเป็นสองแถวสำหรับหน้าต่างที่แคบลง โดยห้ามเปลี่ยนชื่อ `fx:id` และ `onAction`
+หากต้องการกลับจุดเริ่ม ให้ปิดแอป บันทึกไฟล์ แล้วรันจากโฟลเดอร์หลัก Repository:
 
-ย้อนกลับ: [EP 3.15 — แก้ไขข้อมูลเครื่องจักรและ Complete CRUD](ep15-edit-machine-crud.md)
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.16 -BackupExisting
+```
 
-กลับไป: [README ของ Playlist 3](README.md)
+คำสั่งเก็บโปรเจกต์เดิมทั้งชุดใน `practice/_backups` ก่อนเตรียมชุดใหม่ ดูที่มาใน[ชุดพร้อมเรียน](../../lesson-resources/ep3-12-16-steps/README.md)
+
+</details>
+
+Scene Builder ช่วยจัด FXML ด้วยเมาส์ ส่วน Controller และ Service ยังใช้ชุดเดิม ข้ามบทนี้ได้หากต้องการเขียน FXML ต่อด้วยมือ
+
+## 1. เปิดฟอร์มเดิมแล้วขยับระยะ
+
+ติดตั้งจาก[เว็บไซต์ Gluon](https://gluonhq.com/products/scene-builder/) แล้วเปิด `src/main/resources/smartfactory/ui/dashboard-view.fxml` ของโปรเจกต์ที่ทำต่อเนื่อง
+
+ใน Hierarchy เลือก `BorderPane → center → SplitPane → GridPane` ที่มี fx:id เป็น `machineForm`
+
+เปลี่ยน Hgap เป็น `12` และ Vgap เป็น `14` ใน Layout จากนั้น Preview แล้วบันทึก
+
+เปิด FXML ดูเฉพาะค่าที่เปลี่ยน:
+
+```xml
+<GridPane fx:id="machineForm" hgap="12" vgap="14">
+```
+
+
+**ก่อนรัน:** ปรับระยะแล้วปุ่มบันทึกควรเปลี่ยนหน้าที่ไหม?
+
+รันด้วยคำสั่งด้านบน แล้วเปิดแอป เลือก M-002 แล้วกดยกเลิก
+
+<details>
+<summary>รันแล้วค่อยเปิดตรวจผล</summary>
+
+ช่องต่าง ๆ ห่างขึ้น การเลือกและยกเลิกยังทำงานเหมือนเดิม
+
+</details>
+
+
+## 2. ให้ช่องกรอกขยายตามพื้นที่
+
+เลือก GridPane เดิม ตั้ง Column Constraints:
+
+- คอลัมน์ 0: Min Width `90`
+- คอลัมน์ 1: Hgrow `ALWAYS`
+
+เลือก TextField ทั้งสาม ตั้ง Max Width เป็น `Infinity` และ GridPane Hgrow เป็น `ALWAYS` บันทึกแล้วตรวจค่าที่เทียบเท่า:
+
+```xml
+<columnConstraints>
+    <ColumnConstraints minWidth="90"/>
+    <ColumnConstraints hgrow="ALWAYS"/>
+</columnConstraints>
+```
+
+บล็อกด้านบนอยู่ภายใน GridPane; TextField แต่ละตัวต้องมี `maxWidth="Infinity"` และ `GridPane.hgrow="ALWAYS"` โดยคง fx:id และตำแหน่งแถวเดิม
+
+**ก่อนรัน:** อะไรจะกว้างขึ้นเมื่อเลื่อนเส้นแบ่งตารางกับฟอร์ม?
+
+รันด้วยคำสั่งด้านบน แล้วเลื่อนเส้นแบ่งให้ฟอร์มมีพื้นที่เพิ่ม แล้วลองแก้ชื่อและบันทึก
+
+<details>
+<summary>รันแล้วค่อยเปิดตรวจผล</summary>
+
+ช่องกรอกขยายตามคอลัมน์ ไม่ทับ Label และบันทึกชื่อได้เหมือนเดิม
+
+</details>
+
+
+<details>
+<summary>ถ้า Preview ได้ แต่แอปกดปุ่มไม่ได้</summary>
+
+Preview ใช้ตรวจหน้าตา ไม่ใช่ผลการทำงาน ตรวจว่า fx:controller ยังเป็น smartfactory.ui.DashboardController และ fx:id/onAction ของ Control เดิมไม่ถูกลบ แล้วทดสอบด้วยคำสั่งรันแอปอีกครั้ง
+
+</details>
+
+
+## ลองทำเอง
+
+เปลี่ยนระยะระหว่างปุ่มเป็น 12 โดยไม่แก้ Java
+
+<details>
+<summary>เฉลย</summary>
+
+เลือก VBox ที่มี fx:id เป็น actionButtons แล้วตั้ง Spacing เป็น 12 หรือแก้ `spacing="12"` ใน FXML
+
+</details>
+
+<details>
+<summary>โค้ดเทียบ</summary>
+
+[จบขั้นระยะห่าง](../../lesson-resources/ep3-12-16-steps/16a-spacing/) · [จบขั้นขยายช่อง](../../lesson-resources/ep3-12-16-steps/16b-layout/)
+
+</details>
+
+กลับไปที่ [สารบัญ Playlist](README.md)

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smartfactory.ui.DashboardController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <top>
+        <VBox spacing="12">
+            <Label text="Smart Factory Dashboard" styleClass="header-title"/>
+            <FlowPane hgap="12" vgap="8">
+                <Label fx:id="totalLabel" styleClass="summary-card"/>
+                <Label fx:id="normalLabel" styleClass="summary-card"/>
+                <Label fx:id="warningLabel" styleClass="summary-card"/>
+                <Label fx:id="emergencyLabel" styleClass="summary-card"/>
+                <Label fx:id="maintenanceLabel" styleClass="summary-card"/>
+            </FlowPane>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.68">
+            <VBox spacing="10" styleClass="content-area">
+                <TableView fx:id="machineTable" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </SplitPane>
+    </center>
+    <bottom><Label fx:id="statusLabel" text="พร้อมใช้งาน" styleClass="status-bar"/></bottom>
+</BorderPane>

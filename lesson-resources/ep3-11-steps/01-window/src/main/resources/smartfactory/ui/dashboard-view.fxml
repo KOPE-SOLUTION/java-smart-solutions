@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <center><Label text="หน้าจอจาก FXML"/></center>
+</BorderPane>

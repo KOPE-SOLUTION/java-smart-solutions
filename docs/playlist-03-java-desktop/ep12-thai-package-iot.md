@@ -1,43 +1,67 @@
-# EP 3.12 — ภาษาไทย Runtime Image และ IoT Roadmap
+# EP 3.12 — ภาษาไทยและ Runtime Image
 
-## สิ่งที่จะทำ
+เป้าหมาย: ตรวจแอปเดิม แล้วเปิดจากชุดที่มี Java Runtime รวมอยู่ด้วย
 
-- ตรวจ UTF-8 และ Font ภาษาไทย
-- เพิ่ม Java Module สำหรับ FXML
-- สร้าง Runtime Image ด้วย `jlink`
-- เห็นเส้นทางเชื่อม MQTT, Database และ IoT Device
-
-```mermaid
-flowchart LR
-    D[IoT Device] -->|MQTT| A[Adapter]
-    A --> S[SmartFactoryService]
-    S --> M[Model]
-    S --> DB[(Database)]
-    S --> C[JavaFX Controller]
-    C --> V[FXML Dashboard]
-```
-
-## 1. ตรวจ UTF-8
-
-จากโฟลเดอร์หลักของ Repository:
+ทำต่อจากบทก่อนใน `practice/smart-factory-dashboard` ปิดแอปก่อนแก้ไฟล์ รันจากโฟลเดอร์หลัก Repository:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check-encoding.ps1
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml javafx:run
 ```
 
-ถ้า Source เป็น UTF-8 แต่ตัวอักษรยังเป็นสี่เหลี่ยม ให้ตรวจ Font ด้วย `ThaiUiSupport` ซึ่งเลือก `Leelawadee UI`, `Tahoma` หรือ `Noto Sans Thai` ตามที่เครื่องมี
+เพิ่มโค้ดครบหนึ่งขั้นแล้วรันตรวจผลก่อนทำขั้นถัดไป เปิดแอปใหม่และยังไม่เปิด Auto เมื่อทดสอบจำนวนจากข้อมูลเริ่มต้น
 
-ไม่ควรแก้ปัญหาด้วยการใส่ `-Dfile.encoding=UTF-8` เพียงอย่างเดียว เพราะ FXML, CSS, Source และ Font ต้องถูกต้องร่วมกัน
+<details>
+<summary>กลับมาเรียนต่อและต้องการชุดเริ่มต้น</summary>
 
-## 2. เพิ่ม `module-info.java`
+ถ้าทำต่อจากบทก่อนหน้า ใช้งานเดิมได้เลย ไม่ต้องเตรียมใหม่
 
-สร้าง `practice/smart-factory-dashboard/src/main/java/module-info.java`:
+หากต้องการกลับจุดเริ่ม ให้ปิดแอป บันทึกไฟล์ แล้วรันจากโฟลเดอร์หลัก Repository:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\prepare-lesson.ps1 -Episode 3.12 -BackupExisting
+```
+
+คำสั่งเก็บโปรเจกต์เดิมทั้งชุดใน `practice/_backups` ก่อนเตรียมชุดใหม่ ดูที่มาใน[ชุดพร้อมเรียน](../../lesson-resources/ep3-12-16-steps/README.md)
+
+</details>
+
+## 1. ตรวจภาษาไทยและกฎของเครื่องจักร
+
+รันแอปก่อน เลือก M-003 แล้วกดบำรุง ต้องเห็นชั่วโมง 0 และต้องบำรุงเหลือ 1 ลองกดเพิ่มโดยเว้นข้อมูลว่าง ต้องอ่าน Alert ภาษาไทยได้
+
+หากตัวอักษรเพี้ยน ตรวจว่าไฟล์ Java, FXML, CSS บันทึกเป็น UTF-8 หากเป็นสี่เหลี่ยมให้ตรวจ Font ไทยบนเครื่อง โดย CSS เดิมใช้ Leelawadee UI และ Tahoma เป็นตัวเลือก
+
+นำ Test ที่ใช้กับ OOP Core เดิมกลับมารันด้วย จากโฟลเดอร์หลัก Repository:
+
+```powershell
+New-Item -ItemType Directory -Force .\practice\smart-factory-dashboard\src\test\java\smartfactory
+Copy-Item .\lesson-resources\ep3-9-oop-core\tests\SmartFactoryTest.java .\practice\smart-factory-dashboard\src\test\java\smartfactory\SmartFactoryTest.java
+```
+
+ถ้ามีไฟล์ Test นี้และแก้เองไว้แล้ว ให้เทียบเนื้อหาก่อน ไม่ต้องคัดลอกทับ
+
+```powershell
+.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml test-compile org.codehaus.mojo:exec-maven-plugin:3.5.0:java "-Dexec.mainClass=smartfactory.SmartFactoryTest" "-Dexec.classpathScope=test"
+```
+
+<details>
+<summary>ตรวจผลขั้นที่ 1</summary>
+
+Console แสดง `PASS: 6 tests` ส่วนหน้าต่างตรวจภาษาไทยและบำรุงรักษาได้ตามข้างต้น
+
+</details>
+
+
+## 2. เปิดแอปแบบ Module
+
+Module ระบุว่าแอปต้องใช้ส่วนใดของ JavaFX ก่อนนำส่วนที่ใช้ไปจัดชุด Runtime
+
+สร้าง `src/main/java/module-info.java`:
 
 ```java
 module smartfactory.dashboard {
     requires javafx.controls;
     requires javafx.fxml;
-
     exports smartfactory.model;
     exports smartfactory.service;
     exports smartfactory.ui;
@@ -45,11 +69,9 @@ module smartfactory.dashboard {
 }
 ```
 
-`opens` อนุญาตให้ `FXMLLoader` เข้าถึง Field และ Method ที่มี `@FXML` ผ่าน Reflection
+`requires` ระบุสิ่งที่ใช้ ส่วน `opens ... to javafx.fxml` อนุญาตให้ตัวโหลดเชื่อม Field ที่มี `@FXML`
 
-## 3. ตั้งค่า Runtime Image
-
-เปิด `practice/smart-factory-dashboard/pom.xml` แล้วหา `<configuration>` ภายใน Plugin `javafx-maven-plugin` จากนั้นแทนที่ `<mainClass>` เดิมและเพิ่มค่าที่เหลือไว้ใน `<configuration>` เดียวกัน:
+ใน `pom.xml` ภายใน Plugin `javafx-maven-plugin` เปลี่ยนบรรทัด `mainClass` และเพิ่มค่าต่อไปนี้ใน `configuration` เดียวกัน:
 
 ```xml
 <mainClass>smartfactory.dashboard/smartfactory.ui.DesktopApp</mainClass>
@@ -60,50 +82,62 @@ module smartfactory.dashboard {
 <noManPages>true</noManPages>
 ```
 
-สร้าง Runtime Image:
+ชื่อก่อน `/` คือ Module ชื่อหลังคือคลาสเริ่มแอป
+
+**ก่อนรัน:** เปลี่ยนเป็น Module แล้วหน้าตาควรเปลี่ยนไหม?
+
+รันด้วยคำสั่งด้านบน แล้วลองเพิ่ม M-004
+
+<details>
+<summary>รันแล้วค่อยเปิดตรวจผล</summary>
+
+หน้าจอและปุ่มเดิมทำงานเหมือนเดิม ทั้งหมดเพิ่มจาก 3 เป็น 4
+
+</details>
+
+
+## 3. สร้าง Runtime Image
+
+ปิดแอป แล้วรันจากโฟลเดอร์หลัก Repository บน Windows:
 
 ```powershell
 .\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml clean javafx:jlink
-```
-
-รันไฟล์ที่ได้:
-
-```powershell
 .\practice\smart-factory-dashboard\target\smart-factory\bin\smart-factory.bat
 ```
 
-Runtime Image รวม Java Runtime และ Module ที่แอปใช้ เหมาะเป็นฐานก่อนสร้าง Installer ในขั้นต่อยอด
+คำสั่งแรกสร้างชุด Runtime คำสั่งที่สองเปิดแอปจากชุดนั้น ไม่ใช่ Installer .exe และไม่ใช่ชุดเดียวสำหรับทุกระบบปฏิบัติการ
 
-## 4. เตรียมและรัน Test
+<details>
+<summary>ตรวจผลขั้นที่ 3</summary>
 
-1. เปิดไฟล์ [SmartFactoryTest.java](../../lesson-resources/ep3-9-oop-core/tests/SmartFactoryTest.java) จากชุด OOP Core
-2. สร้างโฟลเดอร์ `practice/smart-factory-dashboard/src/test/java/smartfactory/`
-3. คัดลอกไฟล์ไปไว้ที่ `practice/smart-factory-dashboard/src/test/java/smartfactory/SmartFactoryTest.java` หากมีไฟล์นี้อยู่แล้วจากขั้นเตรียมชุดเดิม ให้ใช้ไฟล์เดิมต่อได้
+แอปเปิดได้โดยไม่เรียก Maven; ต้องส่งทั้งโฟลเดอร์ `target/smart-factory` ไม่ใช่เฉพาะไฟล์ .bat ทดลองเพิ่ม/ลบ/บำรุง แล้วปิดแอป ส่วนการทดสอบบนอีกเครื่องต้องใช้ระบบและสถาปัตยกรรมที่ตรงกับชุดที่สร้าง
 
-รันจากโฟลเดอร์หลักของ Repository:
+</details>
 
-```powershell
-.\mvnw.cmd -f .\practice\smart-factory-dashboard\pom.xml test-compile org.codehaus.mojo:exec-maven-plugin:3.5.0:java "-Dexec.mainClass=smartfactory.SmartFactoryTest" "-Dexec.classpathScope=test"
-```
 
-ผลที่ต้องเห็นคือ `PASS: 6 tests` โดยครอบคลุมสถานะ Sensor การบำรุงรักษา และการป้องกันรหัสซ้ำ
+## ลองทำเอง
 
-## 5. ขอบเขตต่อยอด IoT
+เพราะเหตุใดจึงส่งให้เพื่อนเฉพาะ smart-factory.bat ไม่ได้?
 
-ให้สร้าง Adapter ใหม่สำหรับ MQTT หรือ Database แล้วเรียก `SmartFactoryService` แทนการเขียน Network Code ไว้ใน Controller โดยตรง วิธีนี้รักษา OOP และทำให้เปลี่ยน Broker หรือ Database ได้ง่ายกว่า
+<details>
+<summary>เฉลย</summary>
 
-## ตรวจงาน EP 3.12
+ไฟล์นี้เป็นตัวเปิดแอป ต้องใช้ Runtime และ Module ที่อยู่ในโฟลเดอร์เดียวกันด้วย
 
-- ภาษาไทยใน Label, Table และ Alert แสดงถูกต้อง
-- เพิ่ม ลบ อัปเดต Sensor และบำรุงรักษาได้
-- ข้อมูลเริ่มต้นแสดง `Sensor ผิดปกติ = 1` และ `ต้องบำรุงทั้งหมด = 2`
-- หยุด Auto Sensor ก่อนตรวจ แล้ว Summary ลดจาก `2 -> 1 -> 0` เมื่อบำรุง `M-002` และ `M-003` ตามลำดับ
-- Auto Sensor ทำงานโดยหน้าต่างไม่ค้าง
-- `SmartFactoryTest` จากชุด OOP Core แสดง `PASS: 6 tests` ส่วน Test ลำดับที่ 7 จะเพิ่มพร้อมความสามารถแก้ไขเครื่องจักรใน EP 3.15
-- Runtime Image เปิดได้บน Windows
+</details>
 
-ซอร์สฉบับเต็ม: [`src/main/java/smartfactory/ui`](../../src/main/java/smartfactory/ui)
+<details>
+<summary>ต่อยอด IoT ภายหลัง</summary>
 
-ถัดไป: [EP 3.13 — ค้นหาแบบทันทีด้วย FilteredList](ep13-search-filter.md)
+เริ่มจากรับข้อมูลหนึ่งรายการด้วย Simulator → ส่งให้ Service → ตรวจผลบน Dashboard ก่อนเชื่อมอุปกรณ์จริง ดู[แนวทาง Integration](../FUTURE_ROADMAP.md#ขอบเขต-integration-และการใช้งานจริง) ถ้ายังไม่มีอุปกรณ์ไม่ต้องทำส่วนนี้เพื่อผ่าน EP3.12
 
-กลับไป: [README ของ Playlist 3](README.md) หรือ [README หลัก](../../README.md)
+</details>
+
+<details>
+<summary>โค้ดเทียบและอ้างอิง</summary>
+
+[จบขั้น Test](../../lesson-resources/ep3-12-16-steps/12a-tests/) · [จบขั้น Module](../../lesson-resources/ep3-12-16-steps/12b-module/) · [JavaFX Maven Plugin](https://github.com/openjfx/javafx-maven-plugin)
+
+</details>
+
+ถัดไป: [EP3.13 — Search](ep13-search-filter.md)
