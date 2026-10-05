@@ -129,7 +129,11 @@ Angular เป็นเส้นทางหลักสำหรับ Full-sta
 | 3.10 ตอนที่ 3A | ผลลัพธ์จาก Sensor Task | [รับผลกลับมาอัปเดตหน้าจอ](docs/playlist-03-java-desktop/ep10c-sensor-task-result.md) |
 | 3.10 ตอนที่ 3B | ป้องกันงานซ้อนและรับข้อผิดพลาด | [คืนสถานะปุ่มและข้ามผลของเครื่องที่ถูกลบ](docs/playlist-03-java-desktop/ep10c2-sensor-task-safety.md) |
 | 3.10 ตอนที่ 4 | Auto Sensor ด้วย Timeline | [เริ่ม–หยุดการอัปเดตอัตโนมัติ](docs/playlist-03-java-desktop/ep10d-auto-sensor-timeline.md) |
-| 3.11 | FXML และ Controller | [แยก View จาก Logic](docs/playlist-03-java-desktop/ep11-fxml-controller.md) |
+| 3.11 ตอนที่ 1 | เปิดหน้าต่างด้วย FXML | [เปิดหน้าต่างจาก FXML ได้](docs/playlist-03-java-desktop/ep11a-fxml-window.md) |
+| 3.11 ตอนที่ 2 | เชื่อม FXML กับ Controller | [กดปุ่มแล้วข้อความเปลี่ยน](docs/playlist-03-java-desktop/ep11b-fxml-controller.md) |
+| 3.11 ตอนที่ 3 | แสดงตารางและ Summary จาก Service | [แสดงเครื่องจักร 3 แถว และยอดสรุปตรงกับข้อมูล](docs/playlist-03-java-desktop/ep11c-service-table-summary.md) |
+| 3.11 ตอนที่ 4 | เชื่อม Form กับการจัดการเครื่องจักร | [เพิ่ม ลบ และบำรุงรักษาเครื่องจักรผ่าน Form](docs/playlist-03-java-desktop/ep11d-form-crud.md) |
+| 3.11 ตอนที่ 5 | นำ Sensor และ Auto กลับมา | [จำลอง Sensor เปิด–หยุด Auto และหยุดงานเมื่อปิดหน้าต่าง](docs/playlist-03-java-desktop/ep11e-sensor-lifecycle.md) |
 | 3.12 | ภาษาไทย Runtime Image และ IoT | [เตรียมส่งมอบและต่อยอด](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) |
 | 3.13 | Search และ FilteredList | [ค้นหาข้อมูลแบบทันที](docs/playlist-03-java-desktop/ep13-search-filter.md) |
 | 3.14 | Multi-filter และ SortedList | [กรองหลายเงื่อนไขและเรียงข้อมูล](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) |
@@ -151,7 +155,7 @@ EP3.10 เรียนตามลำดับ 1 → 2 → 3A → 3B → 4 จ�
 
 | EP | ลำดับจุดที่รันตรวจผล |
 |---|---|
-| [3.11 — FXML](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | หน้าต่าง → ปุ่ม → ตาราง → Summary → Form เพิ่ม → ลบ/บำรุง → Sensor/Auto |
+| [3.11 — FXML (5 ตอน)](docs/playlist-03-java-desktop/ep11-fxml-controller.md) | 1) หน้าต่าง → 2) Controller → 3) ตาราง/ Summary → 4) Form/จัดการเครื่องจักร → 5) Sensor/Auto โดยรันตรวจผลรวม 7 จุด |
 | [3.12 — ส่งมอบ](docs/playlist-03-java-desktop/ep12-thai-package-iot.md) | ภาษาไทยและ Test → Module → เปิด Runtime Image |
 | [3.13 — Search](docs/playlist-03-java-desktop/ep13-search-filter.md) | ค้นหารหัส → ชื่อ/ตำแหน่ง → ตรวจจำนวนหลังข้อมูลเปลี่ยน |
 | [3.14 — Filter/Sort](docs/playlist-03-java-desktop/ep14-multi-filter-sort.md) | สถานะ → บำรุง → ล้าง → เรียง |

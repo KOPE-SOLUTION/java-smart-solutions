@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('3.10-1', '3.10-2', '3.10-3A', '3.10-3B', '3.10-4', '3.11-1', '3.11-2', '3.11-3', '3.11-4', '3.11-5', '3.11-6', '3.11-7', '3.12', '3.12-1', '3.12-2', '3.12-3', '3.13', '3.13-1', '3.13-2', '3.14-1', '3.14-2', '3.14-3', '3.14-4', '3.15-1', '3.15-2', '3.15-3', '3.15-4', '3.16', '3.16-1', '3.16-2')]
+    [ValidateSet('3.10-1', '3.10-2', '3.10-3A', '3.10-3B', '3.10-4', '3.11-1', '3.11-2', '3.11-3', '3.11-4', '3.11-5', '3.11-3-summary', '3.11-4-actions', '3.12', '3.12-1', '3.12-2', '3.12-3', '3.13', '3.13-1', '3.13-2', '3.14-1', '3.14-2', '3.14-3', '3.14-4', '3.15-1', '3.15-2', '3.15-3', '3.15-4', '3.16', '3.16-1', '3.16-2')]
     [string]$Episode,
     [switch]$BackupExisting
 )
@@ -14,13 +14,14 @@ $starts = @{
     '3.10-3A' = 'lesson-resources/ep3-10-steps/02-task-thread'
     '3.10-3B' = 'lesson-resources/ep3-10-steps/03a-sensor-result'
     '3.10-4'  = 'lesson-resources/ep3-10-steps/03b-sensor-safety'
+
     '3.11-1' = 'lesson-resources/ep3-10-steps/04-auto-sensor'
     '3.11-2' = 'lesson-resources/ep3-11-steps/01-window'
     '3.11-3' = 'lesson-resources/ep3-11-steps/02-button'
-    '3.11-4' = 'lesson-resources/ep3-11-steps/03-table'
-    '3.11-5' = 'lesson-resources/ep3-11-steps/04-summary'
-    '3.11-6' = 'lesson-resources/ep3-11-steps/05-add'
-    '3.11-7' = 'lesson-resources/ep3-11-steps/06-actions'
+    '3.11-4' = 'lesson-resources/ep3-11-steps/04-summary'
+    '3.11-5' = 'lesson-resources/ep3-11-steps/06-actions'
+    '3.11-3-summary' = 'lesson-resources/ep3-11-steps/03-table'
+    '3.11-4-actions' = 'lesson-resources/ep3-11-steps/05-add'
     '3.12' = 'lesson-resources/ep3-11-steps/07-sensor'
     '3.12-1' = 'lesson-resources/ep3-11-steps/07-sensor'
     '3.12-2' = 'lesson-resources/ep3-12-16-steps/12a-tests'
@@ -46,13 +47,14 @@ $lessons = @{
     '3.10-3A' = 'ep10c-sensor-task-result.md'
     '3.10-3B' = 'ep10c2-sensor-task-safety.md'
     '3.10-4'  = 'ep10d-auto-sensor-timeline.md'
-    '3.11-1' = 'ep11-steps/01-window.md'
-    '3.11-2' = 'ep11-steps/02-button.md'
-    '3.11-3' = 'ep11-steps/03-table.md'
-    '3.11-4' = 'ep11-steps/04-summary.md'
-    '3.11-5' = 'ep11-steps/05-add.md'
-    '3.11-6' = 'ep11-steps/06-actions.md'
-    '3.11-7' = 'ep11-steps/07-sensor.md'
+
+    '3.11-1' = 'ep11a-fxml-window.md'
+    '3.11-2' = 'ep11b-fxml-controller.md'
+    '3.11-3' = 'ep11c-service-table-summary.md'
+    '3.11-4' = 'ep11d-form-crud.md'
+    '3.11-5' = 'ep11e-sensor-lifecycle.md'
+    '3.11-3-summary' = 'ep11c-service-table-summary.md'
+    '3.11-4-actions' = 'ep11d-form-crud.md'
     '3.12' = 'ep12-thai-package-iot.md'
     '3.12-1' = 'ep12-thai-package-iot.md'
     '3.12-2' = 'ep12-thai-package-iot.md'

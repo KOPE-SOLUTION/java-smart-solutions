@@ -188,4 +188,4 @@ if (isCancelled()) {
 
 </details>
 
-ถัดไป: [EP 3.11 — FXML และ Controller](ep11-fxml-controller.md)
+ถัดไป: [EP3.11 ตอนที่ 1 — เปิดหน้าต่างด้วย FXML](ep11a-fxml-window.md)
